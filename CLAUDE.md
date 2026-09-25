@@ -249,4 +249,5 @@ Ask me for each asset when the phase that needs it begins.
 - **Development branch:** `claude/new-session-9jokpx`.
 - **Decision (Phase 1):** Cloud only. Nothing is installed on Ran's Mac. Ran reviews each phase on the free hosting test address, and will later edit content on github.com.
 - **Decision (Phase 1):** Website builder is Astro (v7). Content lives in `content/`; images go in `content/images/<slug>/` (kept next to the content so Astro can optimize them); the résumé is `public/resume.pdf`.
-- **Current phase:** Phase 1 (Set up) — project and content structure created; choosing hosting next.
+- **Decision (Phase 1):** Hosting is GitHub Pages, published by `.github/workflows/deploy.yml` whenever the repository's default branch changes. Temporary address: https://ran1199.github.io/portfolio-website/ (so `base` is `/portfolio-website` in `astro.config.mjs`; internal links must use `import.meta.env.BASE_URL`).
+- **Current phase:** Phase 1 (Set up) — waiting for Ran to switch on GitHub Pages, then first publish.
