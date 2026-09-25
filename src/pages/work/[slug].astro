@@ -1,12 +1,16 @@
 ---
-// Case study page template. Every case study uses this same layout;
-// the words and images come from content/case-studies/<name>.md.
-// A section with nothing in the content file shows a placeholder.
+// Case study page template. The words and images come from
+// content/case-studies/<name>.md. Two layouts:
+//  • Visual-first: the file lists its own "sections:" (any headings,
+//    any order), each made of blocks — see _TEMPLATE.md.
+//  • Classic: the fixed sections below (why, research, insight, concept,
+//    prototype, testing, reflection). An empty one shows a placeholder.
 import { getCollection, getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Section from "../../components/case/Section.astro";
 import Part from "../../components/case/Part.astro";
+import Block from "../../components/case/Block.astro";
 import Media from "../../components/case/Media.astro";
 import Inline from "../../components/case/Inline.astro";
 import { withBase } from "../../lib/url";
@@ -41,6 +45,7 @@ const sections = [
 ] as const;
 const numberOf = (id: (typeof sections)[number]["id"]) => sections.findIndex((s) => s.id === id) + 1;
 const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
+const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 ---
 
 <BaseLayout title={d.title} description={d.summary}>
@@ -67,12 +72,23 @@ const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
     </div>
   </header>
 
-  <!-- 2. Why this project -->
+  {
+    d.sections ? (
+      d.sections.map((section, i) => (
+        <Section number={i + 1} heading={section.heading} id={slugify(section.heading) || `section-${i + 1}`} stacked>
+          {section.blocks.map((block) => (
+            <Block block={block} folder={folder} labels={labels} />
+          ))}
+        </Section>
+      ))
+    ) : (
+      <>
+  {/* 2. Why this project */}
   <Section number={numberOf("why")} heading={labels.why} id="why">
     {d.why ? d.why.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("why this project")} /></p>}
   </Section>
 
-  <!-- 3. Research -->
+  {/* 3. Research */}
   <Section number={numberOf("research")} heading={labels.research} id="research">
     {
       d.research ? (
@@ -89,7 +105,7 @@ const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
     }
   </Section>
 
-  <!-- 4. Insight and design goal -->
+  {/* 4. Insight and design goal */}
   <Section number={numberOf("insight")} heading={labels.insight} id="insight">
     <div class="insight">
       <div>
@@ -103,12 +119,12 @@ const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
     </div>
   </Section>
 
-  <!-- 5. Concept and design -->
+  {/* 5. Concept and design */}
   <Section number={numberOf("concept")} heading={labels.concept} id="concept">
     {d.concept ? d.concept.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("concept and design")} /></p>}
   </Section>
 
-  <!-- 6. Prototype: what was built vs. what was designed -->
+  {/* 6. Prototype: what was built vs. what was designed */}
   <Section number={numberOf("prototype")} heading={labels.prototype} id="prototype">
     <div class="split">
       <div class="split__col">
@@ -122,7 +138,7 @@ const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
     </div>
   </Section>
 
-  <!-- 7. Testing → what changed -->
+  {/* 7. Testing → what changed */}
   <Section number={numberOf("testing")} heading={labels.testing} id="testing">
     <div class="before-after">
       {
@@ -141,7 +157,7 @@ const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
     </div>
   </Section>
 
-  <!-- 8. Reflection and next steps -->
+  {/* 8. Reflection and next steps */}
   <Section number={numberOf("reflection")} heading={labels.reflection} id="reflection">
     {d.reflection ? d.reflection.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("reflection and next steps")} /></p>}
     {
@@ -159,6 +175,10 @@ const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
       )
     }
   </Section>
+
+      </>
+    )
+  }
 
   <!-- 9. Next project -->
   <nav class="container next" aria-label={labels.next}>

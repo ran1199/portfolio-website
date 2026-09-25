@@ -1,0 +1,418 @@
+---
+// One "block" of a visual-first case study section (see _TEMPLATE.md).
+// Images lead; text stays short and supports them. A block normally
+// uses one kind of content; when a block has an image AND insight/text,
+// the image takes the wider column with the text beside it.
+import type { CollectionEntry } from "astro:content";
+import Inline from "./Inline.astro";
+import Text from "./Text.astro";
+import Media from "./Media.astro";
+import Video from "./Video.astro";
+
+type Study = CollectionEntry<"caseStudies">["data"];
+type BlockData = NonNullable<Study["sections"]>[number]["blocks"][number];
+
+interface Props {
+  block: BlockData;
+  folder: string;
+  labels: Record<string, string>;
+}
+
+const { block: b, folder, labels } = Astro.props;
+const hasImage = b.image !== undefined;
+const hasSideText = Boolean(b.insight || b.goal || b.text);
+const sideBySide = hasImage && hasSideText && b.size !== "small";
+---
+
+<div class:list={["block", { "block--side": sideBySide }]}>
+  {
+    hasImage && (
+      <div class:list={["block__image", { "block__image--small": b.size === "small" }]}>
+        <Media
+          folder={folder}
+          image={b.image}
+          alt={b.alt}
+          caption={b.caption}
+          sizes={b.size === "small" ? "(min-width: 64rem) 40vw, 100vw" : sideBySide ? "(min-width: 64rem) 60vw, 100vw" : "(min-width: 90rem) 86rem, 100vw"}
+        />
+      </div>
+    )
+  }
+
+  {
+    hasSideText && (
+      <div class="block__side">
+        {b.text && <Text text={b.text} />}
+        {b.source && (
+          <p class="block__source">
+            {labels.source}: <Inline text={b.source} />
+          </p>
+        )}
+        {b.insight && (
+          <div>
+            <p class="small-label">{labels.insightLabel}</p>
+            <p class="block__statement">
+              <Inline text={b.insight} />
+            </p>
+          </div>
+        )}
+        {b.goal && (
+          <div>
+            <p class="small-label">{labels.goalLabel}</p>
+            <p class="block__statement">
+              <Inline text={b.goal} />
+            </p>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  {/* Theory → mini-game cards */}
+  {
+    b.cards && (
+      <ul class="cards">
+        {b.cards.map((c) => (
+          <li class="cards__item">
+            <Media folder={folder} image={c.image} alt={c.alt} sizes="(min-width: 64rem) 28vw, (min-width: 40rem) 45vw, 100vw" />
+            <p class="cards__from">
+              <Inline text={c.from} />
+            </p>
+            <p class="cards__to">
+              <span aria-hidden="true">→ </span>
+              <Inline text={c.to} />
+            </p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {/* Gallery: first image large, the rest side by side */}
+  {
+    b.gallery && (
+      <div class="gallery">
+        {b.gallery.map((g, i) => (
+          <div class:list={["gallery__item", { "gallery__item--lead": i === 0 }]}>
+            <Media folder={folder} image={g.image} alt={g.alt} caption={g.caption} sizes={i === 0 ? "(min-width: 90rem) 86rem, 100vw" : "(min-width: 48rem) 45vw, 100vw"} />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {/* Photo steps: a row on wide screens, stacked on phones */}
+  {
+    b.steps && (
+      <ol class="steps">
+        {b.steps.map((step, i) => (
+          <li class="steps__item">
+            <Media folder={folder} image={step.image} alt={step.alt} sizes="(min-width: 64rem) 18vw, (min-width: 40rem) 45vw, 100vw" />
+            <p class="steps__number">{String(i + 1).padStart(2, "0")}</p>
+            <p class="steps__title">
+              <Inline text={step.title} />
+            </p>
+            {step.text && (
+              <p class="steps__text">
+                <Inline text={step.text} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+    )
+  }
+
+  {/* App screens: a row on wide screens, swipeable on phones */}
+  {
+    b.screens && (
+      <ul class="screens">
+        {b.screens.map((s) => (
+          <li class="screens__item">
+            <Media folder={folder} image={s.image} alt={s.alt} placeholderRatio="9 / 19.5" sizes="(min-width: 64rem) 22vw, 70vw" />
+            {s.title && (
+              <p class="screens__title">
+                <Inline text={s.title} />
+              </p>
+            )}
+            {s.caption && (
+              <p class="screens__caption">
+                <Inline text={s.caption} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {/* Before / after */}
+  {
+    (b.before || b.after) && (
+      <div class="ba">
+        {(["before", "after"] as const).map((key) => {
+          const side = b[key];
+          return side ? (
+            <div class:list={["ba__side", `ba__side--${key}`]}>
+              <p class:list={["pill", { "pill--solid": key === "after" }]}>{labels[key]}</p>
+              <p class="ba__text">
+                <Inline text={side.text} />
+              </p>
+              <div class="ba__panel">
+                <Media folder={folder} image={side.image} alt={side.alt} placeholderRatio="9 / 19.5" sizes="(min-width: 48rem) 40vw, 100vw" />
+              </div>
+            </div>
+          ) : null;
+        })}
+      </div>
+    )
+  }
+
+  {b.video && <div class="block__video"><Video folder={folder} {...b.video} /></div>}
+
+  {
+    b.note && (
+      <p class="block__note">
+        <Inline text={b.note} />
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .block {
+    display: grid;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+
+  .small-label {
+    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .block__side {
+    display: grid;
+    gap: var(--space-6);
+    align-content: start;
+  }
+
+  .block__statement {
+    font-size: var(--text-lg);
+    line-height: 1.4;
+  }
+
+  .block__source,
+  .block__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .block__image--small {
+    max-width: 32rem;
+  }
+
+  .block__video {
+    max-width: 56rem;
+  }
+
+  /* Image beside text: image 8 of 12 columns, text 4. */
+  @media (min-width: 64rem) {
+    .block--side {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  /* ── Cards ── */
+  .cards {
+    display: grid;
+    gap: var(--space-7) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cards__item {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .cards__from {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .cards__to {
+    font-weight: var(--weight-medium);
+  }
+
+  /* ── Gallery ── */
+  .gallery {
+    display: grid;
+    gap: var(--space-7) var(--space-5);
+  }
+
+  /* ── Steps ── */
+  .steps {
+    display: grid;
+    gap: var(--space-7) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps__item {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .steps__number {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .steps__title {
+    font-weight: var(--weight-medium);
+  }
+
+  .steps__text {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ── Screens: swipe sideways on phones and tablets ── */
+  .screens {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(70%, 16rem);
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0 0 var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    list-style: none;
+  }
+
+  .screens__item {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    scroll-snap-align: start;
+  }
+
+  .screens__title {
+    margin-top: var(--space-2);
+    font-weight: var(--weight-medium);
+  }
+
+  .screens__caption {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .screens :global(img),
+  .screens :global(.media__placeholder) {
+    border: 1px solid var(--color-line);
+    border-radius: 1.5rem;
+  }
+
+  /* ── Before / after ── */
+  .ba {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .ba__side {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .pill {
+    justify-self: start;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-text);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+  }
+
+  .pill--solid {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .ba__text {
+    max-width: 30rem;
+  }
+
+  .ba__panel {
+    display: grid;
+    place-items: center;
+    padding: var(--space-6);
+    border-radius: var(--radius-media);
+    background: var(--color-surface);
+  }
+
+  /* Tall screenshots stay a comfortable height inside the panel. */
+  .ba__panel :global(.media) {
+    width: min(100%, 20rem);
+  }
+
+  .ba__panel :global(.media__placeholder) {
+    background: var(--color-bg);
+  }
+
+  @media (min-width: 40rem) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .gallery {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery__item--lead {
+      grid-column: 1 / -1;
+    }
+
+    .ba {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* All steps in one row, however many there are. */
+    .steps {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: var(--space-5);
+    }
+
+    .screens {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: visible;
+    }
+  }
+</style>

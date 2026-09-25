@@ -9,19 +9,25 @@ Tick an item (`[x]`) when it's done.
 - [ ] Final wording of the Home intro line — `content/site.yaml`
 - [ ] Full text for each case study section (Phase 4)
 
-### Galactic Guardians (`content/case-studies/galactic-guardians.md`)
-- [ ] Key statistics on multi-child families + source
-- [ ] Source for the three causes of sibling rivalry (and confirm it's published research, so "Secondary research" is the right label)
-- [ ] Interviews and observation: who, how many, what you found
-- [ ] Design goal (one or two sentences)
-- [ ] One line introducing the game theory → mini-game table
-- [ ] The six game theory examples and the mini-game each inspired
-- [ ] Game flow steps (how many, titles, one line each) + a photo per step
-- [ ] Permission check: do any Product Trial photos show children or identifiable people?
-- [ ] App visuals: information architecture, leaderboard, children's performance, parent dashboard, new game record
-- [ ] Demo video of the photo-detection proof of concept (+ poster image)
-- [ ] Before/after images for the testing section (optional)
-- [ ] Cover image
+### Galactic Guardians (`content/case-studies/galactic-guardians.md`, visual-first)
+- [ ] One intro line: how classic game theory scenarios inspired the mini-games
+- [ ] Mini-game names for all six theories (Cake-Cutting Problem, Public Goods Game — possibly "Galactic Station Build", Volunteer's Dilemma, Prisoner's Dilemma, King's Wise Men Puzzle, Gift-Exchange Game)
+- [ ] If the "3 major reasons" graphic is based on published research, add a source line
+- [ ] Optional: one headline statistic with its source (goes in "Problem and insight")
+- [ ] Permission check: do any Product Trial photos (`play-step-1` … `5`) show children or identifiable people?
+- [ ] Check each image's alt text matches the real export once it's in
+- [ ] Record `demo-photo-detection.mp4` (+ a poster still), then add its file name in the video block
+- [ ] Replace the 23 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
+  - [ ] `cover.jpg` — cover photo (you playing the board game)
+  - [ ] `research-causes.png` — "Sibling rivalry — 3 major reasons" graphic
+  - [ ] `minigame-1.png` … `minigame-6.png` — mini-game cards
+  - [ ] `board.png` — full board / map
+  - [ ] `characters.png` — Nova, Orion, Stella, Cosmo
+  - [ ] `event-cards.png` — the four event card types
+  - [ ] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos
+  - [ ] `app-leaderboard.png`, `app-performance.png`, `app-dashboard.png`, `app-insights.png` — app screens
+  - [ ] `app-ia.png` — information architecture
+  - [ ] `new-game-before.png`, `new-game-after.png` — New Game Record, before/after photo capture
 
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`

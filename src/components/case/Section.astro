@@ -1,15 +1,18 @@
 ---
-// A numbered case study section: the heading sits in a narrow column
-// on the left (on wide screens) with the content beside it.
+// A numbered case study section. Default: the heading sits in a narrow
+// column on the left (on wide screens) with the content beside it.
+// "stacked" (visual-first case studies): heading on top, content below
+// at full width so images can be large.
 interface Props {
   number: number;
   heading: string;
   id: string;
+  stacked?: boolean;
 }
-const { number, heading, id } = Astro.props;
+const { number, heading, id, stacked = false } = Astro.props;
 ---
 
-<section class="section container reveal" aria-labelledby={id}>
+<section class:list={["section container reveal", { "section--stacked": stacked }]} aria-labelledby={id}>
   <header class="section__head">
     <p class="section__number">{String(number).padStart(2, "0")}</p>
     <h2 id={id}>{heading}</h2>
@@ -55,5 +58,18 @@ const { number, heading, id } = Astro.props;
       top: var(--space-6);
       align-self: start;
     }
+
+    .section--stacked {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-7);
+    }
+
+    .section--stacked .section__head {
+      position: static;
+    }
+  }
+
+  .section--stacked .section__body {
+    gap: var(--space-8);
   }
 </style>

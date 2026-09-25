@@ -34,6 +34,7 @@ const visual = z
   .object({
     image: z.string().default(""),
     alt: z.string().default(""),
+    title: z.string().optional(),
     caption: z.string().optional(),
   })
   .refine(needsAlt, altMessage);
@@ -79,6 +80,44 @@ const beforeAfter = z
   })
   .refine(needsAlt, altMessage);
 
+// ── Visual-first layout ──────────────────────────────────────
+// A case study can instead list its own sections, each made of
+// "blocks" (see _TEMPLATE.md). Used when the file has "sections:".
+const card = z
+  .object({
+    from: z.string(),
+    to: z.string(),
+    image: z.string().default(""),
+    alt: z.string().default(""),
+  })
+  .refine(needsAlt, altMessage);
+
+const block = z
+  .object({
+    text: z.string().optional(),
+    source: z.string().optional(),
+    insight: z.string().optional(),
+    goal: z.string().optional(),
+    image: z.string().optional(),
+    alt: z.string().optional(),
+    caption: z.string().optional(),
+    size: z.enum(["wide", "small"]).optional(),
+    cards: z.array(card).optional(),
+    gallery: z.array(visual).optional(),
+    steps: z.array(step).optional(),
+    screens: z.array(visual).optional(),
+    before: beforeAfter.optional(),
+    after: beforeAfter.optional(),
+    video: video.optional(),
+    note: z.string().optional(),
+  })
+  .refine(needsAlt, altMessage);
+
+const visualSection = z.object({
+  heading: z.string(),
+  blocks: z.array(block),
+});
+
 // content/case-studies/*.md — one file per case study.
 // Files starting with "_" (like _TEMPLATE.md) are ignored.
 const caseStudies = defineCollection({
@@ -107,6 +146,7 @@ const caseStudies = defineCollection({
       testing: z.object({ before: beforeAfter, after: beforeAfter }).optional(),
       reflection: z.array(part).optional(),
       credits: z.array(z.string()).optional(),
+      sections: z.array(visualSection).optional(),
     })
     .refine((d) => !d.cover || d.coverAlt, {
       message: "Add a coverAlt description for the cover image.",
