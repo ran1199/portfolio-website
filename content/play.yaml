@@ -14,12 +14,19 @@
 #          until the video loads. Leave this line out for images.
 #   alt:   a short description of the piece, read aloud to people
 #          who can't see the image
+#   title: (optional) short label that appears on hover, e.g. the project
+#   tags:  (optional) small labels shown next to the title on hover,
+#          in square brackets, separated by commas
 #   home:  true = also show it in the Home page gallery; false = Play only
+#          The Home gallery fits 8 pieces exactly (2 beside each case
+#          study). Any more are added below in rows of 3.
 #
 # Example:
 # - file: "poster-series-01.jpg"
 #   type: "image"
 #   alt: "Three posters in pastel colors showing a cartoon rabbit"
+#   title: "Poster series"
+#   tags: ["Illustration", "Print"]
 #   home: true
 #
 # - file: "motion-study.mp4"

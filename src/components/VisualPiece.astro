@@ -1,6 +1,8 @@
 ---
 // A visual piece (image or short looping video). Just for looking:
-// never a link, and no special cursor.
+// never a link, and no special cursor. On hover (mouse or trackpad),
+// its title and tags fade in as small labels.
+// The piece fills the box the gallery gives it.
 import { Image, getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { findImage, findVideo } from "../lib/media";
@@ -8,10 +10,9 @@ import { findImage, findVideo } from "../lib/media";
 interface Props {
   piece?: CollectionEntry<"play">; // leave empty to show a grey placeholder
   sizes: string;                   // how wide the piece shows on screen
-  ratio?: string;                  // placeholder shape, e.g. "4 / 5"
 }
 
-const { piece, sizes, ratio = "4 / 5" } = Astro.props;
+const { piece, sizes } = Astro.props;
 const data = piece?.data;
 const image = data?.type === "image" ? findImage("play", data.file) : undefined;
 const video = data?.type === "video" ? findVideo("play", data.file) : undefined;
@@ -19,6 +20,10 @@ const poster =
   data?.type === "video" && data.poster
     ? (await getImage({ src: findImage("play", data.poster), width: 1200 })).src
     : undefined;
+
+const labels = data
+  ? [data.title, data.tags?.join(", ")].filter(Boolean)
+  : ["[PLACEHOLDER: title]", "[PLACEHOLDER: tags]"];
 ---
 
 <figure class="piece">
@@ -38,31 +43,78 @@ const poster =
         data-motion-video
       />
     ) : (
-      <div class="piece__placeholder" style={`aspect-ratio: ${ratio}`}>
-        [PLACEHOLDER: visual piece]
-      </div>
+      <div class="piece__placeholder">[PLACEHOLDER: visual piece]</div>
+    )
+  }
+  {
+    labels.length > 0 && (
+      <figcaption class="piece__labels">
+        {labels.map((label) => (
+          <span class="piece__label">{label}</span>
+        ))}
+      </figcaption>
     )
   }
 </figure>
 
 <style>
   .piece {
+    position: relative;
+    height: 100%;
     margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-media);
+    background: var(--color-surface);
   }
 
   .piece img,
-  .piece video {
+  .piece video,
+  .piece__placeholder {
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .piece__placeholder {
     display: grid;
     place-items: center;
     padding: var(--space-4);
-    background: var(--color-surface);
     color: var(--color-text-muted);
     font-size: var(--text-xs);
     text-align: center;
+  }
+
+  /* Labels are hidden on touch screens (there's no hover there). */
+  .piece__labels {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .piece__labels {
+      position: absolute;
+      left: var(--space-3);
+      right: var(--space-3);
+      bottom: var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease);
+    }
+
+    .piece:hover .piece__labels {
+      opacity: 1;
+    }
+  }
+
+  .piece__label {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-label);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+    line-height: 1.3;
   }
 </style>
 

@@ -74,6 +74,8 @@ const play = defineCollection({
     type: z.enum(["image", "video"]),
     poster: z.string().optional(),
     alt: z.string(),
+    title: z.string().optional(),
+    tags: z.array(z.string()).optional(),
     home: z.boolean().default(false),
   }).refine((d) => d.type === "image" || d.poster, {
     message: "Videos need a poster image.",

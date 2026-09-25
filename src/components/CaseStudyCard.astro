@@ -43,9 +43,16 @@ const coverImage = cover ? findImage(study.id, cover) : undefined;
 </article>
 
 <style>
+  /* The card fills whatever space the gallery gives it. */
+  .case,
+  .case__link {
+    height: 100%;
+  }
+
   .case__link {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
   }
 
@@ -57,10 +64,14 @@ const coverImage = cover ? findImage(study.id, cover) : undefined;
     position: relative;
     aspect-ratio: 4 / 3;
     overflow: hidden;
+    border-radius: var(--radius-media);
     background: var(--color-surface);
   }
 
-  .case__media img {
+  .case__media img,
+  .case__placeholder {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -69,7 +80,6 @@ const coverImage = cover ? findImage(study.id, cover) : undefined;
   .case__placeholder {
     display: grid;
     place-items: center;
-    height: 100%;
     padding: var(--space-5);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
@@ -97,28 +107,34 @@ const coverImage = cover ? findImage(study.id, cover) : undefined;
     color: var(--color-accent);
   }
 
-  /* Laptops and desktops: details fade in over the image on hover
-     (or when the card is reached with the Tab key). */
-  @media (hover: hover) and (pointer: fine) {
-    .case__media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgb(255 255 255 / 0.9);
-      opacity: 0;
-      transition: opacity var(--duration-slow) var(--ease);
+  /* Wide screens: the image fills the whole tile and the details sit
+     on a white panel in the bottom-left corner of the image. */
+  @media (min-width: 64rem) {
+    .case__media {
+      flex: 1;
+      aspect-ratio: auto;
     }
 
     .case__caption {
       position: absolute;
-      inset: auto 0 0 0;
-      padding: var(--space-6);
+      left: var(--space-4);
+      bottom: var(--space-4);
+      max-width: min(30rem, calc(100% - 2 * var(--space-4)));
+      padding: var(--space-4) var(--space-5);
+      border-radius: var(--radius-media);
+      background: var(--color-bg);
+    }
+  }
+
+  /* Wide screens with a mouse or trackpad: the panel fades in on hover
+     (or when the card is reached with the Tab key). On touch screens
+     it stays visible. */
+  @media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
+    .case__caption {
       opacity: 0;
       transition: opacity var(--duration-slow) var(--ease);
     }
 
-    .case__link:hover .case__media::after,
-    .case__link:focus-visible .case__media::after,
     .case__link:hover .case__caption,
     .case__link:focus-visible .case__caption {
       opacity: 1;

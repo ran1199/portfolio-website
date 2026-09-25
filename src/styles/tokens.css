@@ -64,6 +64,9 @@
   --duration-slow: 600ms;
 
   /* ── Details ────────────────────────────────────────────── */
+  --radius-media: 1rem;     /* rounded corners on images and videos */
+  --radius-label: 0.5rem;   /* rounded corners on hover labels */
+  --gallery-gap: var(--space-3); /* gap between gallery tiles */
   --radius-pill: 999px;
   --focus-ring: 2px solid var(--color-text);
 }
