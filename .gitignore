@@ -1,0 +1,5 @@
+# Files the builder creates automatically. They don't need to be saved to GitHub.
+node_modules/
+dist/
+.astro/
+.DS_Store

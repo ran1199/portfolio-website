@@ -248,4 +248,5 @@ Ask me for each asset when the phase that needs it begins.
 - **Where the work happens:** Claude works in a temporary cloud computer that has a copy of the GitHub repository `ran1199/portfolio-website`. It cannot see Ran's Mac. Anything not committed and pushed to GitHub is lost when the session ends.
 - **Development branch:** `claude/new-session-9jokpx`.
 - **Decision (Phase 1):** Cloud only. Nothing is installed on Ran's Mac. Ran reviews each phase on the free hosting test address, and will later edit content on github.com.
-- **Current phase:** Phase 1 (Set up) — choosing the website builder next.
+- **Decision (Phase 1):** Website builder is Astro (v7). Content lives in `content/`; images go in `content/images/<slug>/` (kept next to the content so Astro can optimize them); the résumé is `public/resume.pdf`.
+- **Current phase:** Phase 1 (Set up) — project and content structure created; choosing hosting next.

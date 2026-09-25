@@ -1,0 +1,25 @@
+# ─────────────────────────────────────────────────────────────
+# SITE SETTINGS
+# Text that appears across the whole website.
+# Edit the words inside the quotes. Keep the quotes.
+# ─────────────────────────────────────────────────────────────
+
+# Your name. It appears at the top left of every page and links to Home.
+name: "Ran Guo"
+
+# The line under your name on the Home page.
+introLine: "Ran Guo — a product thinker with a design background and strong brand sense."
+
+# Short description used by Google and when a link is shared (e.g. LinkedIn).
+# Aim for one sentence, under about 160 characters.
+description: "Portfolio of Ran Guo — a product thinker with a design background and strong brand sense."
+
+# Your email address. Used by the "copy email" button on every page.
+email: "grleah1902@gmail.com"
+
+# The words shown in the top menu.
+menu:
+  work: "Work"
+  play: "Play"
+  about: "About"
+  resume: "Résumé"

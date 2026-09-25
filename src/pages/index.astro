@@ -1,0 +1,43 @@
+---
+// Temporary placeholder Home page (Phase 1). Proves that the site
+// reads text from content/site.yaml and that publishing works.
+// Replaced by the real Home page in Phase 3.
+import { getEntry } from "astro:content";
+
+const site = (await getEntry("site", "site"))!.data;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={site.description} />
+    <meta name="robots" content="noindex" />
+    <title>{site.name}</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: #111;
+        font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+        padding: 24px;
+        box-sizing: border-box;
+      }
+      main { max-width: 36rem; }
+      h1 { font-size: 1.25rem; font-weight: 500; margin: 0 0 1rem; }
+      p { line-height: 1.6; margin: 0 0 0.75rem; color: #444; }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>{site.introLine}</h1>
+      <p>This website is being built. Please check back soon.</p>
+      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </main>
+  </body>
+</html>

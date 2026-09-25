@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────
+# PLAY PIECES
+# Your visual work, shown on the Play page in this order (top = first).
+# Visual pieces are just for looking — they are never clickable.
+#
+# To add a piece:
+#   1. Upload the file into the folder  content/images/play/
+#   2. Copy the example below, remove the "# " at the start of each line,
+#      and fill it in. Add new pieces at the bottom of this file.
+#
+#   file:  the file name inside content/images/play/
+#   type:  "image" for a picture, "video" for a short looping clip
+#   alt:   a short description of the piece, read aloud to people
+#          who can't see the image
+#   home:  true = also show it in the Home page gallery; false = Play only
+#
+# Example:
+# - file: "poster-series-01.jpg"
+#   type: "image"
+#   alt: "Three posters in pastel colors showing a cartoon rabbit"
+#   home: true
+# ─────────────────────────────────────────────────────────────
+
