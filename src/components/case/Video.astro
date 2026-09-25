@@ -1,0 +1,62 @@
+---
+// A short, silent, looping video from the case study's image folder.
+// Paused for visitors who ask for reduced motion (MotionVideos.astro).
+import { getImage } from "astro:assets";
+import { findImage, findVideo } from "../../lib/media";
+import Inline from "./Inline.astro";
+
+interface Props {
+  folder: string;
+  file?: string;
+  poster?: string;
+  alt?: string;
+  caption?: string;
+}
+
+const { folder, file, poster, alt = "", caption } = Astro.props;
+const src = file ? findVideo(folder, file) : undefined;
+const posterSrc = poster ? (await getImage({ src: findImage(folder, poster), width: 1600 })).src : undefined;
+---
+
+<figure class="video">
+  {
+    src ? (
+      <video src={src} poster={posterSrc} autoplay muted loop playsinline preload="metadata" aria-label={alt} data-motion-video />
+    ) : (
+      <div class="video__placeholder">[PLACEHOLDER: video]</div>
+    )
+  }
+  {caption && (
+    <figcaption>
+      <Inline text={caption} />
+    </figcaption>
+  )}
+</figure>
+
+
+<style>
+  .video {
+    margin: 0;
+  }
+
+  video,
+  .video__placeholder {
+    width: 100%;
+    border-radius: var(--radius-media);
+  }
+
+  .video__placeholder {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  figcaption {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

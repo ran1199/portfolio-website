@@ -118,20 +118,3 @@ const labels = data
   }
 </style>
 
-<script>
-  // Pause looping videos for visitors who ask their device for less motion.
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-  function applyMotionPreference() {
-    document.querySelectorAll<HTMLVideoElement>("video[data-motion-video]").forEach((video) => {
-      if (reduceMotion.matches) {
-        video.pause();
-      } else {
-        video.play().catch(() => {});
-      }
-    });
-  }
-
-  applyMotionPreference();
-  reduceMotion.addEventListener("change", applyMotionPreference);
-</script>

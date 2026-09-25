@@ -1,0 +1,21 @@
+---
+// Pauses every looping video (marked data-motion-video) for visitors who
+// ask their device for reduced motion. Included once on every page.
+---
+
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function applyMotionPreference() {
+    document.querySelectorAll<HTMLVideoElement>("video[data-motion-video]").forEach((video) => {
+      if (reduceMotion.matches) {
+        video.pause();
+      } else {
+        video.play().catch(() => {});
+      }
+    });
+  }
+
+  applyMotionPreference();
+  reduceMotion.addEventListener("change", applyMotionPreference);
+</script>

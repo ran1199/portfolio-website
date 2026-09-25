@@ -1,67 +1,399 @@
 ---
-// Case study page. For now it shows the project details only;
-// the full template (research, prototype, testing…) comes in Phase 4.
-import { getCollection, render } from "astro:content";
+// Case study page template. Every case study uses this same layout;
+// the words and images come from content/case-studies/<name>.md.
+// A section with nothing in the content file shows a placeholder.
+import { getCollection, getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/case/Section.astro";
+import Part from "../../components/case/Part.astro";
+import Media from "../../components/case/Media.astro";
+import Inline from "../../components/case/Inline.astro";
+import { withBase } from "../../lib/url";
 
 export async function getStaticPaths() {
-  const studies = await getCollection("caseStudies");
-  return studies.map((study) => ({ params: { slug: study.id }, props: { study } }));
+  const studies = (await getCollection("caseStudies")).sort((a, b) => a.data.order - b.data.order);
+  return studies.map((study, i) => ({
+    params: { slug: study.id },
+    props: { study, next: studies[(i + 1) % studies.length] },
+  }));
 }
 
-const { study } = Astro.props;
-const { title, summary, role, dates, tags } = study.data;
-const { Content } = await render(study);
+interface Props {
+  study: CollectionEntry<"caseStudies">;
+  next: CollectionEntry<"caseStudies">;
+}
+
+const { study, next } = Astro.props;
+const d = study.data;
+const folder = study.id;
+const labels = (await getEntry("site", "site"))!.data.caseStudy;
+
+// Sections in template order (used for the 01, 02… numbers).
+const sections = [
+  { id: "why", heading: labels.why },
+  { id: "research", heading: labels.research },
+  { id: "insight", heading: labels.insight },
+  { id: "concept", heading: labels.concept },
+  { id: "prototype", heading: labels.prototype },
+  { id: "testing", heading: labels.testing },
+  { id: "reflection", heading: labels.reflection },
+] as const;
+const numberOf = (id: (typeof sections)[number]["id"]) => sections.findIndex((s) => s.id === id) + 1;
+const missing = (name: string) => `[PLACEHOLDER: ${name}]`;
 ---
 
-<BaseLayout title={title} description={summary}>
-  <article class="container case-page">
-    <h1>{title}</h1>
-    <p class="summary">{summary}</p>
-    <p class="meta">{role} · {dates}</p>
-    <ul class="tags">{tags.map((tag) => <li>{tag}</li>)}</ul>
-    <div class="body"><Content /></div>
-  </article>
+<BaseLayout title={d.title} description={d.summary}>
+  <!-- 1. Hero -->
+  <header class="hero container">
+    <h1>{d.title}</h1>
+    <p class="hero__summary">{d.summary}</p>
+    {d.notice && <p class="hero__notice">{d.notice}</p>}
+    <dl class="hero__meta">
+      <div>
+        <dt>{labels.role}</dt>
+        <dd>{d.role}</dd>
+      </div>
+      <div>
+        <dt>{labels.dates}</dt>
+        <dd>{d.dates}</dd>
+      </div>
+    </dl>
+    <ul class="hero__tags" aria-label="Tags">
+      {d.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <div class="hero__cover">
+      <Media folder={folder} image={d.cover} alt={d.coverAlt} sizes="(min-width: 90rem) 86rem, 100vw" placeholderRatio="16 / 9" priority />
+    </div>
+  </header>
+
+  <!-- 2. Why this project -->
+  <Section number={numberOf("why")} heading={labels.why} id="why">
+    {d.why ? d.why.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("why this project")} /></p>}
+  </Section>
+
+  <!-- 3. Research -->
+  <Section number={numberOf("research")} heading={labels.research} id="research">
+    {
+      d.research ? (
+        <div class="cards">
+          {d.research.map((part) => (
+            <div class="card">
+              <Part part={part} folder={folder} labels={labels} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p><Inline text={missing("research")} /></p>
+      )
+    }
+  </Section>
+
+  <!-- 4. Insight and design goal -->
+  <Section number={numberOf("insight")} heading={labels.insight} id="insight">
+    <div class="insight">
+      <div>
+        <p class="small-label">{labels.insightLabel}</p>
+        <p class="insight__text"><Inline text={d.insight?.insight ?? missing("insight")} /></p>
+      </div>
+      <div>
+        <p class="small-label">{labels.goalLabel}</p>
+        <p class="insight__text"><Inline text={d.insight?.goal ?? missing("design goal")} /></p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 5. Concept and design -->
+  <Section number={numberOf("concept")} heading={labels.concept} id="concept">
+    {d.concept ? d.concept.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("concept and design")} /></p>}
+  </Section>
+
+  <!-- 6. Prototype: what was built vs. what was designed -->
+  <Section number={numberOf("prototype")} heading={labels.prototype} id="prototype">
+    <div class="split">
+      <div class="split__col">
+        <p class="pill pill--solid">{labels.built}</p>
+        {d.prototype?.built ? d.prototype.built.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("what was built")} /></p>}
+      </div>
+      <div class="split__col">
+        <p class="pill">{labels.designed}</p>
+        {d.prototype?.designed ? d.prototype.designed.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("what was designed")} /></p>}
+      </div>
+    </div>
+  </Section>
+
+  <!-- 7. Testing → what changed -->
+  <Section number={numberOf("testing")} heading={labels.testing} id="testing">
+    <div class="before-after">
+      {
+        (["before", "after"] as const).map((key) => {
+          const side = d.testing?.[key];
+          return (
+            <div class:list={["ba", `ba--${key}`]}>
+              <p class:list={["pill", { "pill--solid": key === "after" }]}>{labels[key]}</p>
+              <p class="ba__text"><Inline text={side?.text ?? missing(key === "before" ? "what testing showed" : "what changed")} /></p>
+              {side && <Media folder={folder} image={side.image} alt={side.alt} sizes="(min-width: 64rem) 36vw, 100vw" />}
+            </div>
+          );
+        })
+      }
+      <span class="ba__arrow" aria-hidden="true">→</span>
+    </div>
+  </Section>
+
+  <!-- 8. Reflection and next steps -->
+  <Section number={numberOf("reflection")} heading={labels.reflection} id="reflection">
+    {d.reflection ? d.reflection.map((part) => <Part part={part} folder={folder} labels={labels} />) : <p><Inline text={missing("reflection and next steps")} /></p>}
+    {
+      d.credits && (
+        <div class="credits">
+          <p class="small-label">{labels.credits}</p>
+          <ul>
+            {d.credits.map((c) => (
+              <li>
+                <Inline text={c} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </Section>
+
+  <!-- 9. Next project -->
+  <nav class="container next" aria-label={labels.next}>
+    <a href={withBase(`work/${next.id}/`)} class="next__link" data-cursor="view">
+      <span class="small-label">{labels.next}</span>
+      <span class="next__title">{next.data.title} <span aria-hidden="true">→</span></span>
+      <span class="next__summary">{next.data.summary}</span>
+    </a>
+  </nav>
 </BaseLayout>
 
 <style>
-  .case-page {
-    padding-top: var(--space-9);
+  /* ── Hero ── */
+  .hero {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-9) var(--space-8);
   }
-  h1 {
+
+  .hero h1 {
     font-size: var(--text-2xl);
     font-weight: var(--weight-regular);
-    margin-bottom: var(--space-4);
   }
-  .summary {
-    max-width: var(--reading-max);
+
+  .hero__summary {
+    max-width: 44rem;
     font-size: var(--text-lg);
-    margin-bottom: var(--space-5);
+    line-height: 1.5;
   }
-  .meta {
+
+  .hero__notice {
+    justify-self: start;
+    max-width: 44rem;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-label);
+    background: var(--color-surface);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
-    margin-bottom: var(--space-4);
   }
-  .tags {
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5) var(--space-8);
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .hero__meta dt {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .hero__meta dd {
+    margin: var(--space-1) 0 0;
+  }
+
+  .hero__tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin: 0 0 var(--space-8);
+    margin: 0;
     padding: 0;
     list-style: none;
   }
-  .tags li {
+
+  .hero__tags li {
     padding: var(--space-1) var(--space-3);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-pill);
     font-size: var(--text-xs);
   }
-  .body {
-    padding: var(--space-9) var(--space-5);
+
+  .hero__cover {
+    margin-top: var(--space-6);
+  }
+
+  /* ── Shared small pieces ── */
+  .small-label {
+    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .pill {
+    justify-self: start;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-text);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+  }
+
+  .pill--solid {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  /* ── Research cards ── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-5);
+  }
+
+  .card {
+    padding: var(--space-6);
+    border-radius: var(--radius-media);
     background: var(--color-surface);
+  }
+
+  /* Image placeholders inside grey cards need a white box to show up. */
+  .card :global(.media__placeholder) {
+    background: var(--color-bg);
+  }
+
+  /* ── Insight ── */
+  .insight {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .insight__text {
+    max-width: 40rem;
+    font-size: var(--text-xl);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* ── Built vs. designed ── */
+  .split {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .split__col {
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+
+  /* ── Before / after ── */
+  .before-after {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .ba {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    padding: var(--space-6);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-media);
+  }
+
+  .ba--after {
+    border-color: var(--color-text);
+  }
+
+  .ba__text {
+    font-size: var(--text-lg);
+    line-height: 1.45;
+  }
+
+  .ba__arrow {
+    display: none;
+  }
+
+  /* ── Credits ── */
+  .credits ul {
+    margin: 0;
+    padding-left: 1.2em;
     color: var(--color-text-muted);
     font-size: var(--text-sm);
-    text-align: center;
+  }
+
+  /* ── Next project ── */
+  .next {
+    padding-top: var(--space-6);
+  }
+
+  .next__link {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-media);
+    background: var(--color-surface);
+    text-decoration: none;
+    transition: background-color var(--duration-slow) var(--ease);
+  }
+
+  .next__link:hover {
+    color: inherit;
+    background: var(--color-line);
+  }
+
+  .next__title {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .next__summary {
+    max-width: 40rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 48rem) {
+    .split {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+    }
+
+    .before-after {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+    }
+
+    .ba__arrow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: var(--color-bg);
+      transform: translate(-50%, -50%);
+    }
   }
 </style>

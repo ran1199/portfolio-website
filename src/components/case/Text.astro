@@ -1,0 +1,23 @@
+---
+// Paragraphs of text. A blank line in the content file starts a new paragraph.
+import Inline from "./Inline.astro";
+
+interface Props {
+  text: string;
+  class?: string;
+}
+const { text, class: className } = Astro.props;
+const paragraphs = text.trim().split(/\n\s*\n/).map((p) => p.replace(/\s*\n\s*/g, " "));
+---
+
+<div class:list={["text", className]}>
+  {paragraphs.map((p) => <p><Inline text={p} /></p>)}
+</div>
+
+<style>
+  .text {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--reading-max);
+  }
+</style>

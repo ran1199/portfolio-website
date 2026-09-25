@@ -1,0 +1,21 @@
+---
+// Shows one line of text. Any [PLACEHOLDER: …] or [SOURCE NEEDED]
+// inside it is highlighted so unfinished content is easy to spot.
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+const parts = text.split(/(\[(?:PLACEHOLDER|SOURCE NEEDED)[^\]]*\])/g).filter(Boolean);
+const isTodo = (s: string) => /^\[(?:PLACEHOLDER|SOURCE NEEDED)/.test(s);
+---
+
+{parts.map((s) => (isTodo(s) ? <mark class="todo">{s}</mark> : s))}
+
+<style>
+  .todo {
+    padding: 0 0.2em;
+    border-radius: 0.2em;
+    background: var(--color-todo);
+    color: inherit;
+  }
+</style>

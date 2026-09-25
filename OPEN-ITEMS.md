@@ -9,6 +9,20 @@ Tick an item (`[x]`) when it's done.
 - [ ] Final wording of the Home intro line — `content/site.yaml`
 - [ ] Full text for each case study section (Phase 4)
 
+### Galactic Guardians (`content/case-studies/galactic-guardians.md`)
+- [ ] Key statistics on multi-child families + source
+- [ ] Source for the three causes of sibling rivalry (and confirm it's published research, so "Secondary research" is the right label)
+- [ ] Interviews and observation: who, how many, what you found
+- [ ] Design goal (one or two sentences)
+- [ ] One line introducing the game theory → mini-game table
+- [ ] The six game theory examples and the mini-game each inspired
+- [ ] Game flow steps (how many, titles, one line each) + a photo per step
+- [ ] Permission check: do any Product Trial photos show children or identifiable people?
+- [ ] App visuals: information architecture, leaderboard, children's performance, parent dashboard, new game record
+- [ ] Demo video of the photo-detection proof of concept (+ poster image)
+- [ ] Before/after images for the testing section (optional)
+- [ ] Cover image
+
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
 - [ ] Figma exports for each case study (one folder per project)

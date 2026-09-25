@@ -22,25 +22,96 @@ const site = defineCollection({
       about: z.string(),
       resume: z.string(),
     }),
+    caseStudy: z.record(z.string(), z.string()),
   }),
 });
 
-// content/case-studies/*.md — one file per case study.
-const caseStudies = defineCollection({
-  loader: glob({ pattern: "*.md", base: "./content/case-studies" }),
-  schema: z.object({
+// Building blocks used inside case study sections (see _TEMPLATE.md).
+const needsAlt = (d: { image?: string; alt?: string }) => !d.image || Boolean(d.alt);
+const altMessage = { message: "Add an alt description for this image.", path: ["alt"] };
+
+const visual = z
+  .object({
+    image: z.string().default(""),
+    alt: z.string().default(""),
+    caption: z.string().optional(),
+  })
+  .refine(needsAlt, altMessage);
+
+const step = z
+  .object({
     title: z.string(),
-    order: z.number(),
-    summary: z.string(),
-    role: z.string(),
-    dates: z.string(),
-    tags: z.array(z.string()),
-    cover: z.string().default(""),
-    coverAlt: z.string().default(""),
-  }).refine((d) => !d.cover || d.coverAlt, {
-    message: "Add a coverAlt description for the cover image.",
-    path: ["coverAlt"],
-  }),
+    text: z.string().optional(),
+    image: z.string().default(""),
+    alt: z.string().default(""),
+  })
+  .refine(needsAlt, altMessage);
+
+const video = z.object({
+  file: z.string().default(""),
+  poster: z.string().default(""),
+  alt: z.string().default(""),
+  caption: z.string().optional(),
+});
+
+const part = z.object({
+  heading: z.string().optional(),
+  label: z.enum(["primary", "secondary", "expert"]).optional(),
+  text: z.string().optional(),
+  points: z.array(z.string()).optional(),
+  pairs: z
+    .object({
+      columns: z.tuple([z.string(), z.string()]),
+      rows: z.array(z.tuple([z.string(), z.string()])),
+    })
+    .optional(),
+  steps: z.array(step).optional(),
+  visuals: z.array(visual).optional(),
+  video: video.optional(),
+  source: z.string().optional(),
+});
+
+const beforeAfter = z
+  .object({
+    text: z.string(),
+    image: z.string().default(""),
+    alt: z.string().default(""),
+  })
+  .refine(needsAlt, altMessage);
+
+// content/case-studies/*.md — one file per case study.
+// Files starting with "_" (like _TEMPLATE.md) are ignored.
+const caseStudies = defineCollection({
+  loader: glob({ pattern: "[!_]*.md", base: "./content/case-studies" }),
+  schema: z
+    .object({
+      title: z.string(),
+      order: z.number(),
+      summary: z.string(),
+      role: z.string(),
+      dates: z.string(),
+      tags: z.array(z.string()),
+      cover: z.string().default(""),
+      coverAlt: z.string().default(""),
+      notice: z.string().optional(),
+      why: z.array(part).optional(),
+      research: z.array(part).optional(),
+      insight: z.object({ insight: z.string(), goal: z.string() }).optional(),
+      concept: z.array(part).optional(),
+      prototype: z
+        .object({
+          built: z.array(part).optional(),
+          designed: z.array(part).optional(),
+        })
+        .optional(),
+      testing: z.object({ before: beforeAfter, after: beforeAfter }).optional(),
+      reflection: z.array(part).optional(),
+      credits: z.array(z.string()).optional(),
+    })
+    .refine((d) => !d.cover || d.coverAlt, {
+      message: "Add a coverAlt description for the cover image.",
+      path: ["coverAlt"],
+    }),
 });
 
 // content/about.md — intro paragraph + timeline.

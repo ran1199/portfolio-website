@@ -1,0 +1,213 @@
+---
+// One "part" of a case study section. Shows whichever building blocks
+// the content file gives it, in this order: label, heading, text,
+// points, pairs table, steps, visuals, video, source.
+import type { CollectionEntry } from "astro:content";
+import Inline from "./Inline.astro";
+import Text from "./Text.astro";
+import Media from "./Media.astro";
+import Video from "./Video.astro";
+
+type Study = CollectionEntry<"caseStudies">["data"];
+type PartData = NonNullable<Study["why"]>[number];
+
+interface Props {
+  part: PartData;
+  folder: string;
+  labels: Record<string, string>;
+}
+
+const { part, folder, labels } = Astro.props;
+const { heading, label, text, points, pairs, steps, visuals, video, source } = part;
+---
+
+<div class="part">
+  {label && <p class="part__label">{labels[label]}</p>}
+  {heading && <h3 class="part__heading"><Inline text={heading} /></h3>}
+  {text && <Text text={text} />}
+
+  {
+    points && (
+      <ul class="part__points">
+        {points.map((point) => (
+          <li>
+            <Inline text={point} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    pairs && (
+      <table class="part__pairs">
+        <thead>
+          <tr>
+            <th scope="col">{pairs.columns[0]}</th>
+            <th scope="col">{pairs.columns[1]}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pairs.rows.map(([left, right]) => (
+            <tr>
+              <td>
+                <Inline text={left} />
+              </td>
+              <td>
+                <span class="part__arrow" aria-hidden="true">→ </span>
+                <Inline text={right} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+  }
+
+  {
+    steps && (
+      <ol class="part__steps">
+        {steps.map((step, i) => (
+          <li>
+            <Media folder={folder} image={step.image} alt={step.alt} sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 45vw, 100vw" />
+            <p class="part__step-number">{String(i + 1).padStart(2, "0")}</p>
+            <p class="part__step-title">
+              <Inline text={step.title} />
+            </p>
+            {step.text && (
+              <p class="part__step-text">
+                <Inline text={step.text} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+    )
+  }
+
+  {
+    visuals && (
+      <div class="part__visuals">
+        {visuals.map((v) => (
+          <Media folder={folder} image={v.image} alt={v.alt} caption={v.caption} sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw" />
+        ))}
+      </div>
+    )
+  }
+
+  {video && <Video folder={folder} {...video} />}
+
+  {
+    source && (
+      <p class="part__source">
+        {labels.source}: <Inline text={source} />
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .part {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .part__label {
+    justify-self: start;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+    letter-spacing: 0.02em;
+  }
+
+  .part__heading {
+    font-size: var(--text-lg);
+  }
+
+  .part__points {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--reading-max);
+    margin: 0;
+    padding-left: 1.2em;
+  }
+
+  .part__pairs {
+    width: 100%;
+    max-width: 48rem;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: var(--text-base);
+  }
+
+  .part__pairs th,
+  .part__pairs td {
+    overflow-wrap: anywhere;
+  }
+
+  .part__pairs th {
+    padding-bottom: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-caps);
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .part__pairs td {
+    width: 50%;
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
+    border-top: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+
+  .part__arrow {
+    color: var(--color-text-muted);
+  }
+
+  .part__steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-6) var(--space-5);
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .part__steps li {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .part__step-number {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .part__step-title {
+    font-weight: var(--weight-medium);
+  }
+
+  .part__step-text {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .part__visuals {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-6) var(--space-5);
+    margin-top: var(--space-2);
+  }
+
+  .part__source {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

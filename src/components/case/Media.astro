@@ -1,0 +1,66 @@
+---
+// An image from the case study's image folder, with an optional caption.
+// With no image yet, shows a grey placeholder box.
+import { Image } from "astro:assets";
+import { findImage } from "../../lib/media";
+import Inline from "./Inline.astro";
+
+interface Props {
+  folder: string;
+  image?: string;
+  alt?: string;
+  caption?: string;
+  sizes: string;
+  placeholderRatio?: string;
+  priority?: boolean;
+}
+
+const { folder, image, alt = "", caption, sizes, placeholderRatio = "4 / 3", priority = false } =
+  Astro.props;
+const src = image ? findImage(folder, image) : undefined;
+---
+
+<figure class="media">
+  {
+    src ? (
+      <Image src={src} alt={alt} widths={[480, 800, 1200, 1600, 2400]} sizes={sizes} priority={priority} />
+    ) : (
+      <div class="media__placeholder" style={`aspect-ratio: ${placeholderRatio}`}>
+        [PLACEHOLDER: image]
+      </div>
+    )
+  }
+  {caption && (
+    <figcaption>
+      <Inline text={caption} />
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .media {
+    margin: 0;
+  }
+
+  .media img,
+  .media__placeholder {
+    width: 100%;
+    border-radius: var(--radius-media);
+  }
+
+  .media__placeholder {
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    text-align: center;
+  }
+
+  figcaption {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

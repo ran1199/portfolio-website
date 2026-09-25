@@ -1,0 +1,59 @@
+---
+// A numbered case study section: the heading sits in a narrow column
+// on the left (on wide screens) with the content beside it.
+interface Props {
+  number: number;
+  heading: string;
+  id: string;
+}
+const { number, heading, id } = Astro.props;
+---
+
+<section class="section container reveal" aria-labelledby={id}>
+  <header class="section__head">
+    <p class="section__number">{String(number).padStart(2, "0")}</p>
+    <h2 id={id}>{heading}</h2>
+  </header>
+  <div class="section__body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .section__number {
+    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+
+  .section__body {
+    display: grid;
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .section {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      gap: var(--space-7);
+      padding-block: var(--space-9);
+    }
+
+    .section__head {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+    }
+  }
+</style>
