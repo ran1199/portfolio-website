@@ -12,6 +12,8 @@ Tick an item (`[x]`) when it's done.
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
 - [ ] Figma exports for each case study (one folder per project)
+- [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
+- [ ] Choose which visual pieces also appear on Home (`home: true` in `content/play.yaml`)
 - [ ] Visual work for Play and Home (images, MP4s, GIFs)
 - [ ] Short demo clip of the Galactic Guardians photo-detection proof of concept
 

@@ -35,6 +35,11 @@ const caseStudies = defineCollection({
     role: z.string(),
     dates: z.string(),
     tags: z.array(z.string()),
+    cover: z.string().default(""),
+    coverAlt: z.string().default(""),
+  }).refine((d) => !d.cover || d.coverAlt, {
+    message: "Add a coverAlt description for the cover image.",
+    path: ["coverAlt"],
   }),
 });
 
@@ -67,8 +72,12 @@ const play = defineCollection({
   schema: z.object({
     file: z.string(),
     type: z.enum(["image", "video"]),
+    poster: z.string().optional(),
     alt: z.string(),
     home: z.boolean().default(false),
+  }).refine((d) => d.type === "image" || d.poster, {
+    message: "Videos need a poster image.",
+    path: ["poster"],
   }),
 });
 

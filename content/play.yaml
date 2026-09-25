@@ -9,7 +9,9 @@
 #      and fill it in. Add new pieces at the bottom of this file.
 #
 #   file:  the file name inside content/images/play/
-#   type:  "image" for a picture, "video" for a short looping clip
+#   type:  "image" for a picture, "video" for a short looping clip (MP4)
+#   poster: videos only — a still image (in the same folder) shown
+#          until the video loads. Leave this line out for images.
 #   alt:   a short description of the piece, read aloud to people
 #          who can't see the image
 #   home:  true = also show it in the Home page gallery; false = Play only
@@ -19,5 +21,11 @@
 #   type: "image"
 #   alt: "Three posters in pastel colors showing a cartoon rabbit"
 #   home: true
+#
+# - file: "motion-study.mp4"
+#   type: "video"
+#   poster: "motion-study-poster.jpg"
+#   alt: "Short looping animation of ..."
+#   home: false
 # ─────────────────────────────────────────────────────────────
 

@@ -1,0 +1,37 @@
+---
+// Gentle fade-in as items marked class="reveal" scroll into view.
+// Skipped for visitors who ask for reduced motion, and items stay
+// fully visible if JavaScript doesn't run.
+---
+
+<style is:global>
+  .reveal-ready .reveal {
+    opacity: 0;
+    transition: opacity var(--duration-slow) var(--ease);
+  }
+
+  .reveal-ready .reveal.is-visible {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // "reveal-ready" is switched on early in BaseLayout's <head>, so items
+  // start hidden instead of flashing visible first.
+  const items = document.querySelectorAll(".reveal");
+
+  if (document.documentElement.classList.contains("reveal-ready")) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -5% 0px" },
+    );
+    items.forEach((item) => observer.observe(item));
+  }
+</script>

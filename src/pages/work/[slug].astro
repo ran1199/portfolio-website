@@ -1,0 +1,67 @@
+---
+// Case study page. For now it shows the project details only;
+// the full template (research, prototype, testing…) comes in Phase 4.
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const studies = await getCollection("caseStudies");
+  return studies.map((study) => ({ params: { slug: study.id }, props: { study } }));
+}
+
+const { study } = Astro.props;
+const { title, summary, role, dates, tags } = study.data;
+const { Content } = await render(study);
+---
+
+<BaseLayout title={title} description={summary}>
+  <article class="container case-page">
+    <h1>{title}</h1>
+    <p class="summary">{summary}</p>
+    <p class="meta">{role} · {dates}</p>
+    <ul class="tags">{tags.map((tag) => <li>{tag}</li>)}</ul>
+    <div class="body"><Content /></div>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-page {
+    padding-top: var(--space-9);
+  }
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-regular);
+    margin-bottom: var(--space-4);
+  }
+  .summary {
+    max-width: var(--reading-max);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-5);
+  }
+  .meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-4);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-8);
+    padding: 0;
+    list-style: none;
+  }
+  .tags li {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+  }
+  .body {
+    padding: var(--space-9) var(--space-5);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+</style>

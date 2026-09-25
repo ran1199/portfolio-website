@@ -6,6 +6,8 @@ import "../styles/global.css";
 import { getEntry } from "astro:content";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import ViewCursor from "../components/ViewCursor.astro";
 
 interface Props {
   title?: string;        // page name, e.g. "About" (leave empty on Home)
@@ -38,6 +40,13 @@ const hideFromSearchEngines = true;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Prepares the gentle fade-in (see components/Reveal.astro). -->
+    <script is:inline>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-ready");
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -46,5 +55,7 @@ const hideFromSearchEngines = true;
       <slot />
     </main>
     <Footer />
+    <ViewCursor />
+    <Reveal />
   </body>
 </html>

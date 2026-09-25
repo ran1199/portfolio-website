@@ -1,0 +1,99 @@
+---
+// The signature cursor: over case studies (anything marked
+// data-cursor="view") the pointer becomes a small circle saying "View".
+// Only on devices with a mouse or trackpad; phones and tablets never see it.
+---
+
+<div class="view-cursor" aria-hidden="true"><span>View</span></div>
+
+<style>
+  .view-cursor {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :global(.has-view-cursor) .view-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      width: 5rem;
+      height: 5rem;
+      margin: -2.5rem 0 0 -2.5rem; /* centers the circle on the pointer */
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      font-size: var(--text-sm);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease);
+      will-change: transform;
+    }
+
+    :global(.has-view-cursor) .view-cursor.is-visible {
+      opacity: 1;
+    }
+
+    /* Hide the normal pointer only where the "View" circle takes over. */
+    :global(.has-view-cursor [data-cursor="view"]) {
+      cursor: none;
+    }
+  }
+</style>
+
+<script>
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const cursor = document.querySelector<HTMLElement>(".view-cursor");
+
+  if (cursor && finePointer.matches) {
+    document.documentElement.classList.add("has-view-cursor");
+
+    let targetX = 0;
+    let targetY = 0;
+    let x = 0;
+    let y = 0;
+    let frame = 0;
+
+    const place = () => {
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    };
+
+    // The circle glides gently after the pointer (or follows it exactly
+    // when reduced motion is on).
+    const follow = () => {
+      x += (targetX - x) * 0.25;
+      y += (targetY - y) * 0.25;
+      place();
+      frame = Math.abs(targetX - x) + Math.abs(targetY - y) > 0.5 ? requestAnimationFrame(follow) : 0;
+    };
+
+    document.addEventListener("pointermove", (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      const overCase = (event.target as Element).closest?.('[data-cursor="view"]');
+
+      if (overCase && !cursor.classList.contains("is-visible")) {
+        // Appear exactly where the pointer is, without gliding in.
+        x = targetX;
+        y = targetY;
+        place();
+      }
+      cursor.classList.toggle("is-visible", Boolean(overCase));
+
+      if (reduceMotion.matches) {
+        x = targetX;
+        y = targetY;
+        place();
+      } else if (!frame) {
+        frame = requestAnimationFrame(follow);
+      }
+    });
+
+    document.documentElement.addEventListener("pointerleave", () => {
+      cursor.classList.remove("is-visible");
+    });
+  }
+</script>

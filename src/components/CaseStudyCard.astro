@@ -1,0 +1,127 @@
+---
+// A case study in the Home gallery. The whole card is one link.
+// On laptops (mouse or trackpad) the title and summary fade in on hover.
+// On phones and tablets they are always shown under the image.
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { findImage } from "../lib/media";
+import { withBase } from "../lib/url";
+
+interface Props {
+  study: CollectionEntry<"caseStudies">;
+  priority?: boolean; // true for the first card, so it loads first
+}
+
+const { study, priority = false } = Astro.props;
+const { title, summary, cover, coverAlt } = study.data;
+const coverImage = cover ? findImage(study.id, cover) : undefined;
+---
+
+<article class="case">
+  <a class="case__link" href={withBase(`work/${study.id}/`)} data-cursor="view">
+    <div class="case__media">
+      {
+        coverImage ? (
+          <Image
+            src={coverImage}
+            alt={coverAlt}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(min-width: 48rem) 58vw, 100vw"
+            priority={priority}
+          />
+        ) : (
+          <div class="case__placeholder">[PLACEHOLDER: cover image]</div>
+        )
+      }
+    </div>
+    <div class="case__caption">
+      <h3 class="case__title">{title}</h3>
+      <p class="case__summary">{summary}</p>
+      <span class="case__cta">View case study <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .case__link {
+    position: relative;
+    display: block;
+    text-decoration: none;
+  }
+
+  .case__link:hover {
+    color: inherit;
+  }
+
+  .case__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .case__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case__placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+
+  .case__caption {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+  }
+
+  .case__title {
+    font-size: var(--text-lg);
+  }
+
+  .case__summary {
+    max-width: 34rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .case__cta {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+  }
+
+  /* Laptops and desktops: details fade in over the image on hover
+     (or when the card is reached with the Tab key). */
+  @media (hover: hover) and (pointer: fine) {
+    .case__media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgb(255 255 255 / 0.9);
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease);
+    }
+
+    .case__caption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: var(--space-6);
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease);
+    }
+
+    .case__link:hover .case__media::after,
+    .case__link:focus-visible .case__media::after,
+    .case__link:hover .case__caption,
+    .case__link:focus-visible .case__caption {
+      opacity: 1;
+    }
+  }
+</style>

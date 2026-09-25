@@ -1,0 +1,85 @@
+---
+// A visual piece (image or short looping video). Just for looking:
+// never a link, and no special cursor.
+import { Image, getImage } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { findImage, findVideo } from "../lib/media";
+
+interface Props {
+  piece?: CollectionEntry<"play">; // leave empty to show a grey placeholder
+  sizes: string;                   // how wide the piece shows on screen
+  ratio?: string;                  // placeholder shape, e.g. "4 / 5"
+}
+
+const { piece, sizes, ratio = "4 / 5" } = Astro.props;
+const data = piece?.data;
+const image = data?.type === "image" ? findImage("play", data.file) : undefined;
+const video = data?.type === "video" ? findVideo("play", data.file) : undefined;
+const poster =
+  data?.type === "video" && data.poster
+    ? (await getImage({ src: findImage("play", data.poster), width: 1200 })).src
+    : undefined;
+---
+
+<figure class="piece">
+  {
+    image && data ? (
+      <Image src={image} alt={data.alt} widths={[480, 800, 1200, 1600]} sizes={sizes} />
+    ) : video && data ? (
+      <video
+        src={video}
+        poster={poster}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label={data.alt}
+        data-motion-video
+      />
+    ) : (
+      <div class="piece__placeholder" style={`aspect-ratio: ${ratio}`}>
+        [PLACEHOLDER: visual piece]
+      </div>
+    )
+  }
+</figure>
+
+<style>
+  .piece {
+    margin: 0;
+  }
+
+  .piece img,
+  .piece video {
+    width: 100%;
+  }
+
+  .piece__placeholder {
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    text-align: center;
+  }
+</style>
+
+<script>
+  // Pause looping videos for visitors who ask their device for less motion.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function applyMotionPreference() {
+    document.querySelectorAll<HTMLVideoElement>("video[data-motion-video]").forEach((video) => {
+      if (reduceMotion.matches) {
+        video.pause();
+      } else {
+        video.play().catch(() => {});
+      }
+    });
+  }
+
+  applyMotionPreference();
+  reduceMotion.addEventListener("change", applyMotionPreference);
+</script>
