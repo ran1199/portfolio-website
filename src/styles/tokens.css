@@ -1,0 +1,69 @@
+/* ─────────────────────────────────────────────────────────────
+   DESIGN TOKENS
+   Every color, font, size and spacing value the site uses lives here.
+   Change a value once and it updates everywhere.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Colors ─────────────────────────────────────────────── */
+  --color-bg: #ffffff;           /* page background: crisp white */
+  --color-text: #111111;         /* main text: near-black */
+  --color-text-muted: #595959;   /* secondary text (dates, captions) */
+  --color-line: #e5e5e5;         /* thin dividing lines */
+  --color-surface: #f5f5f5;      /* soft grey behind placeholders */
+
+  /* Accent color: used sparingly for links, hover states and small
+     details. Not chosen yet — it stays near-black until Ran picks one
+     from three options once the visuals are in (see OPEN-ITEMS.md). */
+  --color-accent: var(--color-text);
+
+  /* ── Font ───────────────────────────────────────────────── */
+  --font-sans: "Instrument Sans Variable", system-ui, -apple-system,
+    "Helvetica Neue", Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  /* ── Text sizes ─────────────────────────────────────────── */
+  /* The larger sizes grow smoothly from phone to laptop screens. */
+  --text-xs: 0.8125rem;                               /* 13px: tags, small labels */
+  --text-sm: 0.9375rem;                               /* 15px: menu, captions */
+  --text-base: 1.0625rem;                             /* 17px: body text */
+  --text-lg: 1.25rem;                                 /* 20px: small headings */
+  --text-xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);      /* 24–32px: section headings */
+  --text-2xl: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);  /* 28–44px: intro line, page titles */
+
+  --leading-tight: 1.25;   /* line spacing for headings */
+  --leading-normal: 1.6;   /* line spacing for paragraphs */
+  --tracking-tight: -0.01em;
+  --tracking-caps: 0.08em; /* letter spacing for small UPPERCASE labels */
+
+  /* ── Spacing scale ──────────────────────────────────────── */
+  /* Use only these steps for gaps and padding, so spacing feels
+     consistent. Each step is roughly 1.5× the one before. */
+  --space-1: 0.25rem;  /*   4px */
+  --space-2: 0.5rem;   /*   8px */
+  --space-3: 0.75rem;  /*  12px */
+  --space-4: 1rem;     /*  16px */
+  --space-5: 1.5rem;   /*  24px */
+  --space-6: 2rem;     /*  32px */
+  --space-7: 3rem;     /*  48px */
+  --space-8: 4rem;     /*  64px */
+  --space-9: 6rem;     /*  96px */
+  --space-10: 8rem;    /* 128px */
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --page-max: 90rem;                         /* widest the content gets */
+  --page-gutter: clamp(1rem, 4vw, 3rem);     /* space at the screen edges */
+  --reading-max: 40rem;                      /* comfortable paragraph width */
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  /* Slow, smooth fades only. Turned off automatically for visitors
+     who ask their device for reduced motion (see global.css). */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-fast: 200ms;
+  --duration-slow: 600ms;
+
+  /* ── Details ────────────────────────────────────────────── */
+  --radius-pill: 999px;
+  --focus-ring: 2px solid var(--color-text);
+}

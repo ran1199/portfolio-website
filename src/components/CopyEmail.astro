@@ -1,0 +1,74 @@
+---
+// A button that copies the email address and briefly shows "Copied ✓".
+// If the browser can't copy (older browsers, some privacy settings),
+// it opens the visitor's email app instead.
+interface Props {
+  email: string;
+  label?: string;
+}
+const { email, label = "Copy email" } = Astro.props;
+---
+
+<button type="button" class="copy-email" data-copy-email={email} data-label={label}>
+  <span class="copy-email__text">{label}</span>
+  <span class="visually-hidden"> address {email}</span>
+</button>
+<span class="visually-hidden" role="status" aria-live="polite" data-copy-status></span>
+
+<style>
+  .copy-email {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+    line-height: 1;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      border-color var(--duration-fast) var(--ease),
+      color var(--duration-fast) var(--ease);
+  }
+
+  .copy-email:hover {
+    border-color: var(--color-text);
+    color: var(--color-accent);
+  }
+
+  .copy-email__text {
+    transition: opacity var(--duration-fast) var(--ease);
+  }
+</style>
+
+<script>
+  const RESET_AFTER_MS = 2000;
+
+  document.querySelectorAll<HTMLButtonElement>("[data-copy-email]").forEach((button) => {
+    const email = button.dataset.copyEmail!;
+    const label = button.dataset.label!;
+    const text = button.querySelector<HTMLElement>(".copy-email__text")!;
+    const status = button.nextElementSibling as HTMLElement | null;
+    let timer: number | undefined;
+
+    button.addEventListener("click", async () => {
+      try {
+        if (!navigator.clipboard) throw new Error("Clipboard not available");
+        await navigator.clipboard.writeText(email);
+      } catch {
+        // Fallback: open the visitor's email app.
+        window.location.href = `mailto:${email}`;
+        return;
+      }
+      text.textContent = "Copied ✓";
+      if (status) status.textContent = "Email address copied";
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        text.textContent = label;
+        if (status) status.textContent = "";
+      }, RESET_AFTER_MS);
+    });
+  });
+</script>

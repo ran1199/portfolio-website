@@ -1,0 +1,39 @@
+---
+// About page. The intro text comes from content/about.md.
+// The timeline and résumé button are built in Phase 5.
+import { getEntry, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const about = (await getEntry("about", "about"))!;
+const { Content } = await render(about);
+---
+
+<BaseLayout title={about.data.title}>
+  <section class="container page">
+    <h1>{about.data.title}</h1>
+    <div class="intro"><Content /></div>
+    <p class="placeholder">[PLACEHOLDER: Timeline and résumé button — built in Phase 5]</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: var(--space-9);
+  }
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-regular);
+    margin-bottom: var(--space-7);
+  }
+  .intro {
+    max-width: var(--reading-max);
+    margin-bottom: var(--space-8);
+  }
+  .placeholder {
+    padding: var(--space-9) var(--space-5);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+</style>

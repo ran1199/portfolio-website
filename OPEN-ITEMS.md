@@ -26,10 +26,12 @@ Tick an item (`[x]`) when it's done.
 - [ ] Any photo showing real children or identifiable people needs your OK first
 
 ## Design decisions pending
-- [ ] Font (Phase 2)
+- [x] Font (Phase 2) — Instrument Sans
 - [ ] Accent color (once your visuals are in the site)
 - [ ] Original mascots for the CTE arena screen (placeholders until designed)
 
 ## Setup
-- [ ] Hosting choice (Phase 1)
+- [x] Hosting choice (Phase 1) — GitHub Pages
 - [ ] Custom domain (Phase 7)
+- [ ] Before launch: let search engines list the site (`hideFromSearchEngines` in `src/layouts/BaseLayout.astro`)
+- [ ] Before launch: delete the temporary style guide page (`src/pages/style-guide.astro`)

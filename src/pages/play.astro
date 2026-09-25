@@ -1,32 +1,27 @@
 ---
-// Home page. The gallery is built in Phase 3.
+// Play page. The grid of visual work is built in Phase 5.
 import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const site = (await getEntry("site", "site"))!.data;
 ---
 
-<BaseLayout>
-  <section class="container intro">
-    <h1>{site.introLine}</h1>
-  </section>
-
-  <section id="work" class="container" aria-label="Work">
-    <p class="placeholder">[PLACEHOLDER: Gallery of case studies and visual pieces — built in Phase 3]</p>
+<BaseLayout title={site.menu.play}>
+  <section class="container page">
+    <h1>{site.menu.play}</h1>
+    <p class="placeholder">[PLACEHOLDER: Grid of visual work — built in Phase 5]</p>
   </section>
 </BaseLayout>
 
 <style>
-  .intro {
-    padding-block: var(--space-9) var(--space-8);
+  .page {
+    padding-top: var(--space-9);
   }
-
-  .intro h1 {
-    max-width: 22em;
+  h1 {
     font-size: var(--text-2xl);
     font-weight: var(--weight-regular);
+    margin-bottom: var(--space-7);
   }
-
   .placeholder {
     padding: var(--space-9) var(--space-5);
     background: var(--color-surface);

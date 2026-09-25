@@ -251,4 +251,7 @@ Ask me for each asset when the phase that needs it begins.
 - **Decision (Phase 1):** Website builder is Astro (v7). Content lives in `content/`; images go in `content/images/<slug>/` (kept next to the content so Astro can optimize them); the résumé is `public/resume.pdf`.
 - **Decision (Phase 1):** Hosting is GitHub Pages, published by `.github/workflows/deploy.yml` whenever the repository's default branch changes. Temporary address: https://ran1199.github.io/portfolio-website/ (so `base` is `/portfolio-website` in `astro.config.mjs`; internal links must use `import.meta.env.BASE_URL`).
 - **Checking the live site:** this cloud computer's network can't open github.io, so publishing is checked through the GitHub Actions run result, and Ran checks the page in their browser.
-- **Current phase:** Phase 1 (Set up) complete — placeholder page live. Waiting for Ran's approval before Phase 2 (design foundation: font options first).
+- **Decision (Phase 2):** Font is Instrument Sans, self-hosted via `@fontsource-variable/instrument-sans` (no Google Fonts requests).
+- **Where things live:** design tokens in `src/styles/tokens.css`; base styles in `src/styles/global.css`; shared page frame in `src/layouts/BaseLayout.astro`; menu, footer and copy-email button in `src/components/`. Build links with `withBase()` from `src/lib/url.ts`.
+- **Screenshots in this cloud computer:** run `npx astro preview` in the background and use the global Playwright with Chromium. For pages that load outside files, launch Chromium with `--proxy-server=$HTTPS_PROXY --proxy-bypass-list=localhost;127.0.0.1`.
+- **Current phase:** Phase 2 (Design foundation) built and live. Waiting for Ran's approval before Phase 3 (Homepage).
