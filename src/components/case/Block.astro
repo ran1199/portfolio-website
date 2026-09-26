@@ -8,6 +8,7 @@ import Inline from "./Inline.astro";
 import Text from "./Text.astro";
 import Media from "./Media.astro";
 import Video from "./Video.astro";
+import { findImage } from "../../lib/media";
 
 type Study = CollectionEntry<"caseStudies">["data"];
 type BlockData = NonNullable<Study["sections"]>[number]["blocks"][number];
@@ -22,6 +23,15 @@ const { block: b, folder, labels } = Astro.props;
 const hasImage = b.image !== undefined;
 const hasSideText = Boolean(b.insight || b.goal || b.text);
 const sideBySide = hasImage && hasSideText && b.size !== "small";
+// Insight can be one line or a list of short lines.
+const insightLines = b.insight === undefined ? [] : [b.insight].flat();
+// Landscape photos in before/after use the panel's full width;
+// tall phone screens stay narrower.
+const isLandscape = (image?: string) => {
+  if (!image) return false;
+  const meta = findImage(folder, image);
+  return meta.width > meta.height;
+};
 ---
 
 <div class:list={["block", { "block--side": sideBySide }]}>
@@ -48,12 +58,14 @@ const sideBySide = hasImage && hasSideText && b.size !== "small";
             {labels.source}: <Inline text={b.source} />
           </p>
         )}
-        {b.insight && (
+        {insightLines.length > 0 && (
           <div>
             <p class="small-label">{labels.insightLabel}</p>
-            <p class="block__statement">
-              <Inline text={b.insight} />
-            </p>
+            {insightLines.map((line) => (
+              <p class="block__statement">
+                <Inline text={line} />
+              </p>
+            ))}
           </div>
         )}
         {b.goal && (
@@ -88,16 +100,27 @@ const sideBySide = hasImage && hasSideText && b.size !== "small";
     )
   }
 
-  {/* Gallery: first image large, the rest side by side */}
+  {/* Gallery: first image large, the rest side by side.
+      With sideBySide: true, all images share one row at equal size. */}
   {
     b.gallery && (
-      <div class="gallery">
-        {b.gallery.map((g, i) => (
-          <div class:list={["gallery__item", { "gallery__item--lead": i === 0 }]}>
-            <Media folder={folder} image={g.image} alt={g.alt} caption={g.caption} sizes={i === 0 ? "(min-width: 90rem) 86rem, 100vw" : "(min-width: 48rem) 45vw, 100vw"} />
-          </div>
-        ))}
+      <div class:list={["gallery", { "gallery--row": b.sideBySide }]}>
+        {b.gallery.map((g, i) => {
+          const lead = i === 0 && !b.sideBySide;
+          return (
+            <div class:list={["gallery__item", { "gallery__item--lead": lead }]}>
+              <Media folder={folder} image={g.image} alt={g.alt} caption={g.caption} sizes={lead ? "(min-width: 90rem) 86rem, 100vw" : "(min-width: 48rem) 45vw, 100vw"} />
+            </div>
+          );
+        })}
       </div>
+    )
+  }
+  {
+    b.gallery && b.caption && !hasImage && (
+      <p class="block__caption">
+        <Inline text={b.caption} />
+      </p>
     )
   }
 
@@ -158,7 +181,7 @@ const sideBySide = hasImage && hasSideText && b.size !== "small";
               <p class="ba__text">
                 <Inline text={side.text} />
               </p>
-              <div class="ba__panel">
+              <div class:list={["ba__panel", { "ba__panel--wide": isLandscape(side.image) }]}>
                 <Media folder={folder} image={side.image} alt={side.alt} placeholderRatio="9 / 19.5" sizes="(min-width: 48rem) 40vw, 100vw" />
               </div>
             </div>
@@ -201,8 +224,19 @@ const sideBySide = hasImage && hasSideText && b.size !== "small";
   }
 
   .block__statement {
+    max-width: 40rem;
     font-size: var(--text-lg);
     line-height: 1.4;
+  }
+
+  .block__statement + .block__statement {
+    margin-top: var(--space-2);
+  }
+
+  .block__caption {
+    margin-top: calc(-1 * var(--space-3));
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
   }
 
   .block__source,
@@ -367,6 +401,10 @@ const sideBySide = hasImage && hasSideText && b.size !== "small";
     width: min(100%, 20rem);
   }
 
+  .ba__panel--wide :global(.media) {
+    width: 100%;
+  }
+
   .ba__panel :global(.media__placeholder) {
     background: var(--color-bg);
   }
@@ -386,8 +424,16 @@ const sideBySide = hasImage && hasSideText && b.size !== "small";
       grid-template-columns: 1fr 1fr;
     }
 
-    .gallery__item--lead {
+    .gallery__item--lead,
+    .gallery__item--lead + .gallery__item:last-child {
       grid-column: 1 / -1;
+    }
+
+    /* Side-by-side row: as many equal columns as there are images. */
+    .gallery--row {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
 
     .ba {

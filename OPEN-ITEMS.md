@@ -29,6 +29,29 @@ Tick an item (`[x]`) when it's done.
   - [ ] `app-ia.png` — information architecture
   - [ ] `new-game-before.png`, `new-game-after.png` — New Game Record, before/after photo capture
 
+### Buddy's Adventure Island (`content/case-studies/buddys-adventure-island.md`, visual-first)
+- [ ] Source(s) for the secondary research: published studies and interviews (replaces `[SOURCE NEEDED]` in "Problem and insight")
+- [ ] Island environment source (credits line at the end of the page)
+- [ ] Photo rights for `in-action.jpg` — keep the placeholder (or delete the block) until confirmed
+- [ ] Testers were a neighbor's children: faces only with their parents' permission; otherwise use photos showing only hands and props (`props-before.jpg`, `necklace-after.jpg`)
+- [ ] No photos of real, named children anywhere on the page
+- [ ] Check each image's alt text matches the real export once it's in
+- [ ] Replace the 18 labeled grey placeholder images in `content/images/buddys-adventure-island/` with Figma exports (same file names):
+  - [ ] `cover.jpg` — island scene with the characters
+  - [ ] `research-signs.png` — signs & symptoms (Age 3–5 / Age 6+)
+  - [ ] `research-interventions.png` — existing interventions (3 approaches)
+  - [ ] `scene-map.png` — game scene map
+  - [ ] `npcs.png` — Buddy, squirrel, bear, rabbit, dolphin
+  - [ ] `play-step-1.png` … `play-step-5.png` — Game Tasks Process screens
+  - [ ] `in-action.jpg` — game interactive process (optional, rights to confirm)
+  - [ ] `props.png` — game props row
+  - [ ] `prop-book.png` — physical prop book spreads
+  - [ ] `handcrafting.png` — handcrafting process (the axe, 8 steps)
+  - [ ] `necklace.png` — detachable necklace diagram
+  - [ ] `arduino-test.jpg` — Arduino testing, one combined image
+  - [ ] `props-before.jpg` — user test: sensors attached to props
+  - [ ] `necklace-after.jpg` — final magnetic necklace clamped on a prop
+
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
 - [ ] Figma exports for each case study (one folder per project)
@@ -38,11 +61,11 @@ Tick an item (`[x]`) when it's done.
 - [ ] Short demo clip of the Galactic Guardians photo-detection proof of concept
 
 ## Sources needed
-- [ ] Buddy's Adventure Island: island environment source
+- [ ] Buddy's Adventure Island: island environment source (credits line)
 - [ ] Source links for all statistics and published interviews (every case study)
 
 ## Permissions and names to confirm
-- [ ] Buddy's Adventure Island: OK to keep calling your friend "a close friend"?
+- [ ] Buddy's Adventure Island: OK to keep calling your friend "a close friend"? (not on the page right now — "Why this project" was removed)
 - [ ] CTE: names and photos of the two BU athletes (shown by sport only until confirmed)
 - [ ] WonderWeave: psychotherapist's name (credited by role only until confirmed)
 - [ ] Any photo showing real children or identifiable people needs your OK first

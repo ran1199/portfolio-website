@@ -74,13 +74,25 @@ const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-")
 
   {
     d.sections ? (
-      d.sections.map((section, i) => (
-        <Section number={i + 1} heading={section.heading} id={slugify(section.heading) || `section-${i + 1}`} stacked>
-          {section.blocks.map((block) => (
-            <Block block={block} folder={folder} labels={labels} />
-          ))}
-        </Section>
-      ))
+      <>
+        {d.sections.map((section, i) => (
+          <Section number={i + 1} heading={section.heading} id={slugify(section.heading) || `section-${i + 1}`} stacked>
+            {section.blocks.map((block) => (
+              <Block block={block} folder={folder} labels={labels} />
+            ))}
+          </Section>
+        ))}
+        {d.credits && (
+          <div class="container visual-credits">
+            <p class="small-label">{labels.credits}</p>
+            {d.credits.map((c) => (
+              <p>
+                <Inline text={c} />
+              </p>
+            ))}
+          </div>
+        )}
+      </>
     ) : (
       <>
   {/* 2. Why this project */}
@@ -356,6 +368,16 @@ const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-")
   .credits ul {
     margin: 0;
     padding-left: 1.2em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ── Credits (visual-first pages) ── */
+  .visual-credits {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-7);
+    border-top: 1px solid var(--color-line);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
   }

@@ -96,7 +96,7 @@ const block = z
   .object({
     text: z.string().optional(),
     source: z.string().optional(),
-    insight: z.string().optional(),
+    insight: z.union([z.string(), z.array(z.string())]).optional(),
     goal: z.string().optional(),
     image: z.string().optional(),
     alt: z.string().optional(),
@@ -104,6 +104,7 @@ const block = z
     size: z.enum(["wide", "small"]).optional(),
     cards: z.array(card).optional(),
     gallery: z.array(visual).optional(),
+    sideBySide: z.boolean().optional(),
     steps: z.array(step).optional(),
     screens: z.array(visual).optional(),
     before: beforeAfter.optional(),

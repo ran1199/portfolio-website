@@ -58,6 +58,13 @@ sections:
       # One line of text with where it comes from:
       - text: "A key statistic in one line."
         source: "[SOURCE NEEDED]"
+      # INSIGHT + GOAL on their own (no image). The insight can also be
+      # two short lines — write each on its own "- " line:
+      - insight:
+          - "First short insight line."
+          - "Second short insight line."
+        goal: "The design goal in one line."
+        note: "A small note, e.g. where the research comes from."
 
   - heading: "Ideas"
     blocks:
@@ -85,6 +92,15 @@ sections:
           - image: ""
             alt: ""
             caption: "A short caption."
+      # IMAGES SIDE BY SIDE: all the same size in one row, with one
+      # shared caption underneath (optional).
+      - sideBySide: true
+        gallery:
+          - image: ""
+            alt: ""
+          - image: ""
+            alt: ""
+        caption: "One caption for the whole row."
       # STEPS: numbered photos in a row (stacked on phones).
       - steps:
           - title: "Step one."
@@ -125,4 +141,8 @@ sections:
   - heading: "Reflection and next steps"
     blocks:
       - text: "What you learned, in one or two sentences."
+
+# CREDITS (optional): small text at the end of the page.
+credits:
+  - "3D characters modeled by me in Blender."
 ---
