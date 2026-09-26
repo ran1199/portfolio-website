@@ -35,6 +35,15 @@ const isLandscape = (image?: string) => {
 ---
 
 <div class:list={["block", { "block--side": sideBySide }]}>
+  {/* Big typographic moment, e.g. a campaign's key message */}
+  {
+    b.statement && (
+      <p class="statement">
+        <Inline text={b.statement} />
+      </p>
+    )
+  }
+
   {
     hasImage && (
       <div class:list={["block__image", { "block__image--small": b.size === "small" }]}>
@@ -77,6 +86,46 @@ const isLandscape = (image?: string) => {
           </div>
         )}
       </div>
+    )
+  }
+
+  {/* Pull quotes, credited without names or photos */}
+  {
+    b.quotes && (
+      <div class="quotes">
+        {b.quotes.map((q) => (
+          <figure class="quote">
+            <blockquote>
+              <p>
+                “<Inline text={q.text} />”
+              </p>
+            </blockquote>
+            <figcaption>
+              — <Inline text={q.credit} />
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    )
+  }
+
+  {/* Small text cards: a title and one line each */}
+  {
+    b.tiles && (
+      <ul class="tiles">
+        {b.tiles.map((t) => (
+          <li class="tile">
+            <p class="tile__title">
+              <Inline text={t.title} />
+            </p>
+            {t.text && (
+              <p class="tile__text">
+                <Inline text={t.text} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
     )
   }
 
@@ -262,6 +311,68 @@ const isLandscape = (image?: string) => {
     }
   }
 
+  /* ── Statement ── */
+  .statement {
+    max-width: 20ch;
+    padding-block: var(--space-7);
+    font-size: clamp(2rem, 1.2rem + 3.6vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Pull quotes ── */
+  .quotes {
+    display: grid;
+    gap: var(--space-8) var(--space-7);
+  }
+
+  .quote {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    margin: 0;
+  }
+
+  .quote blockquote {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: 1.35;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .quote figcaption {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ── Text tiles ── */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tile {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-6);
+    border-radius: var(--radius-media);
+    background: var(--color-surface);
+  }
+
+  .tile__title {
+    font-weight: var(--weight-medium);
+  }
+
+  .tile__text {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
   /* ── Cards ── */
   .cards {
     display: grid;
@@ -439,6 +550,10 @@ const isLandscape = (image?: string) => {
     .ba {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-5);
+    }
+
+    .quotes {
+      grid-template-columns: 1fr 1fr;
     }
   }
 

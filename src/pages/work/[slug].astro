@@ -53,7 +53,6 @@ const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-")
   <header class="hero container">
     <h1>{d.title}</h1>
     <p class="hero__summary">{d.summary}</p>
-    {d.notice && <p class="hero__notice">{d.notice}</p>}
     <dl class="hero__meta">
       <div>
         <dt>{labels.role}</dt>
@@ -70,6 +69,7 @@ const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-")
     <div class="hero__cover">
       <Media folder={folder} image={d.cover} alt={d.coverAlt} sizes="(min-width: 90rem) 86rem, 100vw" placeholderRatio="16 / 9" priority />
     </div>
+    {d.notice && <p class="hero__notice">{d.notice}</p>}
   </header>
 
   {
@@ -221,12 +221,9 @@ const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-")
     line-height: 1.5;
   }
 
+  /* Small note directly under the cover (e.g. "Not affiliated with …"). */
   .hero__notice {
-    justify-self: start;
     max-width: 44rem;
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-label);
-    background: var(--color-surface);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
   }

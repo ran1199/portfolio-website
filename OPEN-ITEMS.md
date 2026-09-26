@@ -52,6 +52,26 @@ Tick an item (`[x]`) when it's done.
   - [ ] `props-before.jpg` — user test: sensors attached to props
   - [ ] `necklace-after.jpg` — final magnetic necklace clamped on a prop
 
+### CTE: Every Hit Matters (`content/case-studies/cte-every-hit-matters.md`, visual-first)
+- [ ] Sources for the sports strip statistics (replaces "Sources: [SOURCE NEEDED]")
+- [ ] Original mascot designs — needed before replacing `screen-1` … `screen-4`, `scenarios` and `screen-kids-height`
+- [ ] Logo check: no NHL, team or other organization logos in `cover` or `billboard-1` … `4` (flag any to Claude before use)
+- [ ] Athletes' permission for names and photos (credited by sport only until confirmed)
+- [ ] `screen-kids-height`: if it shows a real child, confirm permission (or use an illustration)
+- [ ] `screen-before`: export it if you have it; otherwise keep the placeholder
+- [ ] Check each image's alt text matches the real export once it's in
+- [ ] Replace the 16 labeled grey placeholder images in `content/images/cte-every-hit-matters/` with Figma exports (same file names):
+  - [ ] `cover.jpg` — bus stop billboard hero scene (check logos)
+  - [ ] `research-sports.png` — sports strip with statistics (needs sources)
+  - [ ] `user-journey.png` — user journey diagram
+  - [ ] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 (check logos)
+  - [ ] `screen-1.png` … `screen-4.png` — interactive screen steps (combine Figma steps 4 and 5; mascots first)
+  - [ ] `scenarios.png` — scenarios image (mascots first)
+  - [ ] `test-pvc.jpg` — billboard visual test (PVC)
+  - [ ] `test-arduino.jpg` — Arduino ultrasonic sensor test, one image
+  - [ ] `screen-before.png` — interactive screen before the change
+  - [ ] `screen-kids-height.png` — screen with a child reaching the button (mascots first)
+
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
 - [ ] Figma exports for each case study (one folder per project)

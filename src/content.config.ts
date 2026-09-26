@@ -94,6 +94,9 @@ const card = z
 
 const block = z
   .object({
+    statement: z.string().optional(),
+    quotes: z.array(z.object({ text: z.string(), credit: z.string() })).optional(),
+    tiles: z.array(z.object({ title: z.string(), text: z.string().optional() })).optional(),
     text: z.string().optional(),
     source: z.string().optional(),
     insight: z.union([z.string(), z.array(z.string())]).optional(),

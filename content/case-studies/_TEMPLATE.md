@@ -35,7 +35,7 @@ dates: "Jan–Mar 2026"
 tags: ["UX Design", "Research"]
 cover: ""                 # main image, e.g. "cover.jpg"
 coverAlt: ""              # description of the cover image
-notice: ""                # optional short note under the title
+notice: ""                # optional small note directly under the cover image
                           # (e.g. "Self-initiated concept. Not affiliated with …")
 
 # ── SECTIONS ──────────────────────────────────────────────────
@@ -65,6 +65,19 @@ sections:
           - "Second short insight line."
         goal: "The design goal in one line."
         note: "A small note, e.g. where the research comes from."
+
+  - heading: "Strategy"
+    blocks:
+      # STATEMENT: a key message shown big on its own line.
+      - statement: "Your key message."
+      # PULL QUOTES: large quotes with a credit line (no photos needed).
+      - quotes:
+          - text: "What the person said."
+            credit: "Who said it, e.g. by role only"
+      # TEXT CARDS: small cards with a title and one line each.
+      - tiles:
+          - title: "Card title"
+            text: "One short line."
 
   - heading: "Ideas"
     blocks:
