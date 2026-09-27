@@ -138,8 +138,11 @@ const caseStudies = defineCollection({
       cover: z.string().default(""),
       coverAlt: z.string().default(""),
       // Which part of the cover the Home/Work gallery tile keeps when it
-      // trims the sides: left, center or right.
-      coverFocus: z.enum(["left", "center", "right"]).default("center"),
+      // trims the sides: left, center, right, or a percentage such as
+      // "30%" (0% = left edge, 100% = right edge).
+      coverFocus: z
+        .union([z.enum(["left", "center", "right"]), z.string().regex(/^\d{1,3}%$/)])
+        .default("center"),
       notice: z.string().optional(),
       why: z.array(part).optional(),
       research: z.array(part).optional(),

@@ -36,7 +36,8 @@ tags: ["UX Design", "Research"]
 cover: ""                 # main image, e.g. "cover.jpg"
 coverAlt: ""              # description of the cover image
 coverFocus: "center"      # which part of the cover the Home/Work gallery tile
-                          # keeps when it trims the sides: left, center or right
+                          # keeps when it trims the sides: left, center, right,
+                          # or a percentage like "30%" (0% = left edge, 100% = right edge)
 notice: ""                # optional small note directly under the cover image
                           # (e.g. "Self-initiated concept. Not affiliated with …")
 
