@@ -25,6 +25,7 @@ sections:
     blocks:
       - image: "research-causes.png"
         alt: "Pie chart of the 3 major reasons for sibling rivalry: perceived unfairness, power struggles and competition, each illustrated with a photo of children"
+        caption: "Illustrative stock photos."
         insight: "Most solutions are parent-focused; few build kids' conflict-resolution and critical-thinking skills."
         goal: "A board game for children, especially those growing up with siblings, that fosters crucial life skills."
         # To add one headline statistic later, add these two lines here:

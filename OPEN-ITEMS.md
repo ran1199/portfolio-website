@@ -19,7 +19,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] Record `demo-photo-detection.mp4` (+ a poster still), then add its file name in the video block
 - [ ] Replace the 23 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
   - [x] `cover.jpg` — cover photo (you playing the board game) — added
-  - [x] `research-causes.png` — "Sibling rivalry — 3 major reasons" graphic — added (children's photos in it: confirm stock licence + label before publishing)
+  - [x] `research-causes.png` — "Sibling rivalry — 3 major reasons" graphic — added; Ran confirmed the children's photos are OK to use; labelled "Illustrative stock photos."
   - [ ] `minigame-1.png` … `minigame-6.png` — mini-game cards
   - [ ] `board.png` — full board / map
   - [ ] `characters.png` — Nova, Orion, Stella, Cosmo
