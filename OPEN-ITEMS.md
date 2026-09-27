@@ -16,8 +16,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] Optional: one headline statistic with its source (goes in "Problem and insight")
 - [ ] Permission check: do any Product Trial photos (`play-step-1` … `5`) show children or identifiable people?
 - [ ] Check each image's alt text matches the real export once it's in
-- [ ] Record `demo-photo-detection.mp4` (+ a poster still), then add its file name in the video block
-- [ ] Replace the 23 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
+- [ ] Replace the 21 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
   - [x] `cover.jpg` — cover photo (you playing the board game) — added
   - [x] `research-causes.png` — "Sibling rivalry — 3 major reasons" graphic — added; Ran confirmed the children's photos are OK to use; labelled "Illustrative stock photos."
   - [x] `minigame-1.png` … `minigame-5.png` — theory illustrations added
@@ -28,16 +27,14 @@ Tick an item (`[x]`) when it's done.
   - [ ] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos
   - [ ] `app-leaderboard.png`, `app-performance.png`, `app-dashboard.png`, `app-insights.png` — app screens
   - [ ] `app-ia.png` — information architecture
-  - [ ] `new-game-before.png`, `new-game-after.png` — New Game Record, before/after photo capture
 
 ### Buddy's Adventure Island (`content/case-studies/buddys-adventure-island.md`, visual-first)
 - [ ] Source(s) for the secondary research: published studies and interviews (replaces `[SOURCE NEEDED]` in "Problem and insight")
 - [ ] Island environment source (credits line at the end of the page)
 - [ ] Photo rights for `in-action.jpg` — keep the placeholder (or delete the block) until confirmed
-- [ ] Testers were a neighbor's children: faces only with their parents' permission; otherwise use photos showing only hands and props (`props-before.jpg`, `necklace-after.jpg`)
 - [ ] No photos of real, named children anywhere on the page
 - [ ] Check each image's alt text matches the real export once it's in
-- [ ] Replace the 18 labeled grey placeholder images in `content/images/buddys-adventure-island/` with Figma exports (same file names):
+- [ ] Replace the 16 labeled grey placeholder images in `content/images/buddys-adventure-island/` with Figma exports (same file names):
   - [ ] `cover.jpg` — island scene with the characters
   - [ ] `research-signs.png` — signs & symptoms (Age 3–5 / Age 6+)
   - [ ] `research-interventions.png` — existing interventions (3 approaches)
@@ -50,8 +47,6 @@ Tick an item (`[x]`) when it's done.
   - [ ] `handcrafting.png` — handcrafting process (the axe, 8 steps)
   - [ ] `necklace.png` — detachable necklace diagram
   - [ ] `arduino-test.jpg` — Arduino testing, one combined image
-  - [ ] `props-before.jpg` — user test: sensors attached to props
-  - [ ] `necklace-after.jpg` — final magnetic necklace clamped on a prop
 
 ### CTE: Every Hit Matters (`content/case-studies/cte-every-hit-matters.md`, visual-first)
 - [ ] Sources for the sports strip statistics (replaces "Sources: [SOURCE NEEDED]")
@@ -78,10 +73,8 @@ Tick an item (`[x]`) when it's done.
 - [ ] Confirm how the psychotherapist is credited (currently by role only: "Psychotherapist specializing in family counseling")
 - [ ] Illustrative-image labels: if `cover` or any exhibition render shows stock or illustrative people, label it (caption, or a `notice` line for the cover)
 - [ ] `research-journey`: crop out the parent's photo and name before exporting
-- [ ] `support-before`: export it if you have it; otherwise keep the placeholder
-- [ ] Tester quote is optional — keep or delete (no photo either way)
 - [ ] Check each image's alt text matches the real export once it's in
-- [ ] Replace the 19 labeled grey placeholder images in `content/images/wonderweave/` with Figma exports (same file names):
+- [ ] Replace the 17 labeled grey placeholder images in `content/images/wonderweave/` with Figma exports (same file names):
   - [ ] `cover.jpg` — exhibition gallery scene (label stock people as illustrative)
   - [ ] `research-journey.png` — timeline and emotional experiences chart (crop out the parent's photo and name)
   - [ ] `scenes.png` — "How it works" row of 5 scenes
@@ -91,8 +84,6 @@ Tick an item (`[x]`) when it's done.
   - [ ] `space.png` — space and visitor flow diagram
   - [ ] `app-weekly.png`, `app-grow.png`, `app-exhibition.png` — final app screens
   - [ ] `app-ia.png` — information architecture
-  - [ ] `support-before.png` — Support screen before testing (location and feeling only)
-  - [ ] `support-after.png` — Support screen after ("I feel… / I want to…")
 
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
@@ -102,7 +93,6 @@ Tick an item (`[x]`) when it's done.
 - [ ] Visual work for Play and Home (images, MP4s, GIFs) — add each to `content/images/play/` and one entry in `content/play.yaml` (the Play page shows 9 grey placeholders until then)
 - [ ] GIFs: will be converted to MP4 so pages stay fast. This needs a video tool (ffmpeg) installed on the cloud computer — Claude will ask before installing
 - [ ] Each video needs a poster image (a still shown until it loads)
-- [ ] Short demo clip of the Galactic Guardians photo-detection proof of concept
 
 ## Sources needed
 - [ ] Buddy's Adventure Island: island environment source (credits line)

@@ -122,21 +122,4 @@ sections:
         alt: "Information architecture diagram of the companion app"
         caption: "Information architecture"
         size: small
-
-  - heading: "Testing → what changed"
-    blocks:
-      - before:
-          text: "Testers found manual entry slow. With 4 players, counting resources and scores made mistakes easy."
-          image: "new-game-before.png"
-          alt: "New Game Record screen before photo capture, with manual entry"
-        after:
-          text: "I added photo capture to the New Game Record page, so the app detects results automatically."
-          image: "new-game-after.png"
-          alt: "New Game Record screen after adding photo capture"
-      - video:
-          file: ""   # add "demo-photo-detection.mp4" here once it's uploaded
-          poster: ""
-          alt: "Screen recording of the photo-detection proof of concept"
-          caption: "Working proof of concept of the detection, built with AI-assisted coding."
-        note: "The photo-capture flow in the app prototype is designed; the detection itself was tested as a separate proof of concept."
 ---

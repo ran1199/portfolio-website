@@ -97,19 +97,6 @@ sections:
         alt: "Arduino testing of the motion and pressure sensors"
         caption: "Tested motion and pressure sensing with Arduino (GY521, FSR402)."
 
-  - heading: "Testing → what changed"
-    blocks:
-      # Testers were a neighbor's children: hands and props only, no faces,
-      # unless their parents give permission.
-      - before:
-          text: "Two children tested the props. The sensors weren't always accurate and fell off easily."
-          image: "props-before.jpg"
-          alt: "User test: sensors attached to the cardboard props"
-        after:
-          text: "I redesigned the sensor as a detachable magnetic necklace, so users choose where to clamp it onto the prop."
-          image: "necklace-after.jpg"
-          alt: "The final magnetic sensor necklace clamped onto a prop"
-
 # Shown in small text at the end of the page.
 credits:
   - "3D characters modeled by me in Blender. Island environment: [PLACEHOLDER: source]."

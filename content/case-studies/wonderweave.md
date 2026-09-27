@@ -126,19 +126,4 @@ sections:
         alt: "Information architecture diagram of the WonderWeave app"
         caption: "Information architecture"
         size: small
-
-  - heading: "Testing → what changed"
-    blocks:
-      - before:
-          text: "The Support feature first asked users only for their location and how they felt."
-          image: "support-before.png"
-          alt: "Support screen before testing, asking only for location and feeling"
-        after:
-          text: "Now users choose what they want. 'Talk' connects them with people who've had similar experiences. 'Calm down' guides them through Solution-Focused Therapy activities and records their reflections."
-          image: "support-after.png"
-          alt: "Support screen after testing: I feel… and I want to…"
-      # Tester quote (optional, no photo). Delete these lines to remove it.
-      - quotes:
-          - text: "The design is clean and easy to follow. I love the icons, overall look, and also the Find Others feature is great for connecting with people like me who share similar needs."
-            credit: "Usability test participant"
 ---
