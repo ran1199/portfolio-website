@@ -13,8 +13,11 @@ interface Props {
 }
 
 const { study, priority = false } = Astro.props;
-const { title, summary, cover, coverAlt, coverFocus } = study.data;
-const coverImage = cover ? findImage(study.id, cover) : undefined;
+const { title, summary, cover, coverAlt, coverFocus, tileImage, tileAlt } = study.data;
+// The tile uses its own 4:3 image when there is one, otherwise the cover.
+const tileFile = tileImage || cover;
+const tileDescription = tileImage ? tileAlt || coverAlt : coverAlt;
+const coverImage = tileFile ? findImage(study.id, tileFile) : undefined;
 ---
 
 <article class="case">
@@ -24,7 +27,7 @@ const coverImage = cover ? findImage(study.id, cover) : undefined;
         coverImage ? (
           <Image
             src={coverImage}
-            alt={coverAlt}
+            alt={tileDescription}
             widths={[640, 960, 1280, 1600]}
             sizes="(min-width: 48rem) 58vw, 100vw"
             priority={priority}

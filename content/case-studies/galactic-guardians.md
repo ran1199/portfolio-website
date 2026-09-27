@@ -16,7 +16,8 @@ dates: "Sep–Nov 2024"
 tags: ["Game Design", "UI/UX Design", "Educational Design"]
 cover: "cover.jpg"
 coverAlt: "The Galactic Guardians board game set up on a round table, with a player thinking about their next move"
-coverFocus: "30%"    # gallery tile keeps the table centred; the case study page shows the full photo
+tileImage: "tile.jpg"   # 4:3 photo for the Home/Work gallery tile
+tileAlt: "The Galactic Guardians board game set up on a round table"
 
 # ── SECTIONS (numbered 01, 02… in this order) ────────────────
 sections:

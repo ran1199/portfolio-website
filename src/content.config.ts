@@ -137,6 +137,10 @@ const caseStudies = defineCollection({
       tags: z.array(z.string()),
       cover: z.string().default(""),
       coverAlt: z.string().default(""),
+      // Optional separate image for the Home/Work gallery tile (4:3 fits
+      // exactly). Without it, the tile uses the cover.
+      tileImage: z.string().default(""),
+      tileAlt: z.string().default(""),
       // Which part of the cover the Home/Work gallery tile keeps when it
       // trims the sides: left, center, right, or a percentage such as
       // "30%" (0% = left edge, 100% = right edge).

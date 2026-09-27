@@ -35,6 +35,10 @@ dates: "Jan–Mar 2026"
 tags: ["UX Design", "Research"]
 cover: ""                 # main image, e.g. "cover.jpg"
 coverAlt: ""              # description of the cover image
+tileImage: ""             # optional separate image for the Home/Work gallery
+                          # tile; 4:3 fits exactly (e.g. 1600 × 1200). Leave ""
+                          # to use the cover.
+tileAlt: ""               # description of the tile image
 coverFocus: "center"      # which part of the cover the Home/Work gallery tile
                           # keeps when it trims the sides: left, center, right,
                           # or a percentage like "30%" (0% = left edge, 100% = right edge)
