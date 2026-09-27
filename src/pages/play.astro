@@ -14,7 +14,9 @@ const items = pieces.length ? pieces : Array.from({ length: PLACEHOLDER_COUNT },
 
 <BaseLayout title={site.menu.play}>
   <div class="container play">
-    <h1>{site.menu.play}</h1>
+    <!-- Hidden title: not shown on screen, but screen readers still
+         announce the page name. -->
+    <h1 class="visually-hidden">{site.menu.play}</h1>
     <ul class="play__grid">
       {
         items.map((piece) => (
@@ -28,14 +30,9 @@ const items = pieces.length ? pieces : Array.from({ length: PLACEHOLDER_COUNT },
 </BaseLayout>
 
 <style>
+  /* Small gap under the menu so the grid starts near the top. */
   .play {
-    padding-top: var(--space-9);
-  }
-
-  h1 {
-    margin-bottom: var(--space-7);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-regular);
+    padding-top: var(--space-5);
   }
 
   /* Square tiles: two across on phones and tablets, three on wide screens. */
