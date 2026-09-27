@@ -9,7 +9,7 @@ const path = Astro.url.pathname.replace(/\/$/, "");
 const isCurrent = (href: string) => path === href.replace(/\/$/, "");
 
 const links = [
-  { label: site.menu.work, href: withBase("#work") },
+  { label: site.menu.work, href: withBase("work/") },
   { label: site.menu.play, href: withBase("play/") },
   { label: site.menu.about, href: withBase("about/") },
   { label: site.menu.resume, href: withBase("resume.pdf") },

@@ -1,0 +1,102 @@
+---
+// The Work gallery: case studies (large, clickable) mixed with selected
+// visual pieces (smaller, just for looking). Used on Home and on /work/.
+import { getCollection } from "astro:content";
+import CaseStudyCard from "./CaseStudyCard.astro";
+import VisualPiece from "./VisualPiece.astro";
+
+const studies = (await getCollection("caseStudies")).sort((a, b) => a.data.order - b.data.order);
+
+// Visual pieces marked "home: true" in content/play.yaml, in file order.
+// Until there are any, grey placeholders stand in.
+const PIECES_PER_STUDY = 2;
+const homePieces = (await getCollection("play")).filter((p) => p.data.home);
+const pieces = homePieces.length
+  ? homePieces
+  : Array.from({ length: studies.length * PIECES_PER_STUDY }, () => undefined);
+
+// Each case study is followed by the two pieces that sit beside it.
+// Pieces beyond that fill rows of three at the end.
+const blocks = studies.map((study, i) => ({
+  study,
+  pieces: pieces.slice(i * PIECES_PER_STUDY, (i + 1) * PIECES_PER_STUDY),
+}));
+const extras = pieces.slice(studies.length * PIECES_PER_STUDY);
+const pieceSizes = "(min-width: 64rem) 30vw, 48vw";
+---
+
+<div class="gallery-frame">
+  <div class="gallery">
+    {
+      blocks.map(({ study, pieces }, i) => (
+        <>
+          <div class:list={["tile tile--case reveal", { "tile--right": i % 2 === 1 }]}>
+            <CaseStudyCard study={study} priority={i === 0} />
+          </div>
+          {pieces.map((piece) => (
+            <div class="tile tile--piece reveal">
+              <VisualPiece piece={piece} sizes={pieceSizes} />
+            </div>
+          ))}
+        </>
+      ))
+    }
+    {
+      extras.map((piece) => (
+        <div class="tile tile--piece reveal">
+          <VisualPiece piece={piece} sizes={pieceSizes} />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  /* Lets the grid size its rows from its own width. */
+  .gallery-frame {
+    container-type: inline-size;
+  }
+
+  /* Phones and tablets: two columns. Each case study spans the full
+     width (details shown under the image); two pieces sit side by
+     side below it. */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-flow: dense;
+    gap: var(--gallery-gap);
+  }
+
+  .tile--case {
+    grid-column: 1 / -1;
+    margin-bottom: var(--space-5);
+  }
+
+  .tile--piece {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Wide screens: three columns. Each case study takes two columns and
+     two rows (alternating left and right); its two pieces stack beside
+     it. Every row is the same height, so there are no empty gaps. */
+  @media (min-width: 64rem) {
+    .gallery {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: calc((100cqi - 2 * var(--gallery-gap)) / 3 * 0.75);
+    }
+
+    .tile--case {
+      grid-column: 1 / span 2;
+      grid-row: span 2;
+      margin-bottom: 0;
+    }
+
+    .tile--case.tile--right {
+      grid-column: 2 / span 2;
+    }
+
+    .tile--piece {
+      aspect-ratio: auto;
+    }
+  }
+</style>

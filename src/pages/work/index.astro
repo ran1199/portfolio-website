@@ -1,0 +1,25 @@
+---
+// Work page (the "Work" menu link): the same gallery as Home, without the
+// intro line, starting just under the menu like the Play page.
+import { getEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import WorkGallery from "../../components/WorkGallery.astro";
+
+const site = (await getEntry("site", "site"))!.data;
+---
+
+<BaseLayout title={site.menu.work}>
+  <div class="container work">
+    <!-- Hidden title: not shown on screen, but screen readers still
+         announce the page name. -->
+    <h1 class="visually-hidden">{site.menu.work}</h1>
+    <WorkGallery />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Same small gap under the menu as the Play page. */
+  .work {
+    padding-top: var(--space-5);
+  }
+</style>
