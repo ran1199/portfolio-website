@@ -72,6 +72,27 @@ Tick an item (`[x]`) when it's done.
   - [ ] `screen-before.png` — interactive screen before the change
   - [ ] `screen-kids-height.png` — screen with a child reaching the button (mascots first)
 
+### WonderWeave (`content/case-studies/wonderweave.md`, visual-first)
+- [ ] Parents' consent to use their interview quotes (currently: "A father in Beijing (parent interview; names changed for privacy)")
+- [ ] Confirm how the psychotherapist is credited (currently by role only: "Psychotherapist specializing in family counseling")
+- [ ] Illustrative-image labels: if `cover` or any exhibition render shows stock or illustrative people, label it (caption, or a `notice` line for the cover)
+- [ ] `research-journey`: crop out the parent's photo and name before exporting
+- [ ] `support-before`: export it if you have it; otherwise keep the placeholder
+- [ ] Tester quote is optional — keep or delete (no photo either way)
+- [ ] Check each image's alt text matches the real export once it's in
+- [ ] Replace the 19 labeled grey placeholder images in `content/images/wonderweave/` with Figma exports (same file names):
+  - [ ] `cover.jpg` — exhibition gallery scene (label stock people as illustrative)
+  - [ ] `research-journey.png` — timeline and emotional experiences chart (crop out the parent's photo and name)
+  - [ ] `scenes.png` — "How it works" row of 5 scenes
+  - [ ] `visit-step-1.png` … `visit-step-4.png` — experience process icons and illustrations
+  - [ ] `touch-video.png`, `touch-prompt.png`, `support-cards.png` — interaction touchpoints
+  - [ ] `prototype-model.jpg`, `prototype-videos.png` — Makey Makey cardboard model and video tests
+  - [ ] `space.png` — space and visitor flow diagram
+  - [ ] `app-weekly.png`, `app-grow.png`, `app-exhibition.png` — final app screens
+  - [ ] `app-ia.png` — information architecture
+  - [ ] `support-before.png` — Support screen before testing (location and feeling only)
+  - [ ] `support-after.png` — Support screen after ("I feel… / I want to…")
+
 ## Files to provide
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
 - [ ] Figma exports for each case study (one folder per project)

@@ -75,7 +75,9 @@ sections:
           - text: "What the person said."
             credit: "Who said it, e.g. by role only"
       # TEXT CARDS: small cards with a title and one line each.
-      - tiles:
+      # "label" (optional, works on any block) adds a small heading above.
+      - label: "Design focus"
+        tiles:
           - title: "Card title"
             text: "One short line."
 
