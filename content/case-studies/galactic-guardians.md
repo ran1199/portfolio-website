@@ -15,7 +15,7 @@ role: "Individual project"
 dates: "Sep–Nov 2024"
 tags: ["Game Design", "UI/UX Design", "Educational Design"]
 cover: "cover.jpg"
-coverAlt: "Ran playing the Galactic Guardians board game"
+coverAlt: "The Galactic Guardians board game set up on a round table, with a player thinking about their next move"
 
 # ── SECTIONS (numbered 01, 02… in this order) ────────────────
 sections:
