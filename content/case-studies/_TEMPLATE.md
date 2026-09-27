@@ -35,6 +35,8 @@ dates: "Jan–Mar 2026"
 tags: ["UX Design", "Research"]
 cover: ""                 # main image, e.g. "cover.jpg"
 coverAlt: ""              # description of the cover image
+coverFocus: "center"      # which part of the cover the Home/Work gallery tile
+                          # keeps when it trims the sides: left, center or right
 notice: ""                # optional small note directly under the cover image
                           # (e.g. "Self-initiated concept. Not affiliated with …")
 

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const { study, priority = false } = Astro.props;
-const { title, summary, cover, coverAlt } = study.data;
+const { title, summary, cover, coverAlt, coverFocus } = study.data;
 const coverImage = cover ? findImage(study.id, cover) : undefined;
 ---
 
@@ -28,6 +28,7 @@ const coverImage = cover ? findImage(study.id, cover) : undefined;
             widths={[640, 960, 1280, 1600]}
             sizes="(min-width: 48rem) 58vw, 100vw"
             priority={priority}
+            style={`object-position: ${coverFocus} center`}
           />
         ) : (
           <div class="case__placeholder">[PLACEHOLDER: cover image]</div>
