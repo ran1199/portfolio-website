@@ -22,9 +22,9 @@ Tick an item (`[x]`) when it's done.
   - [x] `research-causes.png` — "Sibling rivalry — 3 major reasons" graphic — added; Ran confirmed the children's photos are OK to use; labelled "Illustrative stock photos."
   - [x] `minigame-1.png` … `minigame-5.png` — theory illustrations added
   - [x] `minigame-6.png` — Gift-Exchange Game illustration — added
-  - [ ] `board.png` — full board / map
-  - [ ] `characters.png` — Nova, Orion, Stella, Cosmo
-  - [ ] `event-cards.png` — the four event card types
+  - [x] `board.png` — full board / map — added
+  - [x] `characters.png` — Nova, Orion, Stella, Cosmo — added
+  - [x] `event-cards.png` — the four event card types — added
   - [ ] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos
   - [ ] `app-leaderboard.png`, `app-performance.png`, `app-dashboard.png`, `app-insights.png` — app screens
   - [ ] `app-ia.png` — information architecture

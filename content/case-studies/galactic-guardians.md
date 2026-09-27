@@ -66,12 +66,12 @@ sections:
       # Game world: the first image shows large, the rest side by side.
       - gallery:
           - image: "board.png"
-            alt: "The full Galactic Guardians game board"
+            alt: "The full Galactic Guardians game board: four planets in the center, skill panels on all four sides, with the characters, resource tokens and event card decks around it"
           - image: "characters.png"
-            alt: "The four characters: Nova, Orion, Stella and Cosmo"
+            alt: "The four characters, Nova, Orion, Stella and Cosmo, drawn as colorful monsters"
             caption: "Four characters, each with a unique skill and starting resources."
           - image: "event-cards.png"
-            alt: "The four event card types"
+            alt: "The four event card types, each card back shown beside an example card: Mimic, Flare of Despair, Galactic Station Build and Energy Surge"
             caption: "Game Skill, Contingency, Mini-Game and Surprise cards shape each round."
 
       # How it's played: Product Trial photos, one per step.
