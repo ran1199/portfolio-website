@@ -11,7 +11,7 @@ Tick an item (`[x]`) when it's done.
 
 ### Galactic Guardians (`content/case-studies/galactic-guardians.md`, visual-first)
 - [ ] One intro line: how classic game theory scenarios inspired the mini-games
-- [ ] Mini-game names for all six theories (Cake-Cutting Problem, Public Goods Game — possibly "Galactic Station Build", Volunteer's Dilemma, Prisoner's Dilemma, King's Wise Men Puzzle, Gift-Exchange Game)
+- [ ] Mini-game names for all six theories (Cake-Cutting Problem, Public Goods Game, Volunteer's Dilemma, Prisoner's Dilemma, King's Wise Men Puzzle, Gift-Exchange Game)
 - [ ] If the "3 major reasons" graphic is based on published research, add a source line
 - [ ] Optional: one headline statistic with its source (goes in "Problem and insight")
 - [ ] Permission check: do any Product Trial photos (`play-step-1` … `5`) show children or identifiable people?

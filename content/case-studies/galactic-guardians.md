@@ -41,7 +41,7 @@ sections:
             image: "minigame-1.png"
             alt: "Cake-Cutting Problem illustration: two children share a cake, shown in four steps"
           - from: "Public Goods Game"
-            to: "[PLACEHOLDER: mini-game — possibly \"Galactic Station Build\", to confirm]"
+            to: "[PLACEHOLDER: mini-game]"
             image: "minigame-2.png"
             alt: "Public Goods Game illustration: three children add coins to a piggy bank, the total is doubled and shared equally"
           - from: "Volunteer's Dilemma"
