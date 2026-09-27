@@ -5,7 +5,7 @@ Tick an item (`[x]`) when it's done.
 
 ## Content to write
 - [ ] About intro paragraph — `content/about.md`
-- [ ] Refine the six About timeline one-liners (currently drafts) — `content/about.md`
+- [x] About timeline one-liners — finalized by Ran (7 entries, incl. Hearst China | SuperELLE Magazine)
 - [ ] Final wording of the Home intro line — `content/site.yaml`
 - [ ] Full text for each case study section (Phase 4)
 
