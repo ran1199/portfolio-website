@@ -10,8 +10,15 @@
 #   role:  your job title or degree
 #   note:  one short line about what you did (drafts — refine anytime)
 # To add an entry, copy an existing one (all four lines) and edit it.
+#
+# Other text on the page:
+#   title:           the page heading
+#   resumeButton:    the words on the résumé download button
+#   timelineHeading: the small heading above the timeline
 # ─────────────────────────────────────────────────────────────
 title: "About"
+resumeButton: "Download résumé"
+timelineHeading: "Experience and education"
 
 timeline:
   - when: "May–Aug 2026"

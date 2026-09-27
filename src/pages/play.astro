@@ -1,32 +1,60 @@
 ---
-// Play page. The grid of visual work is built in Phase 5.
-import { getEntry } from "astro:content";
+// Play page: every visual piece from content/play.yaml, in file order.
+// Just for looking — pieces are never links. Until there are any,
+// grey placeholders stand in.
+import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import VisualPiece from "../components/VisualPiece.astro";
 
 const site = (await getEntry("site", "site"))!.data;
+const pieces = await getCollection("play");
+const PLACEHOLDER_COUNT = 9;
+const items = pieces.length ? pieces : Array.from({ length: PLACEHOLDER_COUNT }, () => undefined);
 ---
 
 <BaseLayout title={site.menu.play}>
-  <section class="container page">
+  <div class="container play">
     <h1>{site.menu.play}</h1>
-    <p class="placeholder">[PLACEHOLDER: Grid of visual work — built in Phase 5]</p>
-  </section>
+    <ul class="play__grid">
+      {
+        items.map((piece) => (
+          <li class="play__item reveal">
+            <VisualPiece piece={piece} fit="contain" sizes="(min-width: 64rem) 30vw, 48vw" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </BaseLayout>
 
 <style>
-  .page {
+  .play {
     padding-top: var(--space-9);
   }
+
   h1 {
+    margin-bottom: var(--space-7);
     font-size: var(--text-2xl);
     font-weight: var(--weight-regular);
-    margin-bottom: var(--space-7);
   }
-  .placeholder {
-    padding: var(--space-9) var(--space-5);
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-    text-align: center;
+
+  /* Square tiles: two across on phones and tablets, three on wide screens. */
+  .play__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gallery-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .play__item {
+    aspect-ratio: 1 / 1;
+  }
+
+  @media (min-width: 64rem) {
+    .play__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 </style>

@@ -164,6 +164,8 @@ const about = defineCollection({
   loader: glob({ pattern: "about.md", base: "./content" }),
   schema: z.object({
     title: z.string(),
+    resumeButton: z.string().default("Download résumé"),
+    timelineHeading: z.string().default("Experience and education"),
     timeline: z.array(
       z.object({
         when: z.string(),

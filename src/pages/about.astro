@@ -1,39 +1,232 @@
 ---
-// About page. The intro text comes from content/about.md.
-// The timeline and résumé button are built in Phase 5.
-import { getEntry, render } from "astro:content";
+// About page: intro, résumé download and email, then the timeline.
+// All words come from content/about.md (and the email from site.yaml).
+import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CopyEmail from "../components/CopyEmail.astro";
+import Text from "../components/case/Text.astro";
+import Inline from "../components/case/Inline.astro";
+import { withBase } from "../lib/url";
 
+const site = (await getEntry("site", "site"))!.data;
 const about = (await getEntry("about", "about"))!;
-const { Content } = await render(about);
+const { title, resumeButton, timelineHeading, timeline } = about.data;
+// The intro is the plain text after the second "---" in about.md.
+const intro = (about.body ?? "").trim();
 ---
 
-<BaseLayout title={about.data.title}>
-  <section class="container page">
-    <h1>{about.data.title}</h1>
-    <div class="intro"><Content /></div>
-    <p class="placeholder">[PLACEHOLDER: Timeline and résumé button — built in Phase 5]</p>
-  </section>
+<BaseLayout title={title}>
+  <div class="container about">
+    <section class="about__intro">
+      <h1>{title}</h1>
+      {intro && <Text text={intro} class="about__text" />}
+      <div class="about__actions">
+        <a class="button" href={withBase("resume.pdf")} download>
+          {resumeButton} <span aria-hidden="true">↓</span>
+        </a>
+        <span class="about__email">
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <CopyEmail email={site.email} label="Copy" />
+        </span>
+      </div>
+    </section>
+
+    <section class="timeline reveal" aria-labelledby="timeline-heading">
+      <h2 id="timeline-heading" class="timeline__heading">{timelineHeading}</h2>
+      <ol class="timeline__list">
+        {
+          timeline.map((item) => (
+            <li class="timeline__item">
+              <p class="timeline__when">{item.when}</p>
+              <div class="timeline__body">
+                <p class="timeline__role">
+                  <Inline text={item.role} />
+                </p>
+                <p class="timeline__where">
+                  <Inline text={item.where} />
+                </p>
+                <p class="timeline__note">
+                  <Inline text={item.note} />
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .page {
+  .about {
+    display: grid;
+    gap: var(--space-9);
     padding-top: var(--space-9);
   }
+
+  /* ── Intro, résumé and email ── */
+  .about__intro {
+    display: grid;
+    gap: var(--space-6);
+    align-content: start;
+  }
+
   h1 {
     font-size: var(--text-2xl);
     font-weight: var(--weight-regular);
-    margin-bottom: var(--space-7);
   }
-  .intro {
-    max-width: var(--reading-max);
-    margin-bottom: var(--space-8);
+
+  .about__intro :global(.about__text) {
+    font-size: var(--text-lg);
+    line-height: 1.5;
   }
-  .placeholder {
-    padding: var(--space-9) var(--space-5);
-    background: var(--color-surface);
+
+  .about__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-6);
+    margin-top: var(--space-2);
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-pill);
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: opacity var(--duration-fast) var(--ease);
+  }
+
+  .button:hover {
+    color: var(--color-bg);
+    opacity: 0.85;
+  }
+
+  .about__email {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  /* ── Timeline: a thin line with a dot for each entry ── */
+  .timeline__heading {
+    margin-bottom: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .timeline__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline__item {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    padding: 0 0 var(--space-7) var(--space-6);
+    border-left: 1px solid var(--color-line);
+  }
+
+  .timeline__item:last-child {
+    padding-bottom: 0;
+  }
+
+  /* The dot on the line. */
+  .timeline__item::before {
+    content: "";
+    position: absolute;
+    top: 0.45em;
+    left: -4.5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 1px solid var(--color-text);
+  }
+
+  .timeline__item:first-child::before {
+    background: var(--color-text);
+  }
+
+  .timeline__when {
     color: var(--color-text-muted);
     font-size: var(--text-sm);
-    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline__body {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .timeline__role {
+    font-weight: var(--weight-medium);
+  }
+
+  .timeline__where {
+    font-size: var(--text-sm);
+  }
+
+  .timeline__note {
+    max-width: 36rem;
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* Wide screens: intro on the left, timeline on the right;
+     dates sit in their own column beside the line. */
+  @media (min-width: 64rem) {
+    .about {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: var(--space-9);
+    }
+
+    .about__intro {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+    }
+
+    .timeline {
+      padding-top: var(--space-2);
+    }
+
+    .timeline__item {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      column-gap: var(--space-5);
+      padding: 0;
+      border-left: 0;
+    }
+
+    .timeline__when {
+      text-align: right;
+    }
+
+    .timeline__body {
+      padding: 0 0 var(--space-7) var(--space-6);
+      border-left: 1px solid var(--color-line);
+    }
+
+    .timeline__item:last-child .timeline__body {
+      padding-bottom: 0;
+    }
+
+    .timeline__item::before {
+      left: calc(11rem + var(--space-5) - 4.5px);
+    }
   }
 </style>

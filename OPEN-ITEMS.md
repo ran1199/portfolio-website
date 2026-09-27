@@ -98,7 +98,9 @@ Tick an item (`[x]`) when it's done.
 - [ ] Figma exports for each case study (one folder per project)
 - [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
 - [ ] Choose 8 visual pieces for Home (`home: true` in `content/play.yaml`) — 2 sit beside each case study; add a `title` and `tags` for the hover labels
-- [ ] Visual work for Play and Home (images, MP4s, GIFs)
+- [ ] Visual work for Play and Home (images, MP4s, GIFs) — add each to `content/images/play/` and one entry in `content/play.yaml` (the Play page shows 9 grey placeholders until then)
+- [ ] GIFs: will be converted to MP4 so pages stay fast. This needs a video tool (ffmpeg) installed on the cloud computer — Claude will ask before installing
+- [ ] Each video needs a poster image (a still shown until it loads)
 - [ ] Short demo clip of the Galactic Guardians photo-detection proof of concept
 
 ## Sources needed

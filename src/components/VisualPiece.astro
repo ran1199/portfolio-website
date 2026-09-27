@@ -10,9 +10,11 @@ import { findImage, findVideo } from "../lib/media";
 interface Props {
   piece?: CollectionEntry<"play">; // leave empty to show a grey placeholder
   sizes: string;                   // how wide the piece shows on screen
+  fit?: "cover" | "contain";       // cover = fill the tile (may crop);
+                                   // contain = show the whole piece
 }
 
-const { piece, sizes } = Astro.props;
+const { piece, sizes, fit = "cover" } = Astro.props;
 const data = piece?.data;
 const image = data?.type === "image" ? findImage("play", data.file) : undefined;
 const video = data?.type === "video" ? findVideo("play", data.file) : undefined;
@@ -26,7 +28,7 @@ const labels = data
   : ["[PLACEHOLDER: title]", "[PLACEHOLDER: tags]"];
 ---
 
-<figure class="piece">
+<figure class:list={["piece", { "piece--contain": fit === "contain" }]}>
   {
     image && data ? (
       <Image src={image} alt={data.alt} widths={[480, 800, 1200, 1600]} sizes={sizes} />
@@ -75,6 +77,12 @@ const labels = data
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* Show the whole piece, centred on the soft grey tile. */
+  .piece--contain img,
+  .piece--contain video {
+    object-fit: contain;
   }
 
   .piece__placeholder {
