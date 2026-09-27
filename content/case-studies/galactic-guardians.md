@@ -59,7 +59,7 @@ sections:
           - from: "Gift-Exchange Game"
             to: "[PLACEHOLDER: mini-game]"
             image: "minigame-6.png"
-            alt: "Mini-game card inspired by the Gift-Exchange Game"
+            alt: "Gift-Exchange Game illustration: four scenarios where a child does or doesn't eat their vegetables and a parent does or doesn't give a treat"
 
   - heading: "The game"
     blocks:
