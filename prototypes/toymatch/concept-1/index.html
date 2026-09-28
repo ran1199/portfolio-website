@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ToyMatch Concept 1</title>
+<meta name="description" content="ToyMatch Concept 1: an interactive iPhone prototype for choosing a birthday gift for a child aged 3 to 12. All prices, reviews and availability are sample demo data.">
+<style>
+/*
+  ToyMatch — Concept 1 (iPhone app prototype, previewed in a browser)
+  Layout: one iPhone-sized app column. On a computer it sits centered in a phone frame;
+  on a phone it fills the screen. Each screen is an iOS-style stacked view.
+*/
+:root {
+  --desk: #E7E4DE;        /* area around the phone on a computer */
+  --frame: #1C1B1A;       /* phone bezel */
+  --app: #F4F3F0;         /* app background (grouped iOS background) */
+  --surface: #FFFFFF;     /* cards and sheets */
+  --ink: #1D1C1A;         /* main text */
+  --ink-2: #5D5953;       /* secondary text */
+  --ink-3: #85807A;       /* captions */
+  --line: #E2DFD9;        /* hairlines */
+  --accent: #1D6962;      /* ToyMatch teal: buttons, links, selection */
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E1EFED;
+  --sun: #E9A21F;         /* rating stars, gift ribbon */
+  --fit: #2B7348;         --fit-soft: #E4F2E8;      /* known fit */
+  --unsure: #7F5500;      --unsure-soft: #FAEFD6;   /* uncertain fit */
+  --warn: #A13A1F;        --warn-soft: #FBE6DF;     /* caution / warnings */
+  --demo: #5C4F8F;        --demo-soft: #ECE8F7;     /* "sample data" labels */
+  --tile-a: #FBE7D6; --tile-b: #DFECF6; --tile-c: #E3F1E1; --tile-d: #EDE5F6; --tile-e: #FAF0CC;
+
+  --font-display: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --t-large: 1.875rem;   /* 30px large title */
+  --t-title: 1.375rem;   /* 22px */
+  --t-head: 1.0625rem;   /* 17px headline / body */
+  --t-sub: 0.9375rem;    /* 15px */
+  --t-foot: 0.8125rem;   /* 13px */
+  --t-cap: 0.75rem;      /* 12px */
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px; --s7: 32px; --s8: 44px;
+  --r-card: 16px; --r-btn: 14px; --r-chip: 999px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #0F0F0E; --frame: #000000; --app: #121211; --surface: #1E1E1C;
+    --ink: #F2F0EC; --ink-2: #B3AEA6; --ink-3: #8E8981; --line: #34332F;
+    --accent: #5DB8AD; --accent-ink: #0B2421; --accent-soft: #1A3330; --sun: #F0B447;
+    --fit: #7ACB95; --fit-soft: #1B3224; --unsure: #E8B75E; --unsure-soft: #372B13;
+    --warn: #F29A80; --warn-soft: #3B2019; --demo: #B8ACEB; --demo-soft: #2A2540;
+    --tile-a: #3A2D22; --tile-b: #213040; --tile-c: #223224; --tile-d: #2E2739; --tile-e: #36301A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --desk: #0F0F0E; --frame: #000000; --app: #121211; --surface: #1E1E1C;
+  --ink: #F2F0EC; --ink-2: #B3AEA6; --ink-3: #8E8981; --line: #34332F;
+  --accent: #5DB8AD; --accent-ink: #0B2421; --accent-soft: #1A3330; --sun: #F0B447;
+  --fit: #7ACB95; --fit-soft: #1B3224; --unsure: #E8B75E; --unsure-soft: #372B13;
+  --warn: #F29A80; --warn-soft: #3B2019; --demo: #B8ACEB; --demo-soft: #2A2540;
+  --tile-a: #3A2D22; --tile-b: #213040; --tile-c: #223224; --tile-d: #2E2739; --tile-e: #36301A;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--desk); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--t-head); line-height: 1.4;
+  -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;
+}
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Stage + phone frame ---------- */
+.stage { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s3); padding-block: var(--s4); padding-inline: var(--s4); }
+.phone {
+  position: relative; width: 390px; max-width: 100%; height: min(844px, calc(100% - 40px));
+  background: var(--app); border-radius: 54px; overflow: hidden;
+  box-shadow: 0 0 0 11px var(--frame), 0 0 0 12px color-mix(in srgb, var(--frame) 70%, #888), 0 30px 60px -20px rgba(0,0,0,.35);
+  display: flex; flex-direction: column;
+}
+.statusbar { flex: 0 0 auto; height: 50px; padding: 16px 30px 0 34px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; background: var(--app); position: relative; z-index: 3; }
+.statusbar .island { position: absolute; left: 50%; top: 11px; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: var(--frame); }
+.statusbar svg { display: block; }
+.homebar { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: var(--ink); opacity: .85; z-index: 5; pointer-events: none; }
+.screen { position: relative; flex: 1 1 auto; min-height: 0; }
+.stage-note { font-size: var(--t-cap); color: var(--ink-2); text-align: center; display: flex; gap: var(--s3); align-items: center; flex-wrap: wrap; justify-content: center; }
+.stage-note button { background: none; border: 0; color: var(--accent); font-weight: 600; font-size: var(--t-cap); padding: 6px 4px; text-decoration: underline; text-underline-offset: 2px; }
+
+/* On a real phone (or a narrow/short window), the app fills the screen */
+@media (max-width: 500px), (max-height: 700px) {
+  .stage { padding: 0; gap: 0; }
+  .phone { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
+  .statusbar, .homebar, .stage-note { display: none; }
+}
+
+/* ---------- Views ---------- */
+.view { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; background: var(--app); }
+.view.enter { animation: enter .22s ease-out both; }
+.view.enter-back { animation: enterBack .22s ease-out both; }
+@keyframes enter { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes enterBack { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .view.enter, .view.enter-back { animation: none; } }
+
+.nav { position: sticky; top: 0; z-index: 4; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 44px; padding: 0 var(--s2); background: color-mix(in srgb, var(--app) 88%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid transparent; }
+.nav.scrolled { border-bottom-color: var(--line); }
+.nav-title { font-weight: 600; font-size: var(--t-head); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; text-align: center; }
+.back { justify-self: start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; padding: 0 8px 0 2px; border: 0; background: none; color: var(--accent); font-size: var(--t-head); max-width: 130px; }
+.back span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-right { justify-self: end; }
+.linkbtn { border: 0; background: none; color: var(--accent); font-size: var(--t-head); min-height: 44px; padding: 0 8px; }
+
+.content { flex: 1 0 auto; padding: var(--s2) var(--s4) var(--s7); display: flex; flex-direction: column; gap: var(--s5); }
+.large-title { font-family: var(--font-display); font-size: var(--t-large); line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+.large-title:focus { outline: none; }
+.lede { margin: 0; color: var(--ink-2); font-size: var(--t-sub); }
+h2 { font-family: var(--font-display); font-size: var(--t-title); line-height: 1.2; margin: 0; font-weight: 700; text-wrap: balance; }
+h3 { font-size: var(--t-head); margin: 0; font-weight: 600; }
+p { margin: 0; }
+.muted { color: var(--ink-2); }
+.small { font-size: var(--t-foot); }
+.caption { font-size: var(--t-cap); color: var(--ink-3); }
+.num { font-variant-numeric: tabular-nums; }
+
+.card { background: var(--surface); border-radius: var(--r-card); padding: var(--s4); display: flex; flex-direction: column; gap: var(--s3); min-width: 0; }
+.group { display: flex; flex-direction: column; gap: var(--s2); }
+.group-label { font-size: var(--t-foot); color: var(--ink-2); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; padding-inline: var(--s1); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); min-height: 52px; padding: 0 var(--s5); border-radius: var(--r-btn); border: 0; font-weight: 600; font-size: var(--t-head); text-decoration: none; text-align: center; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary[aria-disabled="true"] { opacity: .45; }
+.btn-secondary { background: var(--accent-soft); color: var(--accent); }
+.btn-plain { background: none; color: var(--accent); min-height: 44px; }
+.btn-block { width: 100%; }
+.bottom-bar { position: sticky; bottom: 0; z-index: 4; margin-top: auto; padding: var(--s3) var(--s4) calc(var(--s4) + env(safe-area-inset-bottom, 0px)); background: color-mix(in srgb, var(--app) 90%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: var(--s2); }
+@media (min-width: 501px) and (min-height: 701px) { .bottom-bar { padding-bottom: 30px; } }
+.bottom-bar .hint { font-size: var(--t-foot); color: var(--ink-2); text-align: center; }
+
+/* Chips */
+.chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.chip { min-height: 44px; padding: 0 var(--s4); border-radius: var(--r-chip); border: 1.5px solid var(--line); background: var(--surface); font-size: var(--t-sub); font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip.unsure[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--app); }
+.chip .tick { display: none; }
+.chip[aria-pressed="true"] .tick { display: inline; }
+.age-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s2); }
+.age-grid .chip { justify-content: center; padding: 0; font-size: var(--t-head); font-variant-numeric: tabular-nums; border-radius: 12px; }
+
+/* Form fields */
+.field { display: flex; align-items: center; gap: var(--s2); min-height: 52px; padding: 0 var(--s4); border-radius: 12px; background: var(--app); border: 1.5px solid var(--line); }
+.field:focus-within { border-color: var(--accent); }
+.field input { flex: 1; min-width: 0; border: 0; background: none; font-size: var(--t-head); min-height: 48px; outline: none; font-variant-numeric: tabular-nums; }
+.field .prefix { color: var(--ink-2); font-weight: 600; }
+.field[aria-invalid="true"], .card[aria-invalid="true"] { border-color: var(--warn); }
+.card[aria-invalid="true"] { box-shadow: 0 0 0 1.5px var(--warn); }
+.q { display: flex; flex-direction: column; gap: 2px; }
+.q-help { font-size: var(--t-foot); color: var(--ink-2); }
+.err { color: var(--warn); font-size: var(--t-foot); font-weight: 600; }
+.date-note { font-size: var(--t-foot); color: var(--ink-2); }
+
+/* Badges */
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: var(--t-cap); font-weight: 600; padding: 3px 8px; border-radius: 6px; line-height: 1.3; }
+.badge-demo { background: var(--demo-soft); color: var(--demo); }
+.badge-fit { background: var(--fit-soft); color: var(--fit); }
+.badge-unsure { background: var(--unsure-soft); color: var(--unsure); }
+.badge-warn { background: var(--warn-soft); color: var(--warn); }
+.demo-note { display: flex; gap: var(--s2); align-items: flex-start; font-size: var(--t-foot); color: var(--demo); background: var(--demo-soft); padding: var(--s3); border-radius: 12px; }
+.demo-note svg { flex: 0 0 auto; margin-top: 1px; }
+
+/* Toy art */
+.art { flex: 0 0 auto; border-radius: 14px; display: grid; place-items: center; overflow: hidden; }
+.art svg { width: 82%; height: 82%; display: block; }
+.tile-a { background: var(--tile-a); } .tile-b { background: var(--tile-b); } .tile-c { background: var(--tile-c); } .tile-d { background: var(--tile-d); } .tile-e { background: var(--tile-e); }
+
+/* Rating */
+.rating { display: inline-flex; align-items: center; gap: 4px; font-size: var(--t-foot); color: var(--ink-2); flex-wrap: wrap; }
+.rating strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+.star { color: var(--sun); }
+
+/* Home */
+.home { justify-content: space-between; }
+.home .content { justify-content: center; gap: var(--s6); padding-top: var(--s7); }
+.brand { display: flex; align-items: center; gap: var(--s3); }
+.brand-name { font-family: var(--font-display); font-weight: 800; font-size: var(--t-title); letter-spacing: -0.01em; }
+.home-art { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+.home-art .art { aspect-ratio: 1; }
+.home-art .art:nth-child(2) { transform: translateY(14px); }
+.promise { display: flex; flex-direction: column; gap: var(--s3); margin: 0; padding: 0; list-style: none; }
+.promise li { display: flex; gap: var(--s3); align-items: flex-start; font-size: var(--t-sub); }
+.promise .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+
+/* Shortlist */
+.summary { display: flex; flex-wrap: wrap; gap: 6px; }
+.summary .pill { font-size: var(--t-foot); padding: 5px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--ink-2); }
+.summary .pill b { color: var(--ink); font-weight: 600; }
+.toy-card { background: var(--surface); border-radius: var(--r-card); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.toy-main { display: flex; gap: var(--s3); padding: var(--s4) var(--s4) var(--s3); text-align: left; background: none; border: 0; width: 100%; align-items: flex-start; }
+.toy-main .art { width: 88px; height: 88px; }
+.toy-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.toy-name { font-weight: 650; font-size: var(--t-head); line-height: 1.25; }
+.toy-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: var(--t-foot); color: var(--ink-2); }
+.toy-meta .price { color: var(--ink); font-weight: 700; font-size: var(--t-sub); }
+.why { margin: 0 var(--s4); padding: var(--s3); border-radius: 12px; background: var(--app); font-size: var(--t-foot); display: flex; flex-direction: column; gap: 6px; }
+.why-line { display: flex; gap: 8px; align-items: flex-start; }
+.why-line svg { flex: 0 0 auto; margin-top: 2px; }
+.toy-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding: var(--s2) var(--s2) var(--s2) var(--s4); }
+.cmp-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 var(--s3); border-radius: 12px; border: 0; background: none; color: var(--ink); font-size: var(--t-sub); font-weight: 500; }
+.box { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--ink-3); display: grid; place-items: center; }
+.cmp-toggle[aria-pressed="true"] .box { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.cmp-toggle[aria-disabled="true"] { opacity: .45; }
+.details-link { color: var(--accent); font-weight: 600; font-size: var(--t-sub); border: 0; background: none; min-height: 44px; padding: 0 var(--s3); display: inline-flex; align-items: center; gap: 2px; }
+.rank { font-size: var(--t-cap); font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+.filter-note { font-size: var(--t-foot); color: var(--ink-2); }
+
+/* Compare */
+.cmp { --cols: 2; display: flex; flex-direction: column; gap: 0; background: var(--surface); border-radius: var(--r-card); }
+.cmp-head { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: var(--s2); padding: var(--s3); position: sticky; top: 44px; z-index: 3; background: var(--surface); border-bottom: 1px solid var(--line); border-radius: var(--r-card) var(--r-card) 0 0; }
+.cmp-col-head { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cmp-col-head .art { width: 100%; height: 64px; }
+.cmp-col-head .nm { font-size: var(--t-foot); font-weight: 650; line-height: 1.25; }
+.cmp-row { padding: var(--s3); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.cmp-row:last-child { border-bottom: 0; }
+.cmp-label { font-size: var(--t-cap); font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .05em; }
+.cmp-vals { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: var(--s2); font-size: var(--t-foot); line-height: 1.35; }
+.cmp-vals > div { min-width: 0; overflow-wrap: anywhere; display: flex; flex-direction: column; gap: 4px; }
+.cmp-vals .big { font-size: var(--t-sub); font-weight: 700; font-variant-numeric: tabular-nums; }
+.cmp-vals ul { margin: 0; padding-left: 14px; }
+.cmp-vals li + li { margin-top: 3px; }
+.cmp-foot { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: var(--s2); padding: var(--s3); }
+.cmp-foot .btn { min-height: 44px; padding: 0 6px; font-size: var(--t-foot); }
+.cmp-best { font-size: var(--t-cap); font-weight: 700; color: var(--fit); }
+
+/* Details */
+.hero-art { width: 100%; aspect-ratio: 1.45; border-radius: 20px; position: relative; }
+.hero-art svg { width: 60%; height: 80%; }
+.hero-art .badge { position: absolute; left: 10px; bottom: 10px; background: color-mix(in srgb, var(--surface) 85%, transparent); color: var(--ink-2); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; font-size: var(--t-sub); margin: 0; }
+.kv dt { color: var(--ink-2); }
+.kv dd { margin: 0; min-width: 0; }
+.list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: var(--t-sub); }
+.list li { display: flex; gap: 10px; align-items: flex-start; }
+.list li svg { flex: 0 0 auto; margin-top: 3px; }
+.reason { display: flex; gap: 10px; align-items: flex-start; }
+.reason .ic { flex: 0 0 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; }
+.reason .ic.known { background: var(--fit-soft); color: var(--fit); }
+.reason .ic.unsure { background: var(--unsure-soft); color: var(--unsure); }
+.reason .ic.caution { background: var(--warn-soft); color: var(--warn); }
+.reason-t { font-weight: 600; font-size: var(--t-sub); }
+.reason-d { font-size: var(--t-foot); color: var(--ink-2); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.split { display: grid; grid-template-columns: 1fr; gap: var(--s3); }
+.sources { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: var(--t-foot); color: var(--ink-2); }
+.sources li { display: flex; gap: 8px; }
+.warn-box { background: var(--warn-soft); color: var(--warn); border-radius: 12px; padding: var(--s3); font-size: var(--t-foot); display: flex; flex-direction: column; gap: 6px; }
+.warn-box ul { margin: 0; padding-left: 18px; color: var(--ink); }
+.toy-title { display: flex; flex-direction: column; gap: 6px; }
+
+/* Retailer */
+.buy-toy { display: flex; gap: var(--s3); align-items: center; }
+.buy-toy .art { width: 72px; height: 72px; }
+.retailer { display: flex; align-items: center; gap: var(--s3); }
+.retailer-logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: #fff; }
+.retailer-logo.brightcart { background: #3E6FB0; }
+.retailer-logo.harbor { background: #7A4E9E; }
+.stock { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.stock::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.stock.in { color: var(--fit); } .stock.low { color: var(--unsure); }
+
+/* Handoff */
+.handoff .content { justify-content: center; align-items: stretch; text-align: center; gap: var(--s5); }
+.handoff-flow { display: flex; align-items: center; justify-content: center; gap: var(--s3); }
+.handoff-flow .node { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 26px; }
+.handoff-flow .tm { background: var(--accent); color: var(--accent-ink); }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); animation: pulse 1.4s ease-in-out infinite; }
+.dots i:nth-child(2) { animation-delay: .2s; } .dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes pulse { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .dots i { animation: none; opacity: .6; } }
+.urlbar { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: var(--t-foot); color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; overflow-wrap: anywhere; text-align: left; }
+.sim-banner { border: 1.5px dashed var(--demo); color: var(--demo); background: var(--demo-soft); border-radius: 12px; padding: var(--s3); font-size: var(--t-foot); text-align: left; display: flex; flex-direction: column; gap: 4px; }
+.sim-banner strong { font-size: var(--t-sub); }
+.empty { text-align: center; padding: var(--s6) var(--s4); }
+</style>
+
+<div class="stage">
+  <div class="phone" id="phone">
+    <div class="statusbar" aria-hidden="true">
+      <span class="num">9:41</span>
+      <span class="island"></span>
+      <span style="display:flex;gap:6px;align-items:center">
+        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg>
+        <svg width="26" height="12" viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="17" height="8" rx="1.8" fill="currentColor"/><rect x="24" y="4" width="1.8" height="4" rx="1" fill="currentColor" opacity=".5"/></svg>
+      </span>
+    </div>
+    <main class="screen" id="screen" aria-live="polite"></main>
+    <div class="homebar" aria-hidden="true"></div>
+  </div>
+  <p class="stage-note">ToyMatch — Concept 1 · iPhone app prototype · all toys, prices and reviews are sample data <button type="button" id="restart">Restart prototype</button></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =========================================================
+     SAMPLE CATALOG (demo data only)
+     Every toy, maker, retailer, price, rating and review summary below
+     is invented for this prototype. None of it describes a real product.
+     ========================================================= */
+
+  const INTERESTS = [
+    { id: "building", label: "Building" },
+    { id: "art", label: "Arts & crafts" },
+    { id: "science", label: "Science & nature" },
+    { id: "pretend", label: "Pretend play" },
+    { id: "active", label: "Active & outdoor" },
+    { id: "games", label: "Puzzles & games" },
+    { id: "vehicles", label: "Vehicles & robots" },
+    { id: "music", label: "Music" },
+    { id: "animals", label: "Animals" }
+  ];
+  const OWNED = [
+    { id: "building", label: "Building sets" },
+    { id: "art", label: "Art & craft kits" },
+    { id: "science", label: "Science kits" },
+    { id: "pretend", label: "Pretend-play sets" },
+    { id: "outdoor", label: "Outdoor toys" },
+    { id: "games", label: "Board games & puzzles" },
+    { id: "vehicles", label: "Toy vehicles & robots" },
+    { id: "music", label: "Instruments" }
+  ];
+  const RETAILERS = {
+    brightcart: { name: "Brightcart", initial: "B", cls: "brightcart", domain: "brightcart.example", updatedDaysAgo: 1, updatedTime: "6:40 PM" },
+    harbor: { name: "Harbor Toys", initial: "H", cls: "harbor", domain: "harbortoys.example", updatedDaysAgo: 1, updatedTime: "9:15 PM" }
+  };
+
+  const TOYS = [
+    { id: "marble-run", name: "Snapframe Marble Run, 80 pieces", maker: "Tinkerlane", illo: "marble", tile: "b",
+      price: 34.99, ageMin: 5, ageMax: 10, interests: ["building", "games"], kind: "building", playStyle: "Build, then play; solo or with a partner",
+      rating: 4.6, ratings: 2140, reviewSpan: "Feb 2025 – Aug 2026",
+      strengths: ["Many layouts from one set keep it interesting", "Pieces snap firmly and survive drops", "Good for playing together with a sibling or adult"],
+      drawbacks: ["Marbles roll under furniture and get lost", "Tall builds can tip over on carpet"],
+      assembly: { short: "Child builds; 20–40 min per layout", detail: "Children build each layout from the idea cards. Ages 5–6 may need an adult for the first build." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Contains marbles and small parts: choking hazard for children under 3."],
+      pieces: "80 track pieces + 20 marbles", size: "Box 14 × 11 × 4 in",
+      retailer: "brightcart", availability: "in", shipDays: 3,
+      limits: ["Needs a hard, flat surface to build tall layouts.", "Marble sets are a poor choice if younger siblings under 3 share the play space."] },
+
+    { id: "terrarium", name: "Glow Garden Terrarium Kit", maker: "Sproutly", illo: "terrarium", tile: "c",
+      price: 24.99, ageMin: 6, ageMax: 12, interests: ["science", "art"], kind: "science", playStyle: "Hands-on project, then ongoing care",
+      rating: 4.3, ratings: 860, reviewSpan: "Jan 2025 – Jul 2026",
+      strengths: ["Satisfying to watch the seeds sprout", "Decorating the jar feels personal", "Clear picture instructions"],
+      drawbacks: ["Some seeds do not sprout", "Light-up lid batteries are not included"],
+      assembly: { short: "About 30 min with an adult", detail: "Plant, water and decorate in about 30 minutes. An adult helps with soil and water." },
+      batteries: { short: "3 × AAA, not included", detail: "The light-up lid uses 3 AAA batteries, not included. The kit works without the light." },
+      warnings: ["Contains soil and seeds; not for eating.", "Adult supervision recommended; keep the battery compartment closed."],
+      pieces: "Jar, soil discs, 2 seed packs, stickers, LED lid", size: "Jar 6 in tall",
+      retailer: "harbor", availability: "in", shipDays: 4,
+      limits: ["Results depend on light and watering over several weeks.", "Messy setup; best done at a table."] },
+
+    { id: "microscope", name: "Pocket Microscope Explorer", maker: "Brightlens", illo: "microscope", tile: "b",
+      price: 29.99, ageMin: 8, ageMax: 12, interests: ["science", "animals"], kind: "science", playStyle: "Curious exploring, indoors or out",
+      rating: 4.4, ratings: 1020, reviewSpan: "Mar 2025 – Aug 2026",
+      strengths: ["Easy to focus for beginners", "Built-in light helps outdoors", "Prepared slides are interesting right away"],
+      drawbacks: ["Image is small compared with a desk microscope", "Glass slides can break"],
+      assembly: { short: "None; ready in 2 min", detail: "Insert the included batteries and it is ready to use." },
+      batteries: { short: "2 × AA, included", detail: "Uses 2 AA batteries, included." },
+      warnings: ["Small parts and glass slides: not for children under 3; adult help advised with slides."],
+      pieces: "Microscope, 6 slides, pouch", size: "5.5 in long",
+      retailer: "brightcart", availability: "in", shipDays: 2,
+      limits: ["Best for kids who like looking closely; less engaging for very active play."] },
+
+    { id: "mag-tiles", name: "Magnetic Tile Set, 60 pieces", maker: "Clikwell", illo: "tiles", tile: "e",
+      price: 49.99, ageMin: 3, ageMax: 8, interests: ["building"], kind: "building", playStyle: "Open-ended building",
+      rating: 4.8, ratings: 5310, reviewSpan: "Jan 2025 – Sep 2026",
+      strengths: ["Kids return to it for months", "Easy for small hands to connect", "Works with other tile sets"],
+      drawbacks: ["Large structures collapse easily", "Price is high for the piece count"],
+      assembly: { short: "None", detail: "No assembly. Tiles connect by magnets." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Contains magnets. Remove damaged tiles right away; swallowed magnets can cause serious injury."],
+      pieces: "60 tiles", size: "Tiles 3 in square",
+      retailer: "harbor", availability: "in", shipDays: 3,
+      limits: ["Many families already own a tile set; check if you can.", "Older kids in the range may want more pieces."] },
+
+    { id: "watercolor", name: "Watercolor Studio Set", maker: "Paperfield", illo: "paint", tile: "a",
+      price: 19.99, ageMin: 6, ageMax: 12, interests: ["art"], kind: "art", playStyle: "Quiet, creative, solo",
+      rating: 4.5, ratings: 1480, reviewSpan: "Apr 2025 – Aug 2026",
+      strengths: ["Colors are bright and mix well", "Thick paper does not curl", "Travel case keeps it tidy"],
+      drawbacks: ["Brushes shed after heavy use", "Paints can stain clothes"],
+      assembly: { short: "None", detail: "Ready to use." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Not for children under 3. Paints may stain fabric."],
+      pieces: "24 paints, 3 brushes, 20 sheets", size: "Case 10 × 7 in",
+      retailer: "brightcart", availability: "in", shipDays: 3,
+      limits: ["Works best for kids who already enjoy drawing or painting."] },
+
+    { id: "market", name: "Wooden Market Stand", maker: "Oakhollow", illo: "market", tile: "a",
+      price: 69.99, ageMin: 3, ageMax: 7, interests: ["pretend"], kind: "pretend", playStyle: "Pretend play, great with friends",
+      rating: 4.5, ratings: 740, reviewSpan: "Feb 2025 – Aug 2026",
+      strengths: ["Sturdy wood build", "Encourages role play with others", "Play food included"],
+      drawbacks: ["Assembly takes about an hour", "Takes up floor space"],
+      assembly: { short: "Adult assembly, 45–60 min", detail: "Adult assembly with a screwdriver (included) takes about 45–60 minutes." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Small play-food pieces: choking hazard for children under 3."],
+      pieces: "Stand + 24 play-food pieces", size: "Assembled 36 × 20 × 42 in",
+      retailer: "harbor", availability: "low", shipDays: 6,
+      limits: ["Large box; the family needs space for it.", "Older kids in the range may outgrow pretend shops."] },
+
+    { id: "ukulele", name: "Beginner Ukulele, 21-inch", maker: "Maplesong", illo: "ukulele", tile: "e",
+      price: 39.99, ageMin: 5, ageMax: 12, interests: ["music"], kind: "music", playStyle: "Learning a skill, solo",
+      rating: 4.2, ratings: 1960, reviewSpan: "Jan 2025 – Aug 2026",
+      strengths: ["Real instrument sound for the price", "Comes with a chord chart", "Right size for kids' hands"],
+      drawbacks: ["Needs frequent tuning at first", "Clip-on tuner not included"],
+      assembly: { short: "None; needs tuning", detail: "No assembly. Needs tuning before first play; new strings stretch for about a week." },
+      batteries: { short: "None (tuner sold separately)", detail: "The ukulele needs no batteries. A clip-on tuner, sold separately, usually uses a coin battery." },
+      warnings: ["Strings under tension: adult help advised when changing strings."],
+      pieces: "Ukulele, gig bag, chord chart", size: "21 in long",
+      retailer: "brightcart", availability: "in", shipDays: 4,
+      limits: ["Best when an adult or lessons can help them get started."] },
+
+    { id: "robot", name: "Code-a-Bot Buddy", maker: "Tinkerlane", illo: "robot", tile: "d",
+      price: 54.99, ageMin: 6, ageMax: 10, interests: ["vehicles", "science"], kind: "vehicles", playStyle: "Screen-free coding puzzles",
+      rating: 4.3, ratings: 690, reviewSpan: "May 2025 – Aug 2026",
+      strengths: ["Teaches sequencing without a screen", "Challenge cards get harder gradually", "Durable shell"],
+      drawbacks: ["Needs 4 AA batteries that are not included", "Some kids finish the cards quickly"],
+      assembly: { short: "About 10 min", detail: "Snap on the wheels and insert batteries: about 10 minutes." },
+      batteries: { short: "4 × AA, not included", detail: "Uses 4 AA batteries, not included." },
+      warnings: ["Small parts: not for children under 3."],
+      pieces: "Robot, 40 coding cards, map mat", size: "Robot 5 in tall",
+      retailer: "harbor", availability: "in", shipDays: 5,
+      limits: ["Buy batteries separately so it works on the day."] },
+
+    { id: "dino-dig", name: "Dino Dig Excavation Kit", maker: "Fossilfun", illo: "dig", tile: "a",
+      price: 16.99, ageMin: 5, ageMax: 10, interests: ["science", "animals"], kind: "science", playStyle: "Messy, hands-on discovery",
+      rating: 4.1, ratings: 3200, reviewSpan: "Jan 2025 – Sep 2026",
+      strengths: ["Exciting reveal as fossils appear", "Good value", "Includes goggles and tools"],
+      drawbacks: ["Digging is dusty and messy", "Plaster block is very hard for younger kids"],
+      assembly: { short: "None; 1–2 hours of digging", detail: "No assembly. Digging out all fossils takes about 1–2 hours." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Creates dust: dig over newspaper and wear the included goggles.", "Small parts: not for children under 3."],
+      pieces: "Plaster block, 6 replica fossils, tools, goggles", size: "Block 7 × 5 in",
+      retailer: "brightcart", availability: "in", shipDays: 2,
+      limits: ["One-time activity; once dug out, the fossils become display pieces."] },
+
+    { id: "forest-game", name: "Forest Friends Cooperative Game", maker: "Tabletop Grove", illo: "board", tile: "c",
+      price: 22.99, ageMin: 4, ageMax: 8, interests: ["games", "animals"], kind: "games", playStyle: "Play together; players team up",
+      rating: 4.7, ratings: 1150, reviewSpan: "Feb 2025 – Aug 2026",
+      strengths: ["Players win or lose together, so fewer arguments", "Quick 15-minute games", "Simple for new readers"],
+      drawbacks: ["Older kids may find it too easy", "Cardboard pieces bend"],
+      assembly: { short: "5 min setup", detail: "Punch out the pieces once, then about 5 minutes to set up each game." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Small parts: not for children under 3."],
+      pieces: "Board, 4 animal movers, 30 cards", size: "Box 10 × 10 in",
+      retailer: "harbor", availability: "in", shipDays: 4,
+      limits: ["Needs 2–4 players; it isn't a solo toy."] },
+
+    { id: "stomp-rocket", name: "Stomp Rocket Launcher", maker: "Skyhop", illo: "rocket", tile: "b",
+      price: 24.99, ageMin: 5, ageMax: 12, interests: ["active", "science"], kind: "outdoor", playStyle: "Active, outdoor, with friends",
+      rating: 4.6, ratings: 2870, reviewSpan: "Jan 2025 – Sep 2026",
+      strengths: ["Gets kids running outside", "Rockets fly high with a stomp", "Easy for groups to share"],
+      drawbacks: ["Rockets get stuck in trees and roofs", "Launch tube can crack if stepped on"],
+      assembly: { short: "About 5 min", detail: "Attach the launch tube to the pad: about 5 minutes." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Outdoor use with adult supervision. Never aim at people or animals."],
+      pieces: "Launcher + 4 foam rockets", size: "Launcher 3 ft",
+      retailer: "brightcart", availability: "in", shipDays: 3,
+      limits: ["Needs open outdoor space; less useful in winter or in small apartments."] },
+
+    { id: "globe-puzzle", name: "3D Planet Puzzle Globe, 240 pieces", maker: "Paperfield", illo: "globe", tile: "b",
+      price: 27.99, ageMin: 8, ageMax: 12, interests: ["games", "science"], kind: "games", playStyle: "Focused, solo or with an adult",
+      rating: 4.2, ratings: 410, reviewSpan: "Jun 2025 – Aug 2026",
+      strengths: ["Finished globe looks good on a shelf", "Teaches continents and countries", "Curved pieces feel new"],
+      drawbacks: ["Takes 2–4 hours; some kids give up", "Stand is lightweight"],
+      assembly: { short: "Assembly is the activity: 2–4 hours", detail: "Building the globe is the activity and takes about 2–4 hours." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Small parts: not for children under 3."],
+      pieces: "240 curved pieces + stand", size: "Globe 6 in across",
+      retailer: "harbor", availability: "in", shipDays: 5,
+      limits: ["Fewer sample ratings than most toys here, so the review picture is less certain."] },
+
+    { id: "vet-kit", name: "Plush Pup Vet Kit", maker: "Oakhollow", illo: "vet", tile: "d",
+      price: 29.99, ageMin: 3, ageMax: 7, interests: ["pretend", "animals"], kind: "pretend", playStyle: "Pretend play and caring",
+      rating: 4.4, ratings: 1630, reviewSpan: "Jan 2025 – Aug 2026",
+      strengths: ["Soft pup is a favorite on its own", "Carry case keeps tools together", "Encourages caring role play"],
+      drawbacks: ["Stethoscope sound is quiet", "Plastic tools feel light"],
+      assembly: { short: "None", detail: "Ready to play." },
+      batteries: { short: "2 × LR44 coin cells, included", detail: "The stethoscope heartbeat uses 2 LR44 coin batteries, included, behind a screw-closed cover." },
+      warnings: ["Contains coin batteries behind a screw cover. Swallowed coin batteries can cause serious injury; keep the cover closed.", "Small parts: not for children under 3."],
+      pieces: "Plush pup, 8 tools, case", size: "Pup 10 in",
+      retailer: "brightcart", availability: "in", shipDays: 3,
+      limits: ["May feel young for kids at the top of the age range."] },
+
+    { id: "rc-car", name: "Flipside Remote-Control Stunt Car", maker: "Skyhop", illo: "car", tile: "e",
+      price: 44.99, ageMin: 6, ageMax: 12, interests: ["vehicles", "active"], kind: "vehicles", playStyle: "Fast, active, indoors or out",
+      rating: 4.0, ratings: 2410, reviewSpan: "Jan 2025 – Sep 2026",
+      strengths: ["Flips and keeps driving", "Fast on smooth floors", "Rechargeable car battery"],
+      drawbacks: ["About 15 min of driving per charge", "Remote needs AA batteries, not included"],
+      assembly: { short: "None; charge 90 min first", detail: "Charge the car by USB for about 90 minutes before first use." },
+      batteries: { short: "Rechargeable car; remote 2 × AA not included", detail: "Car has a built-in rechargeable battery (USB cable included). Remote uses 2 AA batteries, not included." },
+      warnings: ["Charge only with adult supervision, using the included cable."],
+      pieces: "Car, remote, USB cable", size: "Car 9 in long",
+      retailer: "harbor", availability: "in", shipDays: 4,
+      limits: ["Lowest sample rating on the list; the most common complaint is short run time."] },
+
+    { id: "bracelets", name: "Friendship Bracelet Studio", maker: "Paperfield", illo: "bracelet", tile: "d",
+      price: 14.99, ageMin: 7, ageMax: 12, interests: ["art"], kind: "art", playStyle: "Creative, great for sharing with friends",
+      rating: 4.3, ratings: 980, reviewSpan: "Mar 2025 – Aug 2026",
+      strengths: ["Enough thread for many bracelets", "Loom makes patterns easier", "Fun to make and give away"],
+      drawbacks: ["Beads spill easily", "Instructions are small"],
+      assembly: { short: "None", detail: "Ready to use." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Small beads: choking hazard for children under 3."],
+      pieces: "Loom, 18 threads, 200 beads", size: "Box 9 × 6 in",
+      retailer: "brightcart", availability: "in", shipDays: 2,
+      limits: ["Needs patience; younger kids in the range may need help to start."] },
+
+    { id: "stepping-stones", name: "Balance Stepping Stones, set of 6", maker: "Skyhop", illo: "stones", tile: "c",
+      price: 36.99, ageMin: 3, ageMax: 8, interests: ["active"], kind: "outdoor", playStyle: "Active play, indoors or out",
+      rating: 4.5, ratings: 560, reviewSpan: "Apr 2025 – Aug 2026",
+      strengths: ["Non-slip bottoms", "Stack neatly to store", "Good for rainy-day movement"],
+      drawbacks: ["Can slide on smooth wet floors", "Colors fade outdoors"],
+      assembly: { short: "None", detail: "No assembly." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Use on dry, flat surfaces with adult supervision."],
+      pieces: "6 stones", size: "Stones 11–16 in across",
+      retailer: "harbor", availability: "in", shipDays: 5,
+      limits: ["Simple toy; older kids in the range may lose interest sooner."] },
+
+    { id: "drum-pad", name: "Beat Buddy Electronic Drum Pad", maker: "Maplesong", illo: "drum", tile: "a",
+      price: 59.99, ageMin: 4, ageMax: 9, interests: ["music"], kind: "music", playStyle: "Loud, rhythmic, solo",
+      rating: 3.9, ratings: 520, reviewSpan: "May 2025 – Aug 2026",
+      strengths: ["Headphone jack keeps noise down", "Record-and-play-back feature", "Pads are sensitive"],
+      drawbacks: ["Speaker is tinny", "Uses batteries quickly"],
+      assembly: { short: "None", detail: "No assembly." },
+      batteries: { short: "4 × AA, not included (or USB power)", detail: "Uses 4 AA batteries, not included, or a USB cable, included." },
+      warnings: ["Has a volume limit; supervise headphone use."],
+      pieces: "Drum pad, 2 sticks, USB cable", size: "15 × 10 in",
+      retailer: "brightcart", availability: "in", shipDays: 5,
+      limits: ["Lowest sample rating in the catalog; mixed feedback on sound quality."] },
+
+    { id: "birdhouse", name: "Build-Your-Own Birdhouse Kit", maker: "Oakhollow", illo: "birdhouse", tile: "e",
+      price: 18.99, ageMin: 7, ageMax: 12, interests: ["building", "art", "animals"], kind: "art", playStyle: "Build, paint, then display",
+      rating: 4.4, ratings: 720, reviewSpan: "Feb 2025 – Aug 2026",
+      strengths: ["Real wood and nails feel grown-up", "Painting step makes it personal", "Kids are proud to hang it outside"],
+      drawbacks: ["Needs an adult for hammering", "Paint colors are limited"],
+      assembly: { short: "About 45 min with an adult", detail: "Building and painting take about 45 minutes. An adult helps with the hammer and nails." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Contains small nails and uses a hammer: adult supervision required."],
+      pieces: "Pre-cut wood, nails, hammer, 4 paints", size: "Finished 7 in tall",
+      retailer: "harbor", availability: "in", shipDays: 4,
+      limits: ["One-time build; the lasting value is the finished birdhouse."] },
+
+    { id: "animal-puzzles", name: "Chunky Animal Puzzle Trio", maker: "Tabletop Grove", illo: "puzzle", tile: "c",
+      price: 17.99, ageMin: 3, ageMax: 5, interests: ["games", "animals"], kind: "games", playStyle: "Quiet, solo or with an adult",
+      rating: 4.6, ratings: 890, reviewSpan: "Jan 2025 – Aug 2026",
+      strengths: ["Thick pieces for small hands", "Three levels of difficulty", "Bright, friendly art"],
+      drawbacks: ["Five-year-olds may finish them quickly", "Storage box is flimsy"],
+      assembly: { short: "None", detail: "No assembly." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Not for children under 3."],
+      pieces: "3 puzzles: 6, 9 and 12 pieces", size: "Each 10 × 10 in",
+      retailer: "brightcart", availability: "in", shipDays: 2,
+      limits: ["Short play life for kids at the top of the age range."] },
+
+    { id: "fingerpaint", name: "Washable Fingerpaint & Stamp Set", maker: "Paperfield", illo: "stamp", tile: "d",
+      price: 15.99, ageMin: 3, ageMax: 6, interests: ["art"], kind: "art", playStyle: "Messy, creative",
+      rating: 4.3, ratings: 1340, reviewSpan: "Feb 2025 – Aug 2026",
+      strengths: ["Washes out of most clothes", "Chunky stamps are easy to grip", "Bright colors"],
+      drawbacks: ["Pots dry out if left open", "Paper runs out quickly"],
+      assembly: { short: "None", detail: "Ready to use." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Not for children under 3. Paint is not food; supervise use."],
+      pieces: "6 paint pots, 8 stamps, 20 sheets", size: "Box 12 × 9 in",
+      retailer: "harbor", availability: "in", shipDays: 3,
+      limits: ["Messy; best for families comfortable with paint at home."] },
+
+    { id: "pull-train", name: "Pull-Along Wooden Train", maker: "Oakhollow", illo: "train", tile: "b",
+      price: 27.99, ageMin: 3, ageMax: 6, interests: ["vehicles", "pretend"], kind: "vehicles", playStyle: "Pretend play, on the move",
+      rating: 4.5, ratings: 610, reviewSpan: "Mar 2025 – Aug 2026",
+      strengths: ["Smooth, solid wood", "Cars connect with magnets", "Quiet wheels for indoor play"],
+      drawbacks: ["Pull string can tangle", "Paint chips with rough play"],
+      assembly: { short: "None", detail: "No assembly." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Pull string: supervise children under 3 around strings. Contains magnets."],
+      pieces: "Engine + 3 cars", size: "Total 20 in long",
+      retailer: "brightcart", availability: "in", shipDays: 3,
+      limits: ["Kids near 6 may prefer a larger track set."] },
+
+    { id: "shaker-band", name: "Sing-Along Shaker Band", maker: "Maplesong", illo: "shaker", tile: "e",
+      price: 21.99, ageMin: 3, ageMax: 6, interests: ["music"], kind: "music", playStyle: "Noisy, group play",
+      rating: 4.2, ratings: 470, reviewSpan: "Apr 2025 – Aug 2026",
+      strengths: ["Several instruments to share", "Sturdy for young kids", "Songbook with simple rhythms"],
+      drawbacks: ["Loud indoors", "Tambourine jingles loosen over time"],
+      assembly: { short: "None", detail: "No assembly." },
+      batteries: { short: "None", detail: "No batteries needed." },
+      warnings: ["Not for children under 3."],
+      pieces: "Tambourine, 2 maracas, shaker egg, songbook", size: "Box 12 × 8 in",
+      retailer: "harbor", availability: "low", shipDays: 5,
+      limits: ["Fewer sample ratings, so the review picture is less certain."] }
+  ];
+  const TOY = Object.fromEntries(TOYS.map(t => [t.id, t]));
+
+  /* ---------- Illustrations (drawn for the prototype; not product photos) ---------- */
+  const ILLO = {
+    marble: '<rect x="26" y="16" width="8" height="90" rx="3" fill="#8B5E3C"/><rect x="86" y="16" width="8" height="90" rx="3" fill="#8B5E3C"/><path d="M30 34 L90 48" stroke="#2F7FC1" stroke-width="7" stroke-linecap="round"/><path d="M90 62 L30 76" stroke="#E4572E" stroke-width="7" stroke-linecap="round"/><path d="M30 90 L90 102" stroke="#3FA36B" stroke-width="7" stroke-linecap="round"/><circle cx="48" cy="30" r="6" fill="#F2B544"/><circle cx="72" cy="61" r="6" fill="#7B61C9"/><circle cx="56" cy="88" r="6" fill="#2F7FC1"/>',
+    terrarium: '<rect x="32" y="30" width="56" height="74" rx="16" fill="#CFE8F2" stroke="#6BA6C0" stroke-width="3"/><rect x="36" y="20" width="48" height="13" rx="4" fill="#F2B544"/><path d="M35 84 Q60 74 85 84 L85 90 Q85 101 72 101 L48 101 Q35 101 35 90Z" fill="#8B5E3C"/><path d="M60 82 C58 66 50 60 44 58 M60 76 C62 62 70 56 78 55" stroke="#3FA36B" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="44" cy="58" r="6" fill="#3FA36B"/><circle cx="78" cy="55" r="6" fill="#3FA36B"/>',
+    microscope: '<rect x="28" y="94" width="64" height="11" rx="4" fill="#3E4A59"/><path d="M72 94 C90 80 88 52 70 42" stroke="#3E4A59" stroke-width="9" fill="none" stroke-linecap="round"/><g transform="rotate(-25 54 44)"><rect x="46" y="16" width="17" height="48" rx="4" fill="#2F7FC1"/><rect x="44" y="12" width="21" height="8" rx="3" fill="#1F5C91"/></g><rect x="36" y="72" width="38" height="6" rx="3" fill="#8A97A6"/><circle cx="50" cy="66" r="4" fill="#F2B544"/>',
+    tiles: '<rect x="20" y="58" width="38" height="38" rx="4" fill="#E4572E" opacity=".9"/><rect x="62" y="58" width="38" height="38" rx="4" fill="#2F7FC1" opacity=".9"/><path d="M20 54 L39 22 L58 54Z" fill="#F2B544"/><path d="M62 54 L81 22 L100 54Z" fill="#3FA36B"/><rect x="28" y="66" width="22" height="22" rx="2" fill="#fff" opacity=".35"/><rect x="70" y="66" width="22" height="22" rx="2" fill="#fff" opacity=".35"/>',
+    paint: '<rect x="14" y="40" width="92" height="46" rx="12" fill="#FFFFFF" stroke="#C9C3B8" stroke-width="3"/><circle cx="32" cy="56" r="7" fill="#E4572E"/><circle cx="52" cy="56" r="7" fill="#F2B544"/><circle cx="72" cy="56" r="7" fill="#3FA36B"/><circle cx="32" cy="72" r="7" fill="#2F7FC1"/><circle cx="52" cy="72" r="7" fill="#7B61C9"/><circle cx="72" cy="72" r="7" fill="#E88BB0"/><path d="M84 92 L104 24" stroke="#8B5E3C" stroke-width="5" stroke-linecap="round"/><path d="M82 98 L86 88 L90 90Z" fill="#3E4A59"/>',
+    market: '<path d="M18 36 L102 36 L96 20 L24 20Z" fill="#E4572E"/><path d="M34 20 L32 36 M52 20 L51 36 M70 20 L71 36 M88 20 L90 36" stroke="#fff" stroke-width="5"/><rect x="24" y="36" width="6" height="66" fill="#8B5E3C"/><rect x="90" y="36" width="6" height="66" fill="#8B5E3C"/><rect x="20" y="70" width="80" height="12" rx="3" fill="#C8955F"/><circle cx="38" cy="64" r="7" fill="#E4572E"/><circle cx="54" cy="64" r="7" fill="#F2B544"/><circle cx="70" cy="64" r="7" fill="#3FA36B"/><circle cx="84" cy="65" r="6" fill="#7B61C9"/>',
+    ukulele: '<g transform="rotate(35 60 60)"><rect x="55" y="8" width="10" height="56" rx="3" fill="#8B5E3C"/><rect x="52" y="4" width="16" height="12" rx="3" fill="#5E3F27"/><circle cx="60" cy="72" r="18" fill="#D99A4E"/><circle cx="60" cy="92" r="21" fill="#D99A4E"/><circle cx="60" cy="76" r="7" fill="#5E3F27"/><rect x="50" y="96" width="20" height="5" rx="2" fill="#5E3F27"/></g>',
+    robot: '<rect x="32" y="30" width="56" height="44" rx="14" fill="#7B61C9"/><rect x="40" y="40" width="40" height="22" rx="8" fill="#EDE5F6"/><circle cx="51" cy="51" r="4" fill="#2A2540"/><circle cx="69" cy="51" r="4" fill="#2A2540"/><path d="M60 30 V18" stroke="#3E4A59" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="16" r="5" fill="#F2B544"/><rect x="36" y="74" width="48" height="16" rx="6" fill="#5A45A3"/><circle cx="42" cy="96" r="9" fill="#3E4A59"/><circle cx="78" cy="96" r="9" fill="#3E4A59"/>',
+    dig: '<rect x="18" y="40" width="84" height="58" rx="12" fill="#D9B98C"/><path d="M58 70 m-16 0 a16 16 0 1 0 32 0 a12 12 0 1 0 -24 0 a7 7 0 1 0 14 0" fill="none" stroke="#8B5E3C" stroke-width="4" stroke-linecap="round"/><path d="M84 30 L96 18" stroke="#3E4A59" stroke-width="5" stroke-linecap="round"/><path d="M76 40 L86 28 L92 34 L82 46Z" fill="#F2B544"/><circle cx="30" cy="54" r="3" fill="#B89466"/><circle cx="90" cy="84" r="3" fill="#B89466"/>',
+    board: '<rect x="16" y="22" width="88" height="76" rx="10" fill="#FFF6E0" stroke="#C9C3B8" stroke-width="3"/><path d="M30 84 C40 60 56 88 64 64 S86 44 90 36" stroke="#C8955F" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="1 12"/><path d="M78 74 L88 56 L98 74Z" fill="#3FA36B"/><path d="M26 50 L34 36 L42 50Z" fill="#3FA36B"/><circle cx="30" cy="84" r="6" fill="#E4572E"/><circle cx="90" cy="36" r="6" fill="#2F7FC1"/>',
+    rocket: '<path d="M60 12 C74 24 76 46 72 66 L48 66 C44 46 46 24 60 12Z" fill="#E4572E"/><circle cx="60" cy="38" r="7" fill="#DFECF6" stroke="#fff" stroke-width="2"/><path d="M48 56 L38 72 L48 68Z M72 56 L82 72 L72 68Z" fill="#2F7FC1"/><rect x="52" y="66" width="16" height="12" rx="3" fill="#3E4A59"/><path d="M60 78 C60 92 30 96 22 104" stroke="#3E4A59" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="10" y="100" width="24" height="10" rx="5" fill="#F2B544"/>',
+    globe: '<circle cx="60" cy="52" r="36" fill="#6BB3D9"/><path d="M36 38 C44 30 56 34 54 44 C52 54 40 52 36 38Z M64 56 C72 48 86 52 84 62 C82 76 68 78 64 56Z M56 20 C62 18 70 22 66 28 C62 32 56 26 56 20Z" fill="#3FA36B"/><path d="M24 52 H96 M60 16 V88" stroke="#fff" stroke-width="1.5" opacity=".6"/><path d="M60 88 V100" stroke="#8B5E3C" stroke-width="5"/><rect x="40" y="100" width="40" height="8" rx="4" fill="#8B5E3C"/>',
+    vet: '<circle cx="42" cy="40" r="12" fill="#C8955F"/><circle cx="78" cy="40" r="12" fill="#C8955F"/><circle cx="60" cy="60" r="30" fill="#E0B27E"/><ellipse cx="60" cy="72" rx="14" ry="10" fill="#F4DDBE"/><circle cx="50" cy="56" r="3.5" fill="#2A2540"/><circle cx="70" cy="56" r="3.5" fill="#2A2540"/><circle cx="60" cy="68" r="4" fill="#2A2540"/><path d="M28 90 C30 108 58 110 62 96" stroke="#2F7FC1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="64" cy="94" r="6" fill="#8A97A6"/>',
+    car: '<path d="M18 74 L24 56 C26 50 30 48 36 48 L52 48 L62 36 L82 36 L92 50 L100 52 C104 54 104 58 104 62 L104 74Z" fill="#F2B544"/><path d="M64 40 L80 40 L86 50 L58 50Z" fill="#DFECF6"/><circle cx="38" cy="78" r="12" fill="#3E4A59"/><circle cx="86" cy="78" r="12" fill="#3E4A59"/><circle cx="38" cy="78" r="5" fill="#C9C3B8"/><circle cx="86" cy="78" r="5" fill="#C9C3B8"/><path d="M88 36 L96 16" stroke="#3E4A59" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="15" r="3.5" fill="#E4572E"/>',
+    bracelet: '<circle cx="60" cy="60" r="30" fill="none" stroke="#E88BB0" stroke-width="7"/><circle cx="60" cy="60" r="30" fill="none" stroke="#7B61C9" stroke-width="7" stroke-dasharray="10 14"/><circle cx="60" cy="30" r="7" fill="#F2B544"/><circle cx="86" cy="45" r="6" fill="#3FA36B"/><circle cx="86" cy="75" r="6" fill="#2F7FC1"/><circle cx="60" cy="90" r="7" fill="#E4572E"/><circle cx="34" cy="75" r="6" fill="#F2B544"/><circle cx="34" cy="45" r="6" fill="#3FA36B"/>',
+    stones: '<ellipse cx="30" cy="84" rx="18" ry="9" fill="#3FA36B"/><ellipse cx="62" cy="72" rx="16" ry="8" fill="#2F7FC1"/><ellipse cx="90" cy="58" rx="16" ry="8" fill="#E4572E"/><ellipse cx="58" cy="44" rx="14" ry="7" fill="#F2B544"/><ellipse cx="28" cy="32" rx="13" ry="6.5" fill="#7B61C9"/><ellipse cx="90" cy="96" rx="15" ry="7.5" fill="#E88BB0"/>',
+    drum: '<rect x="14" y="42" width="92" height="56" rx="12" fill="#3E4A59"/><circle cx="36" cy="62" r="11" fill="#E4572E"/><circle cx="62" cy="62" r="11" fill="#F2B544"/><circle cx="88" cy="62" r="9" fill="#3FA36B"/><circle cx="48" cy="84" r="8" fill="#2F7FC1"/><circle cx="76" cy="84" r="8" fill="#7B61C9"/><path d="M36 36 L52 12 M84 36 L68 12" stroke="#C8955F" stroke-width="5" stroke-linecap="round"/>',
+    birdhouse: '<path d="M26 50 L60 18 L94 50Z" fill="#E4572E"/><rect x="34" y="48" width="52" height="54" rx="4" fill="#D99A4E"/><circle cx="60" cy="70" r="9" fill="#5E3F27"/><rect x="56" y="84" width="8" height="3" rx="1.5" fill="#5E3F27"/><path d="M60 87 V98" stroke="#5E3F27" stroke-width="3"/><path d="M40 60 L48 60 M72 60 L80 60" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>',
+    puzzle: '<path d="M18 40 H40 a8 8 0 1 1 16 0 H62 V62 a8 8 0 1 0 0 16 V100 H18Z" fill="#F2B544"/><path d="M62 40 H102 V62 a8 8 0 1 1 0 16 V100 H78 a8 8 0 1 0 -16 0 V78 a8 8 0 1 1 0 -16Z" fill="#3FA36B"/><circle cx="36" cy="66" r="10" fill="#E4572E"/><circle cx="33" cy="64" r="2" fill="#2A2540"/><circle cx="84" cy="56" r="8" fill="#2F7FC1"/>',
+    stamp: '<rect x="16" y="64" width="24" height="34" rx="6" fill="#E4572E"/><rect x="46" y="58" width="24" height="40" rx="6" fill="#2F7FC1"/><rect x="76" y="68" width="24" height="30" rx="6" fill="#3FA36B"/><rect x="14" y="58" width="28" height="8" rx="3" fill="#C9C3B8"/><rect x="44" y="52" width="28" height="8" rx="3" fill="#C9C3B8"/><rect x="74" y="62" width="28" height="8" rx="3" fill="#C9C3B8"/><path d="M60 14 L65 27 L79 27 L68 35 L72 48 L60 40 L48 48 L52 35 L41 27 L55 27Z" fill="#F2B544"/>',
+    train: '<rect x="12" y="50" width="34" height="32" rx="5" fill="#E4572E"/><rect x="18" y="36" width="16" height="16" rx="3" fill="#E4572E"/><rect x="50" y="56" width="26" height="26" rx="5" fill="#2F7FC1"/><rect x="80" y="56" width="26" height="26" rx="5" fill="#3FA36B"/><circle cx="22" cy="88" r="7" fill="#3E4A59"/><circle cx="38" cy="88" r="7" fill="#3E4A59"/><circle cx="63" cy="88" r="7" fill="#3E4A59"/><circle cx="93" cy="88" r="7" fill="#3E4A59"/><path d="M12 66 C4 66 4 100 14 106" stroke="#8B5E3C" stroke-width="3" fill="none"/>',
+    shaker: '<circle cx="74" cy="60" r="28" fill="none" stroke="#D99A4E" stroke-width="8"/><circle cx="74" cy="32" r="5" fill="#C9C3B8"/><circle cx="102" cy="60" r="5" fill="#C9C3B8"/><circle cx="74" cy="88" r="5" fill="#C9C3B8"/><circle cx="46" cy="60" r="5" fill="#C9C3B8"/><ellipse cx="32" cy="40" rx="14" ry="17" fill="#E4572E"/><path d="M32 56 V96" stroke="#8B5E3C" stroke-width="6" stroke-linecap="round"/><ellipse cx="40" cy="98" rx="9" ry="11" fill="#F2B544"/>'
+  };
+  function art(t, cls) {
+    return '<div class="art tile-' + t.tile + ' ' + (cls || '') + '"><svg viewBox="0 0 120 120" role="img" aria-label="Illustration of ' + esc(t.name) + '">' + ILLO[t.illo] + '</svg></div>';
+  }
+
+  /* ---------- Small helpers ---------- */
+  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
+  const money = n => "$" + n.toFixed(2);
+  const moneyShort = n => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+  function startOfToday() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+  function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function isoDate(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function parseISO(s) { if (!s) return null; const p = s.split("-").map(Number); if (p.length !== 3 || p.some(isNaN)) return null; return new Date(p[0], p[1] - 1, p[2]); }
+  const fmtDay = d => d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  const fmtShort = d => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const fmtLong = d => d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  const daysBetween = (a, b) => Math.round((b - a) / 86400000);
+  const deliveryDate = t => addDays(startOfToday(), t.shipDays);
+  const labelOf = (list, id) => (list.find(x => x.id === id) || {}).label || id;
+  function updatedLabel(r) { const d = addDays(startOfToday(), -r.updatedDaysAgo); return fmtShort(d) + ", " + r.updatedTime; }
+  const ratingsText = n => n.toLocaleString("en-US");
+  // "an 8-year-old", "an 11-year-old", "a 6-year-old"
+  const aAge = (age, cap) => ((age === 8 || age === 11) ? (cap ? "An " : "an ") : (cap ? "A " : "a ")) + age + "-year-old";
+
+  const ICON = {
+    check: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5 7.4 5.6 10.4 11.5 3.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    q: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 5.2a2.1 2.1 0 1 1 3 1.9c-.7.4-1 .8-1 1.5v.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="7" cy="11.4" r="1.1" fill="currentColor"/></svg>',
+    bang: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2.5v5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="7" cy="11.2" r="1.2" fill="currentColor"/></svg>',
+    back: '<svg width="13" height="22" viewBox="0 0 13 22" aria-hidden="true"><path d="M11 2 2.5 11 11 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    chev: '<svg width="8" height="13" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5 6.5 6.5 1.5 11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    info: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 7v4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="4.6" r="1" fill="currentColor"/></svg>',
+    gift: '<svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="6" y="16" width="28" height="20" rx="4" fill="var(--accent)"/><rect x="4" y="11" width="32" height="8" rx="3" fill="var(--accent)"/><rect x="18" y="11" width="4" height="25" fill="var(--sun)"/><path d="M20 11c-3-6-10-6-9-1 1 3 6 1 9 1Zm0 0c3-6 10-6 9-1-1 3-6 1-9 1Z" fill="none" stroke="var(--sun)" stroke-width="2.4"/></svg>',
+    lock: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2.5" y="6" width="9" height="6.5" rx="1.5" fill="currentColor"/><path d="M4.5 6V4.5a2.5 2.5 0 0 1 5 0V6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+    box: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.3 5.8 10 11 4.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+  const statusIcon = s => s === "known" ? ICON.check : s === "unsure" ? ICON.q : ICON.bang;
+  const DEMO_BADGE = '<span class="badge badge-demo">Sample data</span>';
+
+  /* =========================================================
+     STATE (kept while navigating; also saved for this browser tab)
+     ========================================================= */
+  const STORE_KEY = "toymatch-concept-1";
+  function freshState() {
+    return {
+      inputs: { age: null, budget: "", deadline: "", interests: [], interestsUnsure: false, owned: [], ownedUnsure: false, ownedNone: false },
+      compare: [],
+      stack: [{ screen: "home" }],
+      attempted: false
+    };
+  }
+  let state = freshState();
+  try { const saved = JSON.parse(sessionStorage.getItem(STORE_KEY) || "null"); if (saved && saved.stack && saved.inputs) state = saved; } catch (e) { /* storage unavailable: start fresh */ }
+  function save() { try { sessionStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
+
+  /* =========================================================
+     MATCHING LOGIC
+     1. Hard constraints first: age, budget, delivery before the deadline.
+     2. Then rank: known interests, owned-toy overlap, age fit, review evidence.
+     "Not sure" never adds a preference.
+     ========================================================= */
+  function budgetValue(inp) { const n = parseFloat(String(inp.budget).replace(/[^0-9.]/g, "")); return isFinite(n) ? n : NaN; }
+  function interestsKnown(inp) { return !inp.interestsUnsure && inp.interests.length > 0; }
+  function ownedKnown(inp) { return !inp.ownedUnsure && (inp.ownedNone || inp.owned.length > 0); }
+  function interestMatches(t, inp) { return interestsKnown(inp) ? t.interests.filter(i => inp.interests.includes(i)) : []; }
+  function ageCenter(t, age) { if (t.ageMax === t.ageMin) return 1; const pos = (age - t.ageMin) / (t.ageMax - t.ageMin); return 1 - Math.abs(pos - 0.5) * 2; }
+  function evidence(t) { const bayes = (t.rating * t.ratings + 4.2 * 300) / (t.ratings + 300); return Math.max(0, Math.min(2, (bayes - 3.9) * 2.5)); }
+  function overlapsOwned(t, inp) { return !inp.ownedUnsure && inp.owned.includes(t.kind); }
+
+  function score(t, inp) {
+    let s = 0;
+    const m = interestMatches(t, inp);
+    if (m.length) s += 3 + (m.length - 1);
+    s += 0.8 * ageCenter(t, inp.age);
+    s += evidence(t);
+    if (overlapsOwned(t, inp)) s -= 2.5;
+    return s;
+  }
+
+  function evaluate(inp) {
+    const deadline = parseISO(inp.deadline);
+    const budget = budgetValue(inp);
+    const out = { age: 0, budget: 0, time: 0 };
+    const eligible = [];
+    for (const t of TOYS) {
+      if (inp.age < t.ageMin || inp.age > t.ageMax) { out.age++; continue; }
+      if (t.price > budget) { out.budget++; continue; }
+      if (deliveryDate(t) > deadline) { out.time++; continue; }
+      eligible.push(t);
+    }
+    const scored = eligible.map(t => ({ t, s: score(t, inp), m: interestMatches(t, inp) }))
+      .sort((a, b) => b.s - a.s || b.t.ratings - a.t.ratings);
+    let list = [];
+    if (interestsKnown(inp)) {
+      list = scored.filter(x => x.m.length).slice(0, 5);
+      if (list.length < 3) list = list.concat(scored.filter(x => !x.m.length).slice(0, 3 - list.length));
+    } else {
+      // Interests unknown: cover different kinds of play instead of guessing one.
+      const seen = new Set();
+      for (const x of scored) { if (!seen.has(x.t.kind)) { seen.add(x.t.kind); list.push(x); } if (list.length === 5) break; }
+      if (list.length < 3) for (const x of scored) { if (!list.includes(x)) list.push(x); if (list.length === 3) break; }
+    }
+    return { list: list.map(x => x.t), excluded: out, eligible: eligible.length, total: TOYS.length };
+  }
+
+  /* Fit explanation: each line says whether it is known, uncertain, or a caution. */
+  function reasons(t, inp) {
+    const r = [];
+    const c = ageCenter(t, inp.age);
+    const pos = (inp.age - t.ageMin) / Math.max(1, t.ageMax - t.ageMin);
+    let ageTxt = "Made for ages " + t.ageMin + "–" + t.ageMax + ". ";
+    if (c >= 0.5) ageTxt += aAge(inp.age, true) + " is in the middle of that range.";
+    else if (pos > 0.5) ageTxt += aAge(inp.age, true) + " is near the top of the range, so it may feel simple.";
+    else ageTxt += aAge(inp.age, true) + " is near the start of the range, so an adult may need to help at first.";
+    r.push({ key: "age", s: c >= 0.5 ? "known" : "unsure", title: "Age fit", text: ageTxt });
+
+    r.push({ key: "budget", s: "known", title: "Within budget", text: money(t.price) + " listed price, within your " + moneyShort(budgetValue(inp)) + " limit." });
+
+    const dd = deliveryDate(t), dl = parseISO(inp.deadline), spare = daysBetween(dd, dl);
+    r.push({ key: "time", s: spare >= 2 ? "known" : "unsure", title: "Timing", text: "Estimated delivery " + fmtDay(dd) + (spare === 0 ? ", the same day as your date. That's tight; estimates can change." : ", " + spare + (spare === 1 ? " day" : " days") + " before " + fmtShort(dl) + ". Estimates can change.") });
+
+    const m = interestMatches(t, inp);
+    if (interestsKnown(inp)) {
+      if (m.length) r.push({ key: "interest", s: "known", title: "Matches a known interest", text: "You said they like " + m.map(i => labelOf(INTERESTS, i).toLowerCase()).join(" and ") + ". Play style: " + t.playStyle.toLowerCase() + "." });
+      else r.push({ key: "interest", s: "caution", title: "Outside their listed interests", text: "Included because few toys matched your interests and all your limits. It's here for age fit and sample reviews." });
+    } else {
+      r.push({ key: "interest", s: "unsure", title: "Interests unknown", text: "You weren't sure what they like, so this isn't matched to a preference. It's shown for age fit and sample reviews. Play style: " + t.playStyle.toLowerCase() + "." });
+    }
+
+    if (inp.ownedUnsure || !ownedKnown(inp)) r.push({ key: "owned", s: "unsure", title: "May already own something similar", text: "You weren't sure what toys they have. Check with a parent if you can." });
+    else if (overlapsOwned(t, inp)) r.push({ key: "owned", s: "caution", title: "Similar to toys they have", text: "You said they already have " + labelOf(OWNED, t.kind).toLowerCase() + ". This could overlap." });
+    else r.push({ key: "owned", s: "known", title: "Different from toys they have", text: inp.ownedNone ? "You said they have none of the listed toy types." : "Not the same type as the toys you listed." });
+    return r;
+  }
+  function shortWhy(t, inp) {
+    const rs = reasons(t, inp);
+    const lines = [];
+    const i = rs.find(x => x.key === "interest");
+    if (i.s === "known") lines.push({ s: "known", t: "Matches their interest in " + interestMatches(t, inp).map(x => labelOf(INTERESTS, x).toLowerCase()).join(" and ") });
+    else if (i.s === "unsure") lines.push({ s: "unsure", t: "Interests unknown: picked for age fit and sample reviews" });
+    else lines.push({ s: "caution", t: "Outside the interests you listed" });
+    const a = rs.find(x => x.key === "age");
+    lines.push({ s: a.s, t: a.s === "known" ? "Good age fit (ages " + t.ageMin + "–" + t.ageMax + ")" : (inp.age > (t.ageMin + t.ageMax) / 2 ? "Top of age range (" + t.ageMin + "–" + t.ageMax + "); may feel simple" : "Start of age range (" + t.ageMin + "–" + t.ageMax + "); may need help") });
+    const o = rs.find(x => x.key === "owned");
+    if (o.s === "caution") lines.push({ s: "caution", t: "Similar to toys they already have" });
+    return lines;
+  }
+  function currentResult() { return evaluate(state.inputs); }
+
+  /* =========================================================
+     NAVIGATION
+     ========================================================= */
+  const TITLES = { home: "ToyMatch", form: "Gift details", list: "Gift ideas", compare: "Compare", toy: "Details", retailer: "Where to buy", handoff: "Leaving ToyMatch" };
+  const screenEl = document.getElementById("screen");
+  function top() { return state.stack[state.stack.length - 1]; }
+  function rememberScroll() { const v = screenEl.querySelector(".view"); if (v) top().scroll = v.scrollTop; }
+  function go(screen, params) { rememberScroll(); state.stack.push(Object.assign({ screen }, params || {})); save(); render("forward"); }
+  function back() { if (state.stack.length > 1) { state.stack.pop(); save(); render("back"); } }
+  function resetTo(screen) { state.stack = [{ screen: "home" }]; if (screen !== "home") state.stack.push({ screen }); save(); render("forward"); }
+
+  function navBar(opts) {
+    const prev = state.stack.length > 1 ? TITLES[state.stack[state.stack.length - 2].screen] : null;
+    return '<header class="nav">' +
+      (prev ? '<button class="back" type="button" data-action="back" aria-label="Back to ' + esc(prev) + '">' + ICON.back + '<span>' + esc(prev) + '</span></button>' : '<span></span>') +
+      '<div class="nav-title" aria-hidden="true">' + esc(opts.title || "") + '</div>' +
+      '<div class="nav-right">' + (opts.right || "") + '</div></header>';
+  }
+
+  /* ---------- Screen: Home ---------- */
+  function vHome() {
+    const has = state.inputs.age !== null;
+    return '<div class="view home">' +
+      '<div class="content">' +
+        '<div class="brand">' + ICON.gift + '<span class="brand-name">ToyMatch</span></div>' +
+        '<div class="home-art" aria-hidden="true">' + art(TOY["mag-tiles"]) + art(TOY["terrarium"]) + art(TOY["ukulele"]) + '</div>' +
+        '<div class="group" style="gap:var(--s3)">' +
+          '<h1 class="large-title" tabindex="-1">Find a birthday gift they’ll enjoy, without hours of research.</h1>' +
+          '<p class="lede">Tell us what you know about the child. We’ll suggest 3–5 toys with review summaries and clear reasons each may fit.</p>' +
+        '</div>' +
+        '<ul class="promise">' +
+          '<li><span class="dot">' + ICON.check + '</span><span>Only toys that fit their age, your budget and your date</span></li>' +
+          '<li><span class="dot">' + ICON.check + '</span><span>“Not sure” is fine when you don’t know their interests</span></li>' +
+          '<li><span class="dot">' + ICON.check + '</span><span>Buy at the retailer you choose</span></li>' +
+        '</ul>' +
+      '</div>' +
+      '<div class="bottom-bar">' +
+        '<button class="btn btn-primary btn-block" type="button" data-action="go" data-to="form">' + (has ? "Continue gift search" : "Find a gift") + '</button>' +
+        (has ? '<button class="btn btn-plain btn-block" type="button" data-action="new-search">Start a new search</button>' : '') +
+        '<p class="caption" style="text-align:center">Prototype. Toys, prices and reviews are sample data.</p>' +
+      '</div></div>';
+  }
+
+  /* ---------- Screen: Gift details form ---------- */
+  function chip(group, value, label, extraCls) {
+    return '<button type="button" class="chip ' + (extraCls || "") + '" data-action="chip" data-group="' + group + '" data-value="' + esc(value) + '" aria-pressed="false"><span class="tick">' + ICON.box + '</span>' + esc(label) + '</button>';
+  }
+  function vForm() {
+    const inp = state.inputs;
+    const t0 = startOfToday();
+    let ages = ""; for (let a = 3; a <= 12; a++) ages += chip("age", String(a), String(a));
+    return '<div class="view">' + navBar({ title: "Gift details" }) +
+      '<form class="content" id="giftForm" novalidate>' +
+        '<div class="group"><h1 class="large-title" tabindex="-1">Who’s the gift for?</h1><p class="lede">Takes about a minute. Skip what you don’t know with “Not sure.”</p></div>' +
+
+        '<section class="card" id="q-age" aria-labelledby="l-age"><div class="q"><h2 class="h3" id="l-age" style="font-size:var(--t-head)">Child’s age</h2><span class="q-help">Age on the birthday</span></div>' +
+          '<div class="age-grid" role="group" aria-labelledby="l-age">' + ages + '</div><p class="err" data-err="age" hidden>Choose the child’s age.</p></section>' +
+
+        '<section class="card" id="q-budget" aria-labelledby="l-budget"><div class="q"><h2 id="l-budget" style="font-size:var(--t-head)">Budget</h2><span class="q-help">The most you want to spend</span></div>' +
+          '<label class="field" id="budgetField"><span class="prefix">$</span><input id="budget" name="budget" inputmode="decimal" autocomplete="off" placeholder="Up to…" value="' + esc(inp.budget) + '" aria-describedby="l-budget"></label>' +
+          '<div class="chips" role="group" aria-label="Budget presets">' + chip("budget", "25", "$25") + chip("budget", "40", "$40") + chip("budget", "60", "$60") + chip("budget", "80", "$80") + '</div>' +
+          '<p class="err" data-err="budget" hidden>Enter a budget of at least $10.</p></section>' +
+
+        '<section class="card" id="q-deadline" aria-labelledby="l-deadline"><div class="q"><h2 id="l-deadline" style="font-size:var(--t-head)">Needed by</h2><span class="q-help">The birthday, or the day you’ll give the gift</span></div>' +
+          '<div class="chips" role="group" aria-label="Quick dates">' + chip("deadline", isoDate(addDays(t0, 7)), "In 1 week") + chip("deadline", isoDate(addDays(t0, 14)), "In 2 weeks") + chip("deadline", isoDate(addDays(t0, 30)), "In a month") + '</div>' +
+          '<label class="field"><span class="prefix sr-only">Date</span><input type="date" id="deadline" name="deadline" min="' + isoDate(addDays(t0, 1)) + '" value="' + esc(inp.deadline) + '" aria-label="Pick a date"></label>' +
+          '<p class="date-note" id="dateNote"></p><p class="err" data-err="deadline" hidden>Pick a date after today.</p></section>' +
+
+        '<section class="card" id="q-interests" aria-labelledby="l-int"><div class="q"><h2 id="l-int" style="font-size:var(--t-head)">What are they into?</h2><span class="q-help">Choose any you know about</span></div>' +
+          '<div class="chips" role="group" aria-labelledby="l-int">' + INTERESTS.map(i => chip("interests", i.id, i.label)).join("") + chip("interests", "__unsure", "Not sure", "unsure") + '</div>' +
+          '<p class="err" data-err="interests" hidden>Choose at least one interest, or “Not sure.”</p></section>' +
+
+        '<section class="card" id="q-owned" aria-labelledby="l-own"><div class="q"><h2 id="l-own" style="font-size:var(--t-head)">Toys they already have</h2><span class="q-help">Helps avoid giving something similar</span></div>' +
+          '<div class="chips" role="group" aria-labelledby="l-own">' + OWNED.map(o => chip("owned", o.id, o.label)).join("") + chip("owned", "__none", "None of these") + chip("owned", "__unsure", "Not sure", "unsure") + '</div>' +
+          '<p class="err" data-err="owned" hidden>Choose the toys they have, “None of these” or “Not sure.”</p></section>' +
+      '</form>' +
+      '<div class="bottom-bar"><p class="hint" id="formHint" hidden></p><button class="btn btn-primary btn-block" type="submit" form="giftForm" id="showIdeas">Show gift ideas</button></div>' +
+    '</div>';
+  }
+  function formErrors() {
+    const inp = state.inputs, e = {};
+    if (inp.age === null) e.age = 1;
+    const b = budgetValue(inp); if (!(b >= 10)) e.budget = 1;
+    const d = parseISO(inp.deadline); if (!d || d <= startOfToday()) e.deadline = 1;
+    if (!inp.interestsUnsure && !inp.interests.length) e.interests = 1;
+    if (!inp.ownedUnsure && !inp.ownedNone && !inp.owned.length) e.owned = 1;
+    return e;
+  }
+  function syncForm() {
+    const v = screenEl.querySelector(".view"); if (!v) return;
+    const inp = state.inputs;
+    v.querySelectorAll(".chip").forEach(c => {
+      const g = c.dataset.group, val = c.dataset.value; let on = false;
+      if (g === "age") on = String(inp.age) === val;
+      else if (g === "budget") on = budgetValue(inp) === Number(val);
+      else if (g === "deadline") on = inp.deadline === val;
+      else if (g === "interests") on = val === "__unsure" ? inp.interestsUnsure : inp.interests.includes(val);
+      else if (g === "owned") on = val === "__unsure" ? inp.ownedUnsure : val === "__none" ? inp.ownedNone : inp.owned.includes(val);
+      c.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const bi = v.querySelector("#budget"); if (bi && document.activeElement !== bi) bi.value = inp.budget;
+    const di = v.querySelector("#deadline"); if (di && di.value !== inp.deadline) di.value = inp.deadline;
+    const d = parseISO(inp.deadline), note = v.querySelector("#dateNote");
+    if (note) { const n = d ? daysBetween(startOfToday(), d) : null; note.textContent = d && n > 0 ? fmtLong(d) + " · " + n + (n === 1 ? " day" : " days") + " from today" : ""; }
+    const errs = formErrors();
+    ["age", "budget", "deadline", "interests", "owned"].forEach(k => {
+      const show = state.attempted && errs[k];
+      const p = v.querySelector('[data-err="' + k + '"]'); if (p) p.hidden = !show;
+      const card = v.querySelector("#q-" + (k === "interests" ? "interests" : k)); if (card) card.setAttribute("aria-invalid", show ? "true" : "false");
+    });
+    const hint = v.querySelector("#formHint"), n = Object.keys(errs).length;
+    if (hint) { hint.hidden = !(state.attempted && n); hint.textContent = n === 1 ? "1 answer still needed" : n + " answers still needed"; }
+  }
+  function onChip(g, val) {
+    const inp = state.inputs;
+    if (g === "age") inp.age = Number(val);
+    else if (g === "budget") inp.budget = val;
+    else if (g === "deadline") inp.deadline = val;
+    else if (g === "interests") {
+      if (val === "__unsure") { inp.interestsUnsure = !inp.interestsUnsure; if (inp.interestsUnsure) inp.interests = []; }
+      else { inp.interestsUnsure = false; inp.interests = inp.interests.includes(val) ? inp.interests.filter(x => x !== val) : inp.interests.concat(val); }
+    } else if (g === "owned") {
+      if (val === "__unsure") { inp.ownedUnsure = !inp.ownedUnsure; if (inp.ownedUnsure) { inp.owned = []; inp.ownedNone = false; } }
+      else if (val === "__none") { inp.ownedNone = !inp.ownedNone; if (inp.ownedNone) { inp.owned = []; inp.ownedUnsure = false; } }
+      else { inp.ownedUnsure = false; inp.ownedNone = false; inp.owned = inp.owned.includes(val) ? inp.owned.filter(x => x !== val) : inp.owned.concat(val); }
+    }
+    save(); syncForm();
+  }
+  function submitForm() {
+    state.attempted = true;
+    const errs = formErrors();
+    syncForm();
+    if (Object.keys(errs).length) {
+      const first = ["age", "budget", "deadline", "interests", "owned"].find(k => errs[k]);
+      const el = screenEl.querySelector("#q-" + first); if (el) { el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); const f = el.querySelector("input, button"); if (f) f.focus({ preventScroll: true }); }
+      return;
+    }
+    // Keep only comparison picks that are still on the new shortlist.
+    const ids = currentResult().list.map(t => t.id);
+    state.compare = state.compare.filter(id => ids.includes(id));
+    go("list");
+  }
+
+  /* ---------- Screen: Shortlist ---------- */
+  function summaryPills(inp) {
+    const d = parseISO(inp.deadline);
+    const ints = interestsKnown(inp) ? inp.interests.map(i => labelOf(INTERESTS, i)).join(", ") : "Not sure";
+    const own = inp.ownedUnsure ? "Not sure" : inp.ownedNone ? "None of these" : inp.owned.map(o => labelOf(OWNED, o)).join(", ");
+    return '<div class="summary">' +
+      '<span class="pill">Age <b>' + inp.age + '</b></span>' +
+      '<span class="pill">Up to <b>' + moneyShort(budgetValue(inp)) + '</b></span>' +
+      '<span class="pill">By <b>' + fmtShort(d) + '</b></span>' +
+      '<span class="pill">Likes <b>' + esc(ints) + '</b></span>' +
+      '<span class="pill">Has <b>' + esc(own) + '</b></span></div>';
+  }
+  function ratingHtml(t) { return '<span class="rating"><span class="star" aria-hidden="true">★</span><strong>' + t.rating.toFixed(1) + '</strong><span>(' + ratingsText(t.ratings) + ' sample ratings)</span></span>'; }
+  function vList() {
+    const inp = state.inputs, res = currentResult(), n = res.list.length;
+    const full = state.compare.length >= 3;
+    const ex = res.excluded, parts = [];
+    if (ex.age) parts.push(ex.age + " outside the age");
+    if (ex.budget) parts.push(ex.budget + " over budget");
+    if (ex.time) parts.push(ex.time + " wouldn’t arrive in time");
+    const filterNote = "Checked " + res.total + " sample toys" + (parts.length ? ": " + parts.join(", ") + "." : ".") + (interestsKnown(inp) ? " Ranked by your listed interests, then review evidence." : " Interests unknown, so the list covers different kinds of play and is ranked by age fit and review evidence.");
+    let body;
+    if (!n) {
+      body = '<div class="card empty"><h2>No toys fit all your limits</h2><p class="muted">Try a higher budget or a later date. Nothing in the sample catalog fits age ' + inp.age + ', up to ' + moneyShort(budgetValue(inp)) + ', and delivery by ' + fmtShort(parseISO(inp.deadline)) + '.</p><button type="button" class="btn btn-secondary" data-action="back">Edit gift details</button></div>';
+    } else {
+      body = (n < 3 ? '<div class="card" style="background:var(--unsure-soft);color:var(--unsure)"><p class="small"><b>Only ' + n + ' toy' + (n === 1 ? '' : 's') + ' fit' + (n === 1 ? 's' : '') + ' all your limits.</b> A higher budget or a later date would show more options.</p></div>' : '') +
+        res.list.map((t, i) => {
+          const on = state.compare.includes(t.id), dis = !on && full;
+          return '<article class="toy-card" aria-labelledby="tn-' + t.id + '">' +
+            '<button type="button" class="toy-main" data-action="open" data-id="' + t.id + '">' + art(t) +
+              '<div class="toy-info">' + (i === 0 ? '<span class="rank">Top match</span>' : '') +
+                '<span class="toy-name" id="tn-' + t.id + '">' + esc(t.name) + '</span>' +
+                '<span class="toy-meta"><span class="price num">' + money(t.price) + '</span><span>Ages ' + t.ageMin + '–' + t.ageMax + '</span></span>' +
+                ratingHtml(t) +
+              '</div></button>' +
+            '<div class="why" aria-label="Why it may fit">' + shortWhy(t, inp).map(l => '<div class="why-line" style="color:var(--' + (l.s === "known" ? "fit" : l.s === "unsure" ? "unsure" : "warn") + ')">' + statusIcon(l.s) + '<span style="color:var(--ink)">' + esc(l.t) + '</span></div>').join("") + '</div>' +
+            '<div class="toy-actions">' +
+              '<button type="button" class="cmp-toggle" data-action="cmp" data-id="' + t.id + '" aria-pressed="' + on + '"' + (dis ? ' aria-disabled="true"' : '') + '><span class="box">' + (on ? ICON.box : '') + '</span>' + (dis ? 'Compare (max 3)' : 'Compare') + '</button>' +
+              '<button type="button" class="details-link" data-action="open" data-id="' + t.id + '">Details ' + ICON.chev + '</button>' +
+            '</div></article>';
+        }).join("") +
+        '<p class="filter-note">' + esc(filterNote) + '</p>' +
+        '<div class="demo-note">' + ICON.info + '<span>Prices, ratings, review summaries, stock and delivery are sample data for this prototype, not real listings or real customer reviews.</span></div>';
+    }
+    const c = state.compare.length;
+    const bar = n >= 2 ? '<div class="bottom-bar"><p class="hint" id="cmpHint">' + (c < 2 ? "Select 2 or 3 toys to compare" : c + " selected · up to 3") + '</p>' +
+      '<button type="button" class="btn btn-primary btn-block" data-action="compare"' + (c < 2 ? ' aria-disabled="true"' : '') + '>' + (c < 2 ? "Compare" : "Compare " + c + " toys") + '</button></div>' : '';
+    return '<div class="view">' + navBar({ title: "Gift ideas", right: '<button type="button" class="linkbtn" data-action="back">Edit</button>' }) +
+      '<div class="content">' +
+        '<div class="group"><h1 class="large-title" tabindex="-1">' + (n ? n + " gift idea" + (n === 1 ? "" : "s") + " for " + aAge(inp.age) : "No matches yet") + '</h1>' + summaryPills(inp) + '</div>' +
+        body + '</div>' + bar + '</div>';
+  }
+
+  /* ---------- Screen: Compare ---------- */
+  function vCompare() {
+    const inp = state.inputs, toys = state.compare.map(id => TOY[id]).filter(Boolean);
+    const cols = toys.length;
+    const lowest = Math.min.apply(null, toys.map(t => t.price));
+    const row = (label, fn) => '<div class="cmp-row"><div class="cmp-label">' + label + '</div><div class="cmp-vals">' + toys.map(t => '<div>' + fn(t) + '</div>').join("") + '</div></div>';
+    const fitCell = t => shortWhy(t, inp).map(l => '<span class="badge badge-' + (l.s === "known" ? "fit" : l.s === "unsure" ? "unsure" : "warn") + '" style="white-space:normal">' + esc(l.t) + '</span>').join("");
+    return '<div class="view">' + navBar({ title: "Compare" }) +
+      '<div class="content" style="gap:var(--s4)">' +
+        '<div class="group"><h1 class="large-title" tabindex="-1">Compare ' + cols + ' toys</h1><p class="lede">Same details for each toy. Sample data.</p></div>' +
+        '<div class="cmp" style="--cols:' + cols + '">' +
+          '<div class="cmp-head">' + toys.map(t => '<div class="cmp-col-head">' + art(t) + '<span class="nm">' + esc(t.name) + '</span></div>').join("") + '</div>' +
+          row("Listed price", t => '<span class="big">' + money(t.price) + '</span>' + (cols > 1 && t.price === lowest ? '<span class="cmp-best">Lowest</span>' : '')) +
+          row("Age range", t => '<span class="big">' + t.ageMin + '–' + t.ageMax + '</span><span class="muted">' + (ageCenter(t, inp.age) >= 0.5 ? "Middle of range for " + inp.age : (inp.age > (t.ageMin + t.ageMax) / 2 ? "Top of range for " + inp.age : "Start of range for " + inp.age)) + '</span>') +
+          row("Play style", t => esc(t.playStyle)) +
+          row("Fit", fitCell) +
+          row("Sample reviews", t => '<span><span class="star" aria-hidden="true">★</span> <b class="num">' + t.rating.toFixed(1) + '</b></span><span class="muted">' + ratingsText(t.ratings) + ' ratings</span>') +
+          row("Strengths", t => '<ul>' + t.strengths.slice(0, 2).map(s => '<li>' + esc(s) + '</li>').join("") + '</ul>') +
+          row("Drawbacks", t => '<ul>' + t.drawbacks.map(s => '<li>' + esc(s) + '</li>').join("") + '</ul>') +
+          row("Assembly", t => esc(t.assembly.short)) +
+          row("Batteries", t => esc(t.batteries.short)) +
+          row("Warnings", t => '<span style="color:var(--warn)">' + esc(t.warnings[0]) + '</span>' + (t.warnings.length > 1 ? '<span class="muted">+' + (t.warnings.length - 1) + ' more in details</span>' : '')) +
+          row("Delivery", t => '<span>' + esc(fmtDay(deliveryDate(t))) + '</span><span class="muted">' + esc(RETAILERS[t.retailer].name) + ' (est.)</span>') +
+          '<div class="cmp-foot">' + toys.map(t => '<button type="button" class="btn btn-secondary" data-action="open" data-id="' + t.id + '">Details</button>').join("") + '</div>' +
+        '</div>' +
+        '<div class="demo-note">' + ICON.info + '<span>Review strengths and drawbacks are sample summaries written for this prototype, not real customer reviews.</span></div>' +
+      '</div></div>';
+  }
+
+  /* ---------- Screen: Toy details ---------- */
+  function vToy(id) {
+    const t = TOY[id], inp = state.inputs, r = RETAILERS[t.retailer];
+    const on = state.compare.includes(t.id), full = state.compare.length >= 3;
+    const rs = reasons(t, inp);
+    const limits = t.limits.slice();
+    if (!interestsKnown(inp)) limits.push("You weren’t sure about their interests, so this pick isn’t based on what they like.");
+    if (!ownedKnown(inp)) limits.push("You weren’t sure what toys they already own, so this could duplicate something.");
+    limits.push("Fit is based on your answers and the product’s age label. ToyMatch can’t confirm it suits this particular child.");
+    return '<div class="view">' + navBar({ title: "Details" }) +
+      '<div class="content">' +
+        '<div class="hero-art art tile-' + t.tile + '"><svg viewBox="0 0 120 120" role="img" aria-label="Illustration of ' + esc(t.name) + '">' + ILLO[t.illo] + '</svg><span class="badge">Illustration, not a product photo</span></div>' +
+        '<div class="toy-title"><span class="caption">' + esc(t.maker) + ' (sample brand)</span><h1 class="large-title" style="font-size:var(--t-title)" tabindex="-1">' + esc(t.name) + '</h1>' +
+          '<div class="toy-meta"><span class="price num" style="font-size:var(--t-head)">' + money(t.price) + '</span><span>Ages ' + t.ageMin + '–' + t.ageMax + '</span>' + ratingHtml(t) + '</div></div>' +
+
+        '<section class="card" aria-labelledby="h-fit"><h2 id="h-fit">Why it may fit</h2>' +
+          '<div class="legend"><span class="badge badge-fit">' + ICON.check + ' From your answers</span><span class="badge badge-unsure">' + ICON.q + ' Uncertain</span><span class="badge badge-warn">' + ICON.bang + ' Check this</span></div>' +
+          rs.map(x => '<div class="reason"><span class="ic ' + x.s + '">' + statusIcon(x.s) + '</span><div><div class="reason-t">' + esc(x.title) + '</div><div class="reason-d">' + esc(x.text) + '</div></div></div>').join("") +
+        '</section>' +
+
+        '<section class="card" aria-labelledby="h-rev"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><h2 id="h-rev">What buyers say</h2>' + DEMO_BADGE + '</div>' +
+          '<p class="small muted"><b style="color:var(--ink)"><span class="star">★</span> ' + t.rating.toFixed(1) + '</b> average from ' + ratingsText(t.ratings) + ' sample ratings, ' + esc(t.reviewSpan) + '. Summaries are written for this prototype, not taken from real reviews.</p>' +
+          '<div class="split"><div class="group"><h3 style="color:var(--fit)">Often praised</h3><ul class="list">' + t.strengths.map(s => '<li><span style="color:var(--fit)">' + ICON.check + '</span><span>' + esc(s) + '</span></li>').join("") + '</ul></div>' +
+          '<div class="group"><h3 style="color:var(--warn)">Common complaints</h3><ul class="list">' + t.drawbacks.map(s => '<li><span style="color:var(--warn)">' + ICON.bang + '</span><span>' + esc(s) + '</span></li>').join("") + '</ul></div></div>' +
+          '<div class="group"><h3 class="small" style="color:var(--ink-2)">Sources (sample)</h3><ul class="sources">' +
+            '<li>• <span>' + esc(r.name) + ' product reviews: ' + ratingsText(t.ratings) + ' ratings, ' + esc(t.reviewSpan) + '. Demo reference; no live link.</span></li>' +
+            '<li>• <span>' + esc(t.maker) + ' product page: age guidance, contents, warnings. Demo reference; no live link.</span></li></ul></div>' +
+        '</section>' +
+
+        '<section class="card" aria-labelledby="h-req"><h2 id="h-req">Before you buy</h2>' +
+          '<dl class="kv"><dt>Assembly</dt><dd>' + esc(t.assembly.detail) + '</dd><dt>Batteries</dt><dd>' + esc(t.batteries.detail) + '</dd><dt>In the box</dt><dd>' + esc(t.pieces) + '</dd><dt>Size</dt><dd>' + esc(t.size) + '</dd></dl>' +
+          '<div class="warn-box"><b>Manufacturer warnings</b><ul>' + t.warnings.map(w => '<li>' + esc(w) + '</li>').join("") + '</ul></div>' +
+        '</section>' +
+
+        '<section class="card" aria-labelledby="h-lim"><h2 id="h-lim">Limitations</h2><ul class="list">' + limits.map(l => '<li><span style="color:var(--unsure)">' + ICON.q + '</span><span>' + esc(l) + '</span></li>').join("") + '</ul></section>' +
+        '<button type="button" class="cmp-toggle" style="align-self:flex-start" data-action="cmp" data-id="' + t.id + '" aria-pressed="' + on + '"' + (!on && full ? ' aria-disabled="true"' : '') + '><span class="box">' + (on ? ICON.box : '') + '</span>' + (!on && full ? 'Compare list is full (3)' : on ? 'In your compare list' : 'Add to compare') + '</button>' +
+      '</div>' +
+      '<div class="bottom-bar"><button type="button" class="btn btn-primary btn-block" data-action="choose" data-id="' + t.id + '">Choose this toy · ' + money(t.price) + '</button></div></div>';
+  }
+
+  /* ---------- Screen: Retailer ---------- */
+  function vRetailer(id) {
+    const t = TOY[id], r = RETAILERS[t.retailer], inp = state.inputs;
+    const dd = deliveryDate(t), dl = parseISO(inp.deadline), spare = daysBetween(dd, dl);
+    return '<div class="view">' + navBar({ title: "Where to buy" }) +
+      '<div class="content">' +
+        '<div class="group"><h1 class="large-title" tabindex="-1">Ready to buy</h1><p class="lede">Check the details, then finish on the retailer’s site.</p></div>' +
+        '<section class="card"><div class="buy-toy">' + art(t) + '<div class="toy-info"><span class="toy-name">' + esc(t.name) + '</span><span class="toy-meta"><span>Ages ' + t.ageMin + '–' + t.ageMax + '</span><span>' + esc(t.maker) + '</span></span></div></div></section>' +
+        '<section class="card" aria-labelledby="h-ret"><div class="retailer"><span class="retailer-logo ' + r.cls + '" aria-hidden="true">' + r.initial + '</span><div><h2 id="h-ret" style="font-size:var(--t-head)">' + esc(r.name) + '</h2><span class="caption">Sample retailer</span></div></div>' +
+          '<dl class="kv"><dt>Listed price</dt><dd class="num"><b>' + money(t.price) + '</b></dd>' +
+          '<dt>Availability</dt><dd><span class="stock ' + (t.availability === "in" ? "in" : "low") + '">' + (t.availability === "in" ? "In stock" : "Low stock") + '</span></dd>' +
+          '<dt>Delivery</dt><dd>Estimated ' + esc(fmtDay(dd)) + '<br><span class="small muted">' + (spare >= 0 ? spare + (spare === 1 ? " day" : " days") + " before your " + esc(fmtShort(dl)) + " date" : "") + '</span></dd>' +
+          '<dt>Updated</dt><dd>' + esc(updatedLabel(r)) + '</dd></dl>' +
+          '<div class="demo-note">' + ICON.info + '<span>Sample price, stock and delivery for this prototype. In the real app, the price and delivery shown at the retailer are final and can differ from this.</span></div>' +
+        '</section>' +
+        '<p class="small muted">ToyMatch doesn’t handle payment. You’ll check out on ' + esc(r.name) + '’s site.</p>' +
+      '</div>' +
+      '<div class="bottom-bar"><button type="button" class="btn btn-primary btn-block" data-action="buy" data-id="' + t.id + '">Buy at ' + esc(r.name) + '</button></div></div>';
+  }
+
+  /* ---------- Screen: Simulated handoff ---------- */
+  function vHandoff(id) {
+    const t = TOY[id], r = RETAILERS[t.retailer];
+    return '<div class="view handoff">' +
+      '<div class="content">' +
+        '<div class="sim-banner" role="note"><strong>Simulated handoff</strong><span>This is a prototype. No retailer page opens, nothing is bought, and no payment is taken.</span></div>' +
+        '<div class="handoff-flow" aria-hidden="true"><span class="node tm">T</span><span class="dots"><i></i><i></i><i></i></span><span class="node retailer-logo ' + r.cls + '" style="width:64px;height:64px;border-radius:18px;font-size:26px">' + r.initial + '</span></div>' +
+        '<div class="group" style="gap:var(--s2)"><h1 class="large-title" style="font-size:var(--t-title)" tabindex="-1">Leaving ToyMatch for ' + esc(r.name) + '</h1>' +
+          '<p class="muted">In the iPhone app, ' + esc(r.name) + '’s product page for <b style="color:var(--ink)">' + esc(t.name) + '</b> would open here, listed at ' + money(t.price) + ' (sample). Checkout happens there.</p></div>' +
+        '<div class="urlbar">' + ICON.lock + '<span>' + esc(r.domain) + '/toys/' + esc(t.id) + '</span></div>' +
+        '<p class="caption">Example address for the prototype. It is not a real web page.</p>' +
+      '</div>' +
+      '<div class="bottom-bar"><button type="button" class="btn btn-secondary btn-block" data-action="back">Back to ToyMatch</button><button type="button" class="btn btn-plain btn-block" data-action="new-search">Start a new gift search</button></div></div>';
+  }
+
+  /* =========================================================
+     RENDER
+     ========================================================= */
+  function render(dir) {
+    let entry = top();
+    // Guard: screens that need finished gift details send you back to the form.
+    const needsInputs = ["list", "compare", "toy", "retailer", "handoff"];
+    if (needsInputs.includes(entry.screen) && Object.keys(formErrors()).length) { state.stack = [{ screen: "home" }, { screen: "form" }]; entry = top(); }
+    if (entry.screen === "compare" && state.compare.length < 2) { state.stack.pop(); entry = top(); }
+    if (entry.id && !TOY[entry.id]) { state.stack = [{ screen: "home" }]; entry = top(); }
+    save();
+
+    let html;
+    switch (entry.screen) {
+      case "form": html = vForm(); break;
+      case "list": html = vList(); break;
+      case "compare": html = vCompare(); break;
+      case "toy": html = vToy(entry.id); break;
+      case "retailer": html = vRetailer(entry.id); break;
+      case "handoff": html = vHandoff(entry.id); break;
+      default: html = vHome();
+    }
+    screenEl.innerHTML = html;
+    const v = screenEl.querySelector(".view");
+    if (dir === "forward") v.classList.add("enter");
+    if (dir === "back") v.classList.add("enter-back");
+    if (entry.screen === "form") syncForm();
+    v.scrollTop = dir === "refresh" || dir === "back" ? (entry.scroll || 0) : 0;
+    const nav = v.querySelector(".nav");
+    if (nav) { const upd = () => nav.classList.toggle("scrolled", v.scrollTop > 4); v.addEventListener("scroll", upd, { passive: true }); upd(); }
+    if (dir !== "refresh") { const h = v.querySelector("h1"); if (h && dir) h.focus({ preventScroll: true }); }
+    document.title = entry.screen === "home" ? "ToyMatch Concept 1" : TITLES[entry.screen] + " · ToyMatch Concept 1";
+  }
+  function refresh(focusSel) { rememberScroll(); render("refresh"); if (focusSel) { const el = screenEl.querySelector(focusSel); if (el) el.focus({ preventScroll: true }); } }
+
+  /* ---------- Events ---------- */
+  screenEl.addEventListener("click", e => {
+    const b = e.target.closest("[data-action]"); if (!b) return;
+    const a = b.dataset.action, id = b.dataset.id;
+    if (a === "back") back();
+    else if (a === "go") go(b.dataset.to);
+    else if (a === "chip") onChip(b.dataset.group, b.dataset.value);
+    else if (a === "open") go("toy", { id });
+    else if (a === "cmp") {
+      if (b.getAttribute("aria-disabled") === "true") return;
+      state.compare = state.compare.includes(id) ? state.compare.filter(x => x !== id) : state.compare.concat(id);
+      save(); refresh('[data-action="cmp"][data-id="' + id + '"]');
+    }
+    else if (a === "compare") { if (state.compare.length >= 2) go("compare"); else { const h = screenEl.querySelector("#cmpHint"); if (h) { h.textContent = "Select at least 2 toys first"; h.style.color = "var(--warn)"; } } }
+    else if (a === "choose") go("retailer", { id });
+    else if (a === "buy") go("handoff", { id });
+    else if (a === "new-search") { state = freshState(); state.stack.push({ screen: "form" }); save(); render("forward"); }
+  });
+  screenEl.addEventListener("input", e => {
+    if (e.target.id === "budget") { state.inputs.budget = e.target.value.replace(/[^0-9.]/g, ""); if (e.target.value !== state.inputs.budget) e.target.value = state.inputs.budget; save(); syncForm(); }
+  });
+  screenEl.addEventListener("change", e => {
+    if (e.target.id === "deadline") { state.inputs.deadline = e.target.value; save(); syncForm(); }
+  });
+  screenEl.addEventListener("submit", e => { e.preventDefault(); submitForm(); });
+  document.getElementById("restart").addEventListener("click", () => { state = freshState(); save(); render("forward"); });
+
+  // Expose the matcher for testing in the browser console.
+  window.ToyMatch = { evaluate, TOYS };
+  render();
+})();
+</script>
+
+</html>
