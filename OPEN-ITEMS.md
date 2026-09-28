@@ -10,11 +10,11 @@ Tick an item (`[x]`) when it's done.
 - [ ] Full text for each case study section (Phase 4)
 
 ### Galactic Guardians (`content/case-studies/galactic-guardians.md`, visual-first)
-- [ ] One intro line: how classic game theory scenarios inspired the mini-games
-- [ ] Mini-game names for all six theories (Cake-Cutting Problem, Public Goods Game, Volunteer's Dilemma, Prisoner's Dilemma, King's Wise Men Puzzle, Gift-Exchange Game)
+- [x] One intro line: how classic game theory scenarios inspired the mini-games — added
+- [x] One line for each of the six game theories — added (cards now show theory title + illustration + one line)
 - [ ] If the "3 major reasons" graphic is based on published research, add a source line
 - [ ] Optional: one headline statistic with its source (goes in "Problem and insight")
-- [ ] Permission check: do any Product Trial photos (`play-step-1` … `5`) show children or identifiable people?
+- [x] Permission check: Product Trial photos (`play-step-1` … `5`) show hands only, no faces
 - [ ] Check each image's alt text matches the real export once it's in
 - [ ] Replace the 21 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
   - [x] `cover.jpg` — cover photo (you playing the board game) — added

@@ -90,12 +90,12 @@ sections:
 
   - heading: "Ideas"
     blocks:
-      # CARDS: a grid of images, each with "from → to" labels.
+      # CARDS: a grid of cards, each with a title, an image and one line.
       - cards:
-          - from: "Where the idea came from"
-            to: "What it became"
+          - title: "Card title"
             image: ""
             alt: ""
+            text: "One short line."
 
   - heading: "The design"
     blocks:

@@ -138,20 +138,21 @@ const isLandscape = (image?: string) => {
     )
   }
 
-  {/* Theory → mini-game cards */}
+  {/* Cards: a title, an image, then one line */}
   {
     b.cards && (
       <ul class="cards">
         {b.cards.map((c) => (
           <li class="cards__item">
+            <p class="cards__title">
+              <Inline text={c.title} />
+            </p>
             <Media folder={folder} image={c.image} alt={c.alt} sizes="(min-width: 64rem) 28vw, (min-width: 40rem) 45vw, 100vw" />
-            <p class="cards__from">
-              <Inline text={c.from} />
-            </p>
-            <p class="cards__to">
-              <span aria-hidden="true">→ </span>
-              <Inline text={c.to} />
-            </p>
+            {c.text && (
+              <p class="cards__text">
+                <Inline text={c.text} />
+              </p>
+            )}
           </li>
         ))}
       </ul>
@@ -405,14 +406,14 @@ const isLandscape = (image?: string) => {
     align-content: start;
   }
 
-  .cards__from {
+  .cards__title {
+    font-weight: var(--weight-medium);
+  }
+
+  .cards__text {
     margin-top: var(--space-2);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
-  }
-
-  .cards__to {
-    font-weight: var(--weight-medium);
   }
 
   /* ── Gallery ── */

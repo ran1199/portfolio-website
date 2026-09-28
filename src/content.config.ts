@@ -85,8 +85,8 @@ const beforeAfter = z
 // "blocks" (see _TEMPLATE.md). Used when the file has "sections:".
 const card = z
   .object({
-    from: z.string(),
-    to: z.string(),
+    title: z.string(),
+    text: z.string().default(""),
     image: z.string().default(""),
     alt: z.string().default(""),
   })
