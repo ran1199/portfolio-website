@@ -11,7 +11,7 @@ portfolio website: nothing in `prototypes/` is published on the portfolio site.
 iPhone frame; on a phone it fills the screen. A private preview page is also on claude.ai
 (link in the session notes).
 
-**Snapshot:** Git tag `toymatch-concept-1` marks this exact version.
+**Snapshot:** commit "Add ToyMatch Concept 1 iPhone prototype" on branch `claude/blissful-pascal-wrulqk` is the original Concept 1. The claude.ai preview page also keeps it as Version 1.
 
 **Starting Concept 2:** copy `concept-1/` to `concept-2/` and change only the copy, so both
 versions stay available to compare.
