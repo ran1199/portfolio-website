@@ -24,7 +24,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `board.png` — full board / map — added
   - [x] `characters.png` — Nova, Orion, Stella, Cosmo — added
   - [x] `event-cards.png` — the four event card types — added
-  - [ ] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos
+  - [x] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos — added (hands only, no faces)
   - [ ] `app-leaderboard.png`, `app-performance.png`, `app-dashboard.png`, `app-insights.png` — app screens
   - [ ] `app-ia.png` — information architecture
 
