@@ -15,9 +15,9 @@ role: "Individual project"
 dates: "Sep–Nov 2024"
 tags: ["Game Design", "UI/UX Design", "Educational Design"]
 cover: "cover.jpg"
-coverAlt: "The Galactic Guardians board game set up on a round table, with a player thinking about their next move"
+coverAlt: "The Galactic Guardians board game on a round wooden table, with the character standees, event cards and resource tokens, as a player moves the blue character"
 tileImage: "tile.jpg"   # 4:3 photo for the Home/Work gallery tile
-tileAlt: "The Galactic Guardians board game set up on a round table"
+tileAlt: "The Galactic Guardians board game on a round wooden table, with the character standees, event cards and resource tokens"
 
 # ── SECTIONS (numbered 01, 02… in this order) ────────────────
 sections:
