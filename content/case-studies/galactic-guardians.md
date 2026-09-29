@@ -101,7 +101,7 @@ sections:
 
   - heading: "Companion app"
     blocks:
-      - text: "Parents track progress through AI-generated analysis."
+      - text: "After each game, AI-generated analysis shows parents each child's player type and the skills they need to develop for a more harmonious family."
       # App screens in two groups of 4. "label" is the small group heading;
       # "title" shows above each screen and "caption" below it.
       - label: "Play and progress"
