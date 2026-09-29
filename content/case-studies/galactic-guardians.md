@@ -140,8 +140,4 @@ sections:
             alt: "Parent insights screen with article cards on children, conflicts and family dynamics"
             title: "Parent insights"
             caption: "Parenting tips and articles"
-      - image: "app-ia.png"
-        alt: "Information architecture diagram of the companion app"
-        caption: "Information architecture"
-        size: small
 ---

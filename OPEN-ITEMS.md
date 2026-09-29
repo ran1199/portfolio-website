@@ -16,7 +16,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] Optional: one headline statistic with its source (goes in "Problem and insight")
 - [x] Permission check: Product Trial photos (`play-step-1` … `5`) show hands only, no faces
 - [ ] Check each image's alt text matches the real export once it's in
-- [ ] Replace the 21 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
+- [ ] Replace the 20 labeled grey placeholder images in `content/images/galactic-guardians/` with Figma exports (same file names):
   - [x] `cover.jpg` — cover photo (you playing the board game) — added
   - [x] `research-causes.png` — "Sibling rivalry — 3 major reasons" graphic — added; Ran confirmed the children's photos are OK to use; labelled "Illustrative stock photos."
   - [x] `minigame-1.png` … `minigame-5.png` — theory illustrations added
@@ -26,7 +26,6 @@ Tick an item (`[x]`) when it's done.
   - [x] `event-cards.png` — the four event card types — added
   - [x] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos — added (hands only, no faces)
   - [x] All 8 app screens (`app-leaderboard`, `app-game-history`, `app-skill-focus`, `app-performance`, `app-dashboard`, `app-new-game`, `app-profile`, `app-insights`) — added
-  - [ ] `app-ia.png` — information architecture
 
 ### Buddy's Adventure Island (`content/case-studies/buddys-adventure-island.md`, visual-first)
 - [ ] Source(s) for the secondary research: published studies and interviews (replaces `[SOURCE NEEDED]` in "Problem and insight")
