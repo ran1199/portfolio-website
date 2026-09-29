@@ -2,9 +2,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  // The site's temporary address on GitHub Pages.
-  // When the custom domain is connected (Phase 7), `site` becomes that
-  // domain and `base` is removed.
-  site: "https://ran1199.github.io",
-  base: "/portfolio-website",
+  // The site's address. It lives at the root of the custom domain,
+  // so there is no `base` path any more.
+  site: "https://ranguodesign.com",
 });
