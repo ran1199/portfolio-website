@@ -205,18 +205,20 @@ const isLandscape = (image?: string) => {
     )
   }
 
-  {/* App screens: a row on wide screens, swipeable on phones */}
+  {/* App screens: label above, caption below. One row on wide screens,
+      2 per row on tablets, swipeable on phones. The images already
+      include the phone frame, so no border is added. */}
   {
     b.screens && (
       <ul class="screens">
         {b.screens.map((s) => (
           <li class="screens__item">
-            <Media folder={folder} image={s.image} alt={s.alt} placeholderRatio="9 / 19.5" sizes="(min-width: 64rem) 22vw, 70vw" />
             {s.title && (
               <p class="screens__title">
                 <Inline text={s.title} />
               </p>
             )}
+            <Media folder={folder} image={s.image} alt={s.alt} placeholderRatio="9 / 19.5" sizes="(min-width: 40rem) 230px, 62vw" />
             {s.caption && (
               <p class="screens__caption">
                 <Inline text={s.caption} />
@@ -452,40 +454,48 @@ const isLandscape = (image?: string) => {
     font-size: var(--text-sm);
   }
 
-  /* ── Screens: swipe sideways on phones and tablets ── */
+  /* ── Screens: swipe sideways on phones (the next screen peeks in) ── */
   .screens {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: min(70%, 16rem);
-    gap: var(--space-5);
+    grid-auto-columns: min(62%, var(--screen-max));
+    gap: var(--space-7) var(--space-5);
     margin: 0;
     padding: 0 0 var(--space-3);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     list-style: none;
+    /* Screens are 454px files: shown at most 230px wide to stay sharp. */
+    --screen-max: 14.375rem;
   }
 
   .screens__item {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-3);
     align-content: start;
+    justify-items: center;
+    text-align: center;
     scroll-snap-align: start;
   }
 
+  .screens__item :global(.media) {
+    width: 100%;
+    max-width: var(--screen-max);
+  }
+
   .screens__title {
-    margin-top: var(--space-2);
     font-weight: var(--weight-medium);
   }
 
   .screens__caption {
+    max-width: 18rem;
     color: var(--color-text-muted);
     font-size: var(--text-sm);
   }
 
-  .screens :global(img),
-  .screens :global(.media__placeholder) {
-    border: 1px solid var(--color-line);
-    border-radius: 1.5rem;
+  /* The phone frame is part of the image: no border or rounding. */
+  .screens :global(img) {
+    border-radius: 0;
   }
 
   /* ── Before / after ── */
@@ -546,6 +556,15 @@ const isLandscape = (image?: string) => {
     .steps {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    /* Tablets: 2 screens per row. */
+    .screens {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding-bottom: 0;
+      overflow: visible;
+    }
   }
 
   @media (min-width: 48rem) {
@@ -588,10 +607,11 @@ const isLandscape = (image?: string) => {
       gap: var(--space-5);
     }
 
+    /* All screens in one evenly spaced row. */
     .screens {
-      grid-auto-flow: row;
-      grid-template-columns: repeat(4, 1fr);
-      overflow: visible;
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
     }
   }
 </style>

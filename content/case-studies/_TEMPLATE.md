@@ -134,7 +134,9 @@ sections:
             image: ""
             alt: ""
         note: "A small note under the steps."
-      # SCREENS: app screenshots in a row (swipe sideways on phones).
+      # SCREENS: app screens in a row, each with a title above and a caption
+      # below (2 per row on tablets, swipe sideways on phones). Shown at
+      # most 230px wide. Add "label" to name a group, e.g. "Parent tools".
       - screens:
           - image: ""
             alt: ""
