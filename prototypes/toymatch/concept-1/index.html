@@ -7,7 +7,7 @@
 <meta name="description" content="ToyMatch Concept 1: an interactive iPhone prototype for choosing a birthday gift for a child aged 3 to 12. All prices, reviews and availability are sample demo data.">
 <style>
 /*
-  ToyMatch — Concept 1 (iPhone app prototype, previewed in a browser)
+  ToyMatch — Concept 1 (iPhone app prototype, previewed in a browser at iPhone 17 size: 402 × 874 pt)
   Layout: one iPhone-sized app column. On a computer it sits centered in a phone frame;
   on a phone it fills the screen. Each screen is an iOS-style stacked view.
 */
@@ -77,15 +77,15 @@ button { cursor: pointer; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Stage + phone frame ---------- */
-.stage { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s3); padding-block: var(--s4); padding-inline: var(--s4); }
+.stage { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s3); padding-block: var(--s6); padding-inline: var(--s4); }
 .phone {
-  position: relative; width: 390px; max-width: 100%; height: min(844px, calc(100% - 40px));
-  background: var(--app); border-radius: 54px; overflow: hidden;
+  position: relative; width: 402px; max-width: 100%; height: min(874px, calc(100% - 80px));
+  background: var(--app); border-radius: 56px; overflow: hidden;
   box-shadow: 0 0 0 11px var(--frame), 0 0 0 12px color-mix(in srgb, var(--frame) 70%, #888), 0 30px 60px -20px rgba(0,0,0,.35);
   display: flex; flex-direction: column;
 }
-.statusbar { flex: 0 0 auto; height: 50px; padding: 16px 30px 0 34px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; background: var(--app); position: relative; z-index: 3; }
-.statusbar .island { position: absolute; left: 50%; top: 11px; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: var(--frame); }
+.statusbar { flex: 0 0 auto; height: 62px; padding: 0 34px 0 46px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; background: var(--app); position: relative; z-index: 3; }
+.statusbar .island { position: absolute; left: 50%; top: 11px; width: 126px; height: 37px; margin-left: -63px; border-radius: 20px; background: var(--frame); }
 .statusbar svg { display: block; }
 .homebar { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: var(--ink); opacity: .85; z-index: 5; pointer-events: none; }
 .screen { position: relative; flex: 1 1 auto; min-height: 0; }
@@ -112,7 +112,16 @@ button { cursor: pointer; }
 .nav-title { font-weight: 600; font-size: var(--t-head); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; text-align: center; }
 .back { justify-self: start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; padding: 0 8px 0 2px; border: 0; background: none; color: var(--accent); font-size: var(--t-head); max-width: 130px; }
 .back span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.nav-right { justify-self: end; }
+.nav-right { justify-self: end; display: flex; align-items: center; }
+.iconbtn { width: 44px; height: 44px; border: 0; background: none; color: var(--accent); display: grid; place-items: center; border-radius: 12px; }
+.iconbtn.spin svg { animation: spin .5s ease-out; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn .ic-refresh { flex: 0 0 auto; }
+.refresh-note { display: flex; gap: 8px; align-items: flex-start; font-size: var(--t-foot); color: var(--accent); background: var(--accent-soft); padding: var(--s3); border-radius: 12px; }
+.refresh-note svg { flex: 0 0 auto; width: 16px; height: 16px; margin-top: 1px; }
+.toy-card.fresh { animation: fade .3s ease-out both; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .iconbtn.spin svg, .toy-card.fresh { animation: none; } }
 .linkbtn { border: 0; background: none; color: var(--accent); font-size: var(--t-head); min-height: 44px; padding: 0 8px; }
 
 .content { flex: 1 0 auto; padding: var(--s2) var(--s4) var(--s7); display: flex; flex-direction: column; gap: var(--s5); }
@@ -185,9 +194,7 @@ p { margin: 0; }
 
 /* Home */
 .home { justify-content: space-between; }
-.home .content { justify-content: center; gap: var(--s6); padding-top: var(--s7); }
-.brand { display: flex; align-items: center; gap: var(--s3); }
-.brand-name { font-family: var(--font-display); font-weight: 800; font-size: var(--t-title); letter-spacing: -0.01em; }
+.home .content { justify-content: flex-start; gap: var(--s6); padding-top: var(--s4); }
 .home-art { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
 .home-art .art { aspect-ratio: 1; }
 .home-art .art:nth-child(2) { transform: translateY(14px); }
@@ -268,6 +275,21 @@ p { margin: 0; }
 .retailer-logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: #fff; }
 .retailer-logo.brightcart { background: #3E6FB0; }
 .retailer-logo.harbor { background: #7A4E9E; }
+.retailer-logo.amazon { background: #3D4B5C; }
+.retailer-logo.target { background: #8A5A3C; }
+.offers { display: flex; flex-direction: column; gap: var(--s3); }
+.offer { display: flex; gap: var(--s3); align-items: flex-start; width: 100%; text-align: left; background: var(--surface); border: 2px solid var(--line); border-radius: var(--r-card); padding: var(--s4); }
+.offer[aria-checked="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.offer-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.offer-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s2); }
+.offer-name { font-weight: 650; font-size: var(--t-head); }
+.offer-price { font-weight: 700; font-size: var(--t-head); font-variant-numeric: tabular-nums; text-align: right; }
+.offer-price s { display: block; font-weight: 400; font-size: var(--t-foot); color: var(--ink-3); }
+.offer-line { font-size: var(--t-foot); color: var(--ink-2); }
+.offer-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.radio { flex: 0 0 22px; height: 22px; margin-top: 11px; border-radius: 50%; border: 2px solid var(--ink-3); display: grid; place-items: center; }
+.offer[aria-checked="true"] .radio { border-color: var(--accent); }
+.offer[aria-checked="true"] .radio::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
 .stock { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
 .stock::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 .stock.in { color: var(--fit); } .stock.low { color: var(--unsure); }
@@ -301,7 +323,7 @@ p { margin: 0; }
     <main class="screen" id="screen" aria-live="polite"></main>
     <div class="homebar" aria-hidden="true"></div>
   </div>
-  <p class="stage-note">ToyMatch — Concept 1 · iPhone app prototype · all toys, prices and reviews are sample data <button type="button" id="restart">Restart prototype</button></p>
+  <p class="stage-note">ToyMatch — Concept 1 · iPhone 17 screen (402 × 874 pt) · all toys, prices and reviews are sample data <button type="button" id="restart">Restart prototype</button></p>
 </div>
 
 <script>
@@ -337,8 +359,23 @@ p { margin: 0; }
   ];
   const RETAILERS = {
     brightcart: { name: "Brightcart", initial: "B", cls: "brightcart", domain: "brightcart.example", updatedDaysAgo: 1, updatedTime: "6:40 PM" },
-    harbor: { name: "Harbor Toys", initial: "H", cls: "harbor", domain: "harbortoys.example", updatedDaysAgo: 1, updatedTime: "9:15 PM" }
+    harbor: { name: "Harbor Toys", initial: "H", cls: "harbor", domain: "harbortoys.example", updatedDaysAgo: 1, updatedTime: "9:15 PM" },
+    amazon: { name: "Amazon", initial: "A", cls: "amazon", domain: "amazon.com", updatedDaysAgo: 1, updatedTime: "10:05 PM" },
+    target: { name: "Target", initial: "T", cls: "target", domain: "target.com", updatedDaysAgo: 1, updatedTime: "8:30 PM" }
   };
+  /* Where to buy: each toy has 3 sample offers.
+     - its listed retailer (the price and delivery used everywhere else in the app)
+     - Amazon: same price, faster delivery
+     - Target: a few dollars cheaper (sample discount), a day slower */
+  function offers(t) {
+    const disc = t.price < 20 ? 1.5 : t.price < 40 ? 2.5 : 4;
+    return [
+      { key: t.retailer, price: t.price, was: null, days: t.shipDays, avail: t.availability },
+      { key: "amazon", price: t.price, was: null, days: Math.max(1, Math.min(2, t.shipDays - 1)), avail: "in" },
+      { key: "target", price: Math.round((t.price - disc) * 100) / 100, was: t.price, days: t.shipDays + 1, avail: t.availability }
+    ];
+  }
+  const offerFor = (t, key) => offers(t).find(o => o.key === key) || offers(t)[0];
 
   const TOYS = [
     { id: "marble-run", name: "Snapframe Marble Run, 80 pieces", maker: "Tinkerlane", illo: "marble", tile: "b",
@@ -662,6 +699,7 @@ p { margin: 0; }
     back: '<svg width="13" height="22" viewBox="0 0 13 22" aria-hidden="true"><path d="M11 2 2.5 11 11 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     chev: '<svg width="8" height="13" viewBox="0 0 8 13" aria-hidden="true"><path d="M1.5 1.5 6.5 6.5 1.5 11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     info: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 7v4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="4.6" r="1" fill="currentColor"/></svg>',
+    refresh: '<svg class="ic-refresh" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.2 8.2A6.4 6.4 0 0 0 4.6 5.8M3.8 11.8a6.4 6.4 0 0 0 11.6 2.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.8 3.6v4.8H12M3.2 16.4v-4.8H8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     lock: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2.5" y="6" width="9" height="6.5" rx="1.5" fill="currentColor"/><path d="M4.5 6V4.5a2.5 2.5 0 0 1 5 0V6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
     box: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.3 5.8 10 11 4.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
@@ -676,6 +714,9 @@ p { margin: 0; }
     return {
       inputs: { age: null, budget: "", deadline: "", interests: [], interestsUnsure: false, owned: [], ownedUnsure: false, ownedNone: false },
       compare: [],
+      list: null,      // ids currently on the shortlist
+      seen: [],        // ids already shown (so Refresh brings new ones)
+      listNote: "",    // short message after a refresh
       stack: [{ screen: "home" }],
       attempted: false
     };
@@ -731,7 +772,10 @@ p { margin: 0; }
       for (const x of scored) { if (!seen.has(x.t.kind)) { seen.add(x.t.kind); list.push(x); } if (list.length === 5) break; }
       if (list.length < 3) for (const x of scored) { if (!list.includes(x)) list.push(x); if (list.length === 3) break; }
     }
-    return { list: list.map(x => x.t), excluded: out, eligible: eligible.length, total: TOYS.length };
+    // Pool for "Refresh": toys matching known interests when there are at least 3, otherwise every toy that fits.
+    const matched = scored.filter(x => x.m.length);
+    const pool = (interestsKnown(inp) && matched.length >= 3 ? matched : scored).map(x => x.t);
+    return { list: list.map(x => x.t), pool, excluded: out, eligible: eligible.length, total: TOYS.length };
   }
 
   /* Fit explanation: each line says whether it is known, uncertain, or a caution. */
@@ -777,6 +821,42 @@ p { margin: 0; }
     return lines;
   }
   function currentResult() { return evaluate(state.inputs); }
+  function shownList() {
+    const ids = (state.list || []).filter(id => TOY[id]);
+    if (!ids.length) { const r = currentResult(); state.list = r.list.map(t => t.id); state.seen = state.list.slice(); }
+    return state.list.map(id => TOY[id]);
+  }
+
+  /* Refresh: keep toys picked for comparison, swap the rest for toys not yet shown.
+     Every toy still fits age, budget and date. When all have been seen, start again. */
+  function refreshIdeas() {
+    const res = currentResult(), pool = res.pool.map(t => t.id);
+    const current = shownList().map(t => t.id);
+    const n = Math.max(3, Math.min(5, current.length));
+    const pinned = current.filter(id => state.compare.includes(id));
+    const others = pool.filter(id => !current.includes(id));
+    if (!others.length) { state.listNote = "No other toys fit all your answers. These are all of them."; return; }
+    let unseen = others.filter(id => !state.seen.includes(id));
+    let restarted = false;
+    if (!unseen.length) { restarted = true; state.seen = pinned.slice(); unseen = others; }
+    const fresh = [];
+    if (!interestsKnown(state.inputs)) {
+      // Interests unknown: prefer kinds of play not already on the list.
+      const kinds = new Set(pinned.map(id => TOY[id].kind));
+      for (const id of unseen) if (fresh.length < n - pinned.length && !kinds.has(TOY[id].kind)) { fresh.push(id); kinds.add(TOY[id].kind); }
+    }
+    for (const id of unseen) if (fresh.length < n - pinned.length && !fresh.includes(id)) fresh.push(id);
+    // Top up with earlier ideas if there aren't enough new ones.
+    for (const id of others) if (pinned.length + fresh.length < Math.min(n, pool.length) && !fresh.includes(id)) fresh.push(id);
+    const next = pool.filter(id => pinned.includes(id) || fresh.includes(id));
+    state.list = next;
+    state.seen = Array.from(new Set(state.seen.concat(next)));
+    const newCount = fresh.length;
+    state.listNote = (restarted ? "You\u2019ve seen every toy that fits. Starting again from the top. " : "") +
+      "Showing " + newCount + " different idea" + (newCount === 1 ? "" : "s") +
+      (pinned.length ? "; kept " + pinned.length + " you\u2019re comparing." : ".") +
+      " " + Math.min(state.seen.length, pool.length) + " of " + pool.length + " matching toys seen.";
+  }
 
   /* =========================================================
      NAVIGATION
@@ -802,7 +882,6 @@ p { margin: 0; }
     const has = state.inputs.age !== null;
     return '<div class="view home">' +
       '<div class="content">' +
-        '<div class="brand"><span class="brand-name">ToyMatch</span></div>' +
         '<div class="home-art" aria-hidden="true">' + art(TOY["mag-tiles"]) + art(TOY["terrarium"]) + art(TOY["ukulele"]) + '</div>' +
         '<div class="group" style="gap:var(--s3)">' +
           '<h1 class="large-title" tabindex="-1">Find a birthday gift they’ll enjoy, without hours of research.</h1>' +
@@ -915,8 +994,9 @@ p { margin: 0; }
       const el = screenEl.querySelector("#q-" + first); if (el) { el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); const f = el.querySelector("input, button"); if (f) f.focus({ preventScroll: true }); }
       return;
     }
-    // Keep only comparison picks that are still on the new shortlist.
+    // New answers give a new shortlist; keep only comparison picks that are still on it.
     const ids = currentResult().list.map(t => t.id);
+    state.list = ids; state.seen = ids.slice(); state.listNote = "";
     state.compare = state.compare.filter(id => ids.includes(id));
     go("list");
   }
@@ -935,7 +1015,8 @@ p { margin: 0; }
   }
   function ratingHtml(t) { return '<span class="rating"><span class="star" aria-hidden="true">★</span><strong>' + t.rating.toFixed(1) + '</strong><span>(' + ratingsText(t.ratings) + ' sample ratings)</span></span>'; }
   function vList() {
-    const inp = state.inputs, res = currentResult(), n = res.list.length;
+    const inp = state.inputs, res = currentResult(), list = shownList(), n = list.length, topId = res.pool.length ? res.pool[0].id : null;
+    const canRefresh = res.pool.length > n;
     const full = state.compare.length >= 3;
     const ex = res.excluded, parts = [];
     if (ex.age) parts.push(ex.age + " outside the age");
@@ -947,11 +1028,12 @@ p { margin: 0; }
       body = '<div class="card empty"><h2>No toys fit all your limits</h2><p class="muted">Try a higher budget or a later date. Nothing in the sample catalog fits age ' + inp.age + ', up to ' + moneyShort(budgetValue(inp)) + ', and delivery by ' + fmtShort(parseISO(inp.deadline)) + '.</p><button type="button" class="btn btn-secondary" data-action="back">Edit gift details</button></div>';
     } else {
       body = (n < 3 ? '<div class="card" style="background:var(--unsure-soft);color:var(--unsure)"><p class="small"><b>Only ' + n + ' toy' + (n === 1 ? '' : 's') + ' fit' + (n === 1 ? 's' : '') + ' all your limits.</b> A higher budget or a later date would show more options.</p></div>' : '') +
-        res.list.map((t, i) => {
+        (state.listNote ? '<p class="refresh-note" role="status">' + ICON.refresh + '<span>' + esc(state.listNote) + '</span></p>' : '') +
+        list.map((t, i) => {
           const on = state.compare.includes(t.id), dis = !on && full;
-          return '<article class="toy-card" aria-labelledby="tn-' + t.id + '">' +
+          return '<article class="toy-card' + (state.justRefreshed ? ' fresh' : '') + '" aria-labelledby="tn-' + t.id + '">' +
             '<button type="button" class="toy-main" data-action="open" data-id="' + t.id + '">' + art(t) +
-              '<div class="toy-info">' + (i === 0 ? '<span class="rank">Top match</span>' : '') +
+              '<div class="toy-info">' + (t.id === topId ? '<span class="rank">Top match</span>' : '') +
                 '<span class="toy-name" id="tn-' + t.id + '">' + esc(t.name) + '</span>' +
                 '<span class="toy-meta"><span class="price num">' + money(t.price) + '</span><span>Ages ' + t.ageMin + '–' + t.ageMax + '</span></span>' +
                 ratingHtml(t) +
@@ -962,13 +1044,14 @@ p { margin: 0; }
               '<button type="button" class="details-link" data-action="open" data-id="' + t.id + '">Details ' + ICON.chev + '</button>' +
             '</div></article>';
         }).join("") +
+        (canRefresh ? '<button type="button" class="btn btn-secondary btn-block" data-action="refresh">' + ICON.refresh + 'Show different ideas</button>' : '') +
         '<p class="filter-note">' + esc(filterNote) + '</p>' +
         '<div class="demo-note">' + ICON.info + '<span>Prices, ratings, review summaries, stock and delivery are sample data for this prototype, not real listings or real customer reviews.</span></div>';
     }
     const c = state.compare.length;
     const bar = n >= 2 ? '<div class="bottom-bar"><p class="hint" id="cmpHint">' + (c < 2 ? "Select 2 or 3 toys to compare" : c + " selected · up to 3") + '</p>' +
       '<button type="button" class="btn btn-primary btn-block" data-action="compare"' + (c < 2 ? ' aria-disabled="true"' : '') + '>' + (c < 2 ? "Compare" : "Compare " + c + " toys") + '</button></div>' : '';
-    return '<div class="view">' + navBar({ title: "Gift ideas", right: '<button type="button" class="linkbtn" data-action="back">Edit</button>' }) +
+    return '<div class="view">' + navBar({ title: "Gift ideas", right: (canRefresh ? '<button type="button" class="iconbtn" data-action="refresh" aria-label="Refresh: show different ideas" title="Show different ideas">' + ICON.refresh + '</button>' : '') + '<button type="button" class="linkbtn" data-action="back">Edit</button>' }) +
       '<div class="content">' +
         '<div class="group"><h1 class="large-title" tabindex="-1">' + (n ? n + " gift idea" + (n === 1 ? "" : "s") + " for " + aAge(inp.age) : "No matches yet") + '</h1>' + summaryPills(inp) + '</div>' +
         body + '</div>' + bar + '</div>';
@@ -1040,40 +1123,50 @@ p { margin: 0; }
         '<section class="card" aria-labelledby="h-lim"><h2 id="h-lim">Limitations</h2><ul class="list">' + limits.map(l => '<li><span style="color:var(--unsure)">' + ICON.q + '</span><span>' + esc(l) + '</span></li>').join("") + '</ul></section>' +
         '<button type="button" class="cmp-toggle" style="align-self:flex-start" data-action="cmp" data-id="' + t.id + '" aria-pressed="' + on + '"' + (!on && full ? ' aria-disabled="true"' : '') + '><span class="box">' + (on ? ICON.box : '') + '</span>' + (!on && full ? 'Compare list is full (3)' : on ? 'In your compare list' : 'Add to compare') + '</button>' +
       '</div>' +
-      '<div class="bottom-bar"><button type="button" class="btn btn-primary btn-block" data-action="choose" data-id="' + t.id + '">Choose this toy · ' + money(t.price) + '</button></div></div>';
+      '<div class="bottom-bar"><button type="button" class="btn btn-primary btn-block" data-action="choose" data-id="' + t.id + '">Choose this toy</button></div></div>';
   }
 
   /* ---------- Screen: Retailer ---------- */
-  function vRetailer(id) {
-    const t = TOY[id], r = RETAILERS[t.retailer], inp = state.inputs;
-    const dd = deliveryDate(t), dl = parseISO(inp.deadline), spare = daysBetween(dd, dl);
+  function vRetailer(id, key) {
+    const t = TOY[id], inp = state.inputs, dl = parseISO(inp.deadline);
+    const list = offers(t), sel = offerFor(t, key);
+    const fastest = Math.min.apply(null, list.map(o => o.days)), cheapest = Math.min.apply(null, list.map(o => o.price));
+    const card = o => {
+      const r = RETAILERS[o.key], dd = addDays(startOfToday(), o.days), spare = daysBetween(dd, dl), on = o.key === sel.key;
+      const tags = (o.days === fastest ? '<span class="badge badge-fit">Fastest delivery</span>' : '') + (o.price === cheapest && o.was ? '<span class="badge badge-fit">Lowest price</span>' : '');
+      return '<button type="button" class="offer" role="radio" aria-checked="' + on + '" data-action="pick-retailer" data-id="' + t.id + '" data-ret="' + o.key + '">' +
+        '<span class="retailer-logo ' + r.cls + '" aria-hidden="true">' + r.initial + '</span>' +
+        '<span class="offer-body">' +
+          '<span class="offer-top"><span class="offer-name">' + esc(r.name) + '</span><span class="offer-price">' + money(o.price) + (o.was ? '<s>' + money(o.was) + '</s>' : '') + '</span></span>' +
+          (tags || o.was ? '<span class="offer-tags">' + tags + (o.was ? '<span class="badge badge-demo">Sample discount</span>' : '') + '</span>' : '') +
+          '<span class="offer-line">Estimated delivery <b style="color:var(--ink)">' + esc(fmtDay(dd)) + '</b><br>' +
+            (spare >= 0 ? spare + (spare === 1 ? " day" : " days") + " before your " + esc(fmtShort(dl)) + " date" : '<span style="color:var(--warn);font-weight:600">May arrive after your ' + esc(fmtShort(dl)) + ' date</span>') + '</span>' +
+          '<span class="offer-line"><span class="stock ' + (o.avail === "in" ? "in" : "low") + '">' + (o.avail === "in" ? "In stock" : "Low stock") + '</span></span><span class="caption">Updated ' + esc(updatedLabel(r)) + '</span>' +
+        '</span><span class="radio" aria-hidden="true"></span></button>';
+    };
+    const sr = RETAILERS[sel.key];
     return '<div class="view">' + navBar({ title: "Where to buy" }) +
       '<div class="content">' +
-        '<div class="group"><h1 class="large-title" tabindex="-1">Ready to buy</h1><p class="lede">Check the details, then finish on the retailer’s site.</p></div>' +
-        '<section class="card"><div class="buy-toy">' + art(t) + '<div class="toy-info"><span class="toy-name">' + esc(t.name) + '</span><span class="toy-meta"><span>Ages ' + t.ageMin + '–' + t.ageMax + '</span><span>' + esc(t.maker) + '</span></span></div></div></section>' +
-        '<section class="card" aria-labelledby="h-ret"><div class="retailer"><span class="retailer-logo ' + r.cls + '" aria-hidden="true">' + r.initial + '</span><div><h2 id="h-ret" style="font-size:var(--t-head)">' + esc(r.name) + '</h2><span class="caption">Sample retailer</span></div></div>' +
-          '<dl class="kv"><dt>Listed price</dt><dd class="num"><b>' + money(t.price) + '</b></dd>' +
-          '<dt>Availability</dt><dd><span class="stock ' + (t.availability === "in" ? "in" : "low") + '">' + (t.availability === "in" ? "In stock" : "Low stock") + '</span></dd>' +
-          '<dt>Delivery</dt><dd>Estimated ' + esc(fmtDay(dd)) + '<br><span class="small muted">' + (spare >= 0 ? spare + (spare === 1 ? " day" : " days") + " before your " + esc(fmtShort(dl)) + " date" : "") + '</span></dd>' +
-          '<dt>Updated</dt><dd>' + esc(updatedLabel(r)) + '</dd></dl>' +
-          '<div class="demo-note">' + ICON.info + '<span>Sample price, stock and delivery for this prototype. In the real app, the price and delivery shown at the retailer are final and can differ from this.</span></div>' +
-        '</section>' +
-        '<p class="small muted">ToyMatch doesn’t handle payment. You’ll check out on ' + esc(r.name) + '’s site.</p>' +
+        '<div class="group"><h1 class="large-title" tabindex="-1">Choose where to buy</h1><p class="lede">Compare price and delivery, then finish on the retailer\u2019s site.</p></div>' +
+        '<section class="card"><div class="buy-toy">' + art(t) + '<div class="toy-info"><span class="toy-name">' + esc(t.name) + '</span><span class="toy-meta"><span>Ages ' + t.ageMin + '\u2013' + t.ageMax + '</span><span>' + esc(t.maker) + '</span></span></div></div></section>' +
+        '<div class="group"><h2 id="h-ret" style="font-size:var(--t-head)">3 retailers</h2><div class="offers" role="radiogroup" aria-labelledby="h-ret">' + list.map(card).join("") + '</div></div>' +
+        '<div class="demo-note">' + ICON.info + '<span>Prices, discounts, stock and delivery are sample data for this prototype, not real Amazon, Target or other retailer listings. The retailer\u2019s own page shows the final price and delivery.</span></div>' +
+        '<p class="small muted">ToyMatch doesn\u2019t handle payment. You\u2019ll check out on the retailer\u2019s site.</p>' +
       '</div>' +
-      '<div class="bottom-bar"><button type="button" class="btn btn-primary btn-block" data-action="buy" data-id="' + t.id + '">Buy at ' + esc(r.name) + '</button></div></div>';
+      '<div class="bottom-bar"><button type="button" class="btn btn-primary btn-block" data-action="buy" data-id="' + t.id + '" data-ret="' + sel.key + '">Buy at ' + esc(sr.name) + ' \u00B7 ' + money(sel.price) + '</button></div></div>';
   }
 
   /* ---------- Screen: Simulated handoff ---------- */
-  function vHandoff(id) {
-    const t = TOY[id], r = RETAILERS[t.retailer];
+  function vHandoff(id, key) {
+    const t = TOY[id], o = offerFor(t, key), r = RETAILERS[o.key];
     return '<div class="view handoff">' +
       '<div class="content">' +
         '<div class="sim-banner" role="note"><strong>Simulated handoff</strong><span>This is a prototype. No retailer page opens, nothing is bought, and no payment is taken.</span></div>' +
         '<div class="handoff-flow" aria-hidden="true"><span class="node tm">T</span><span class="dots"><i></i><i></i><i></i></span><span class="node retailer-logo ' + r.cls + '" style="width:64px;height:64px;border-radius:18px;font-size:26px">' + r.initial + '</span></div>' +
         '<div class="group" style="gap:var(--s2)"><h1 class="large-title" style="font-size:var(--t-title)" tabindex="-1">Leaving ToyMatch for ' + esc(r.name) + '</h1>' +
-          '<p class="muted">In the iPhone app, ' + esc(r.name) + '’s product page for <b style="color:var(--ink)">' + esc(t.name) + '</b> would open here, listed at ' + money(t.price) + ' (sample). Checkout happens there.</p></div>' +
-        '<div class="urlbar">' + ICON.lock + '<span>' + esc(r.domain) + '/toys/' + esc(t.id) + '</span></div>' +
-        '<p class="caption">Example address for the prototype. It is not a real web page.</p>' +
+          '<p class="muted">In the iPhone app, ' + esc(r.name) + '’s product page for <b style="color:var(--ink)">' + esc(t.name) + '</b> would open here, listed at ' + money(o.price) + ' (sample). Checkout happens there.</p></div>' +
+        '<div class="urlbar">' + ICON.lock + '<span>' + esc(r.domain) + ' \u00B7 product page</span></div>' +
+        '<p class="caption">Shown as an example only. No page opens in this prototype.</p>' +
       '</div>' +
       '<div class="bottom-bar"><button type="button" class="btn btn-secondary btn-block" data-action="back">Back to ToyMatch</button><button type="button" class="btn btn-plain btn-block" data-action="new-search">Start a new gift search</button></div></div>';
   }
@@ -1096,8 +1189,8 @@ p { margin: 0; }
       case "list": html = vList(); break;
       case "compare": html = vCompare(); break;
       case "toy": html = vToy(entry.id); break;
-      case "retailer": html = vRetailer(entry.id); break;
-      case "handoff": html = vHandoff(entry.id); break;
+      case "retailer": html = vRetailer(entry.id, entry.ret); break;
+      case "handoff": html = vHandoff(entry.id, entry.ret); break;
       default: html = vHome();
     }
     screenEl.innerHTML = html;
@@ -1127,8 +1220,15 @@ p { margin: 0; }
       save(); refresh('[data-action="cmp"][data-id="' + id + '"]');
     }
     else if (a === "compare") { if (state.compare.length >= 2) go("compare"); else { const h = screenEl.querySelector("#cmpHint"); if (h) { h.textContent = "Select at least 2 toys first"; h.style.color = "var(--warn)"; } } }
+    else if (a === "refresh") {
+      refreshIdeas(); save(); state.justRefreshed = true;
+      rememberScroll(); top().scroll = 0; render("refresh"); delete state.justRefreshed; save();
+      const btn = screenEl.querySelector('.nav [data-action="refresh"]');
+      if (btn) { btn.classList.add("spin"); btn.focus({ preventScroll: true }); }
+    }
     else if (a === "choose") go("retailer", { id });
-    else if (a === "buy") go("handoff", { id });
+    else if (a === "pick-retailer") { top().ret = b.dataset.ret; save(); refresh('[data-action="pick-retailer"][data-ret="' + b.dataset.ret + '"]'); }
+    else if (a === "buy") go("handoff", { id, ret: b.dataset.ret });
     else if (a === "new-search") { state = freshState(); state.stack.push({ screen: "form" }); save(); render("forward"); }
   });
   screenEl.addEventListener("input", e => {
@@ -1141,7 +1241,7 @@ p { margin: 0; }
   document.getElementById("restart").addEventListener("click", () => { state = freshState(); save(); render("forward"); });
 
   // Expose the matcher for testing in the browser console.
-  window.ToyMatch = { evaluate, TOYS };
+  window.ToyMatch = { evaluate, TOYS, offers };
   render();
 })();
 </script>
