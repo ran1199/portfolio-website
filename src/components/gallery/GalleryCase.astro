@@ -1,0 +1,39 @@
+---
+// A case study in the gallery. The whole tile is one link, with the
+// "View" cursor on laptops. With a mouse or trackpad, the title, summary
+// and "View case study →" fade in over the bottom of the image; on
+// phones and tablets the title and summary are always shown under it.
+import type { CollectionEntry } from "astro:content";
+import GalleryTile from "./GalleryTile.astro";
+import type { GalleryMedia } from "../../lib/gallery";
+import { withBase } from "../../lib/url";
+
+interface Props {
+  study: CollectionEntry<"caseStudies">;
+  media: GalleryMedia;
+  alt: string;
+  fit: "cover" | "contain";
+  priority?: boolean;
+}
+
+const { study, media, alt, fit, priority = false } = Astro.props;
+const { title, summary } = study.data;
+---
+
+<article class="g-case reveal">
+  <a class="g-case__link" href={withBase(`work/${study.id}/`)} data-cursor="view">
+    <GalleryTile
+      media={media}
+      alt={alt}
+      fit={fit}
+      sizes="(min-width: 40rem) 50vw, 100vw"
+      priority={priority}
+      class="g-case__tile"
+    />
+    <div class="g-case__text">
+      <h3 class="g-case__title">{title}</h3>
+      <p class="g-case__summary">{summary}</p>
+      <span class="g-case__cta">View case study <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>

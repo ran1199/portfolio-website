@@ -1,5 +1,6 @@
 ---
-// Home page: intro line, then the Work gallery (see WorkGallery.astro).
+// Home page: a quiet intro line, then the gallery (see WorkGallery.astro).
+// The intro line lives in content/site.yaml; leave it empty ("") to hide it.
 import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkGallery from "../components/WorkGallery.astro";
@@ -8,24 +9,35 @@ const site = (await getEntry("site", "site"))!.data;
 ---
 
 <BaseLayout>
-  <section class="container intro">
-    <h1>{site.introLine}</h1>
-  </section>
+  {
+    site.introLine ? (
+      <div class="container intro">
+        <h1>{site.introLine}</h1>
+      </div>
+    ) : (
+      <h1 class="visually-hidden">{site.name}</h1>
+    )
+  }
 
-  <section id="work" class="container" aria-labelledby="work-heading">
+  <section class="home-gallery" aria-labelledby="work-heading">
     <h2 id="work-heading" class="visually-hidden">{site.menu.work}</h2>
     <WorkGallery />
   </section>
 </BaseLayout>
 
 <style>
+  /* One quiet line in body size, just under the menu. */
   .intro {
-    padding-block: var(--space-8) var(--space-8);
+    padding-bottom: var(--space-5);
   }
 
   .intro h1 {
-    max-width: 22em;
-    font-size: var(--text-2xl);
+    font-size: var(--text-base);
     font-weight: var(--weight-regular);
+    line-height: var(--leading-normal);
+  }
+
+  .home-gallery {
+    padding-bottom: var(--grid-edge);
   }
 </style>

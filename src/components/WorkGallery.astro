@@ -1,102 +1,458 @@
 ---
-// The Work gallery: case studies (large, clickable) mixed with selected
-// visual pieces (smaller, just for looking). Used on Home and on /work/.
+// The gallery on the Home and Work pages, built from
+// content/home-gallery.yaml (see the notes at the top of that file).
+//
+// Laptops: case studies sit side by side in pairs, each about 1.5× the
+// width of a visual piece. The visual pieces listed after a pair flow
+// below it in 3 columns (masonry: each column stacks its own tiles).
+// Before the next pair, the last tile of each shorter column grows a
+// little, so the columns end level and no gap is left.
+// Tablets: pairs stay side by side; pieces flow in 2 columns.
+// Phones: one column, in list order.
 import { getCollection } from "astro:content";
-import CaseStudyCard from "./CaseStudyCard.astro";
-import VisualPiece from "./VisualPiece.astro";
+import GalleryCase from "./gallery/GalleryCase.astro";
+import GalleryTile from "./gallery/GalleryTile.astro";
+import { resolveMedia, isPlaceholder, type GalleryMedia } from "../lib/gallery";
 
-const studies = (await getCollection("caseStudies")).sort((a, b) => a.data.order - b.data.order);
+const items = (await getCollection("homeGallery")).sort((a, b) => a.id.localeCompare(b.id));
+const studies = await getCollection("caseStudies");
 
-// Visual pieces marked "home: true" in content/play.yaml, in file order.
-// Until there are any, grey placeholders stand in.
-const PIECES_PER_STUDY = 2;
-const homePieces = (await getCollection("play")).filter((p) => p.data.home);
-const pieces = homePieces.length
-  ? homePieces
-  : Array.from({ length: studies.length * PIECES_PER_STUDY }, () => undefined);
+type CaseItem = {
+  kind: "case";
+  study: (typeof studies)[number];
+  media: GalleryMedia;
+  alt: string;
+  fit: "cover" | "contain";
+};
+type PieceItem = { kind: "piece"; media: GalleryMedia; alt: string; fit: "cover" | "contain" };
 
-// Each case study is followed by the two pieces that sit beside it.
-// Pieces beyond that fill rows of three at the end.
-const blocks = studies.map((study, i) => ({
-  study,
-  pieces: pieces.slice(i * PIECES_PER_STUDY, (i + 1) * PIECES_PER_STUDY),
-}));
-const extras = pieces.slice(studies.length * PIECES_PER_STUDY);
-const pieceSizes = "(min-width: 64rem) 30vw, 48vw";
+const resolved: (CaseItem | PieceItem)[] = items.map(({ data }) => {
+  if (data.type === "case-study") {
+    const study = studies.find((s) => s.id === data.study);
+    if (!study) {
+      throw new Error(
+        `home-gallery.yaml: no case study called "${data.study}". ` +
+          `Use the file name from content/case-studies/, without ".md".`,
+      );
+    }
+    // Default: the case study's own tile image (or its cover).
+    const ownFile = isPlaceholder(data.file);
+    const file = ownFile ? study.data.tileImage || study.data.cover : data.file;
+    const media = ownFile
+      ? resolveMedia(study.id, file, "", data.ratio)
+      : resolveMedia("gallery", data.file, data.poster, data.ratio);
+    const alt = ownFile
+      ? study.data.tileImage
+        ? study.data.tileAlt || study.data.coverAlt
+        : study.data.coverAlt
+      : data.alt;
+    return { kind: "case", study, media, alt, fit: data.fit };
+  }
+  return {
+    kind: "piece",
+    media: resolveMedia("gallery", data.file, data.poster, data.ratio),
+    alt: data.alt,
+    fit: data.fit,
+  };
+});
+
+// Group the list into rows of case study pairs and blocks of pieces.
+type Pair = { kind: "pair"; cases: CaseItem[] };
+type Zone = { kind: "zone"; pieces: PieceItem[]; level: boolean };
+const segments: (Pair | Zone)[] = [];
+let waiting: CaseItem | undefined; // first case study of a pair
+let pieces: PieceItem[] = [];
+const flushPieces = (level: boolean) => {
+  if (pieces.length) segments.push({ kind: "zone", pieces, level });
+  pieces = [];
+};
+for (const item of resolved) {
+  if (item.kind === "piece") {
+    pieces.push(item);
+  } else if (!waiting) {
+    flushPieces(true); // pieces waiting from before sit above this pair
+    waiting = item;
+  } else {
+    segments.push({ kind: "pair", cases: [waiting, item] });
+    waiting = undefined;
+  }
+}
+if (waiting) {
+  // An odd case study out: shown on its own row, same size, centered.
+  flushPieces(true);
+  segments.push({ kind: "pair", cases: [waiting] });
+}
+flushPieces(false); // the last block ends the page, so it can stay ragged
+
+// Masonry: pieces are shared between the columns (keeping list order
+// inside each column). Before a pair of case studies, every way of sharing
+// them is tried (for up to 8 pieces) and the most even one is kept, so the
+// columns need as little extra grey as possible to end level. Otherwise
+// each piece goes into the currently shortest column.
+// The same rule runs in the browser for tablets (2 columns) and phones (1).
+const GAP = 0.03; // the gap, as a share of a column's width
+function assign(heights: number[], count: number, level: boolean): number[] {
+  const greedy = () => {
+    const cols = new Array(count).fill(0);
+    return heights.map((h) => {
+      const c = cols.indexOf(Math.min(...cols));
+      cols[c] += h + GAP;
+      return c;
+    });
+  };
+  if (!level || count < 2 || heights.length > 8) return greedy();
+  let best = greedy();
+  let bestSpread = Infinity;
+  const pick = new Array(heights.length).fill(0);
+  const total = count ** heights.length;
+  for (let n = 0; n < total; n++) {
+    let k = n;
+    const cols = new Array(count).fill(0);
+    for (let i = 0; i < heights.length; i++) {
+      pick[i] = k % count;
+      k = Math.floor(k / count);
+      cols[pick[i]] += heights[i] + GAP;
+    }
+    if (cols.some((c) => c === 0)) continue; // no empty columns
+    const spread = Math.max(...cols) - Math.min(...cols);
+    if (spread < bestSpread - 1e-9) {
+      bestSpread = spread;
+      best = [...pick];
+    }
+  }
+  return best;
+}
+function columns(list: PieceItem[], count: number, level: boolean) {
+  const cols: { piece: PieceItem; index: number }[][] = Array.from({ length: count }, () => []);
+  assign(list.map((p) => 1 / p.media.ratio), count, level).forEach((c, index) =>
+    cols[c].push({ piece: list[index], index }),
+  );
+  return cols;
+}
+const pieceSizes = "(min-width: 64rem) 34vw, (min-width: 40rem) 50vw, 100vw";
+let caseCount = 0;
 ---
 
-<div class="gallery-frame">
-  <div class="gallery">
-    {
-      blocks.map(({ study, pieces }, i) => (
-        <>
-          <div class:list={["tile tile--case reveal", { "tile--right": i % 2 === 1 }]}>
-            <CaseStudyCard study={study} priority={i === 0} />
-          </div>
-          {pieces.map((piece) => (
-            <div class="tile tile--piece reveal">
-              <VisualPiece piece={piece} sizes={pieceSizes} />
+<div class="g-gallery" data-gap={GAP}>
+  {
+    segments.map((segment) =>
+      segment.kind === "pair" ? (
+        <div class:list={["g-pair", { "g-pair--single": segment.cases.length === 1 }]}>
+          {segment.cases.map((c) => (
+            <GalleryCase
+              study={c.study}
+              media={c.media}
+              alt={c.alt}
+              fit={c.fit}
+              priority={caseCount++ < 2}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="g-zone" data-zone data-cols="3" data-level={String(segment.level)}>
+          {columns(segment.pieces, 3, segment.level).map((col) => (
+            <div class="g-zone__col">
+              {col.map(({ piece, index }) => (
+                <GalleryTile
+                  media={piece.media}
+                  alt={piece.alt}
+                  fit={piece.fit}
+                  sizes={pieceSizes}
+                  class="g-zone__item reveal"
+                  data-i={index}
+                  data-h={1 / piece.media.ratio}
+                  style={`--ratio: ${piece.media.ratio}; --i: ${index}`}
+                />
+              ))}
             </div>
           ))}
-        </>
-      ))
-    }
-    {
-      extras.map((piece) => (
-        <div class="tile tile--piece reveal">
-          <VisualPiece piece={piece} sizes={pieceSizes} />
         </div>
-      ))
-    }
-  </div>
+      ),
+    )
+  }
 </div>
 
-<style>
-  /* Lets the grid size its rows from its own width. */
-  .gallery-frame {
-    container-type: inline-size;
+<script>
+  // Re-flows each block of pieces into 3, 2 or 1 columns to match the
+  // screen, using the same "shortest column first" rule as the server.
+  const wide = window.matchMedia("(min-width: 64rem)");
+  const medium = window.matchMedia("(min-width: 40rem)");
+  const gallery = document.querySelector<HTMLElement>(".g-gallery");
+  const gap = Number(gallery?.dataset.gap ?? 0.03);
+
+  // Same sharing rule as on the server (see the notes at the top).
+  function assign(heights: number[], count: number, level: boolean): number[] {
+    const greedy = () => {
+      const cols = new Array(count).fill(0);
+      return heights.map((h) => {
+        const c = cols.indexOf(Math.min(...cols));
+        cols[c] += h + gap;
+        return c;
+      });
+    };
+    if (!level || count < 2 || heights.length > 8) return greedy();
+    let best = greedy();
+    let bestSpread = Infinity;
+    const pick = new Array(heights.length).fill(0);
+    const total = count ** heights.length;
+    for (let n = 0; n < total; n++) {
+      let k = n;
+      const cols = new Array(count).fill(0);
+      for (let i = 0; i < heights.length; i++) {
+        pick[i] = k % count;
+        k = Math.floor(k / count);
+        cols[pick[i]] += heights[i] + gap;
+      }
+      if (cols.some((c) => c === 0)) continue;
+      const spread = Math.max(...cols) - Math.min(...cols);
+      if (spread < bestSpread - 1e-9) {
+        bestSpread = spread;
+        best = [...pick];
+      }
+    }
+    return best;
   }
 
-  /* Phones and tablets: two columns. Each case study spans the full
-     width (details shown under the image); two pieces sit side by
-     side below it. */
-  .gallery {
+  function layout() {
+    const count = wide.matches ? 3 : medium.matches ? 2 : 1;
+    document.querySelectorAll<HTMLElement>("[data-zone]").forEach((zone) => {
+      if (zone.dataset.cols === String(count)) return;
+      const tiles = [...zone.querySelectorAll<HTMLElement>("[data-i]")].sort(
+        (a, b) => Number(a.dataset.i) - Number(b.dataset.i),
+      );
+      const cols = Array.from({ length: count }, () => {
+        const col = document.createElement("div");
+        col.className = "g-zone__col";
+        return col;
+      });
+      const level = zone.dataset.level === "true";
+      assign(tiles.map((t) => Number(t.dataset.h)), count, level).forEach((c, i) =>
+        cols[c].append(tiles[i]),
+      );
+      zone.replaceChildren(...cols);
+      zone.dataset.cols = String(count);
+    });
+  }
+
+  layout();
+  wide.addEventListener("change", layout);
+  medium.addEventListener("change", layout);
+
+  // Videos load only when they come near the screen, and play only if
+  // the visitor hasn't asked for reduced motion.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const video = entry.target as HTMLVideoElement;
+        videoObserver.unobserve(video);
+        video.src = video.dataset.src ?? "";
+        if (!reduceMotion.matches) video.play().catch(() => {});
+      });
+    },
+    { rootMargin: "300px 0px" },
+  );
+  document
+    .querySelectorAll<HTMLVideoElement>(".g-gallery video[data-lazy-video]")
+    .forEach((video) => videoObserver.observe(video));
+</script>
+
+<style is:global>
+  /* Global (not scoped) because the columns are rebuilt in the browser. */
+  .g-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+    padding-inline: var(--grid-edge);
+  }
+
+  /* ── Tiles ── */
+  .g-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    background: var(--color-surface);
+  }
+
+  .g-tile__media {
+    width: 100%;
+    aspect-ratio: var(--ratio);
+  }
+
+  /* Centered on the grey, with space around (logos, mockups, objects). */
+  .g-tile--contain .g-tile__media {
+    width: 76%;
+  }
+
+  .g-tile__media img,
+  .g-tile__media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .g-tile--contain .g-tile__media img,
+  .g-tile--contain .g-tile__media video {
+    object-fit: contain;
+  }
+
+  .g-tile--placeholder .g-tile__media {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .g-tile__placeholder {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-flow: dense;
-    gap: var(--gallery-gap);
+    place-content: center;
+    gap: var(--space-1);
+    height: 100%;
+    padding: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    text-align: center;
   }
 
-  .tile--case {
-    grid-column: 1 / -1;
-    margin-bottom: var(--space-5);
+  .g-tile__slot {
+    opacity: 0.75;
   }
 
-  .tile--piece {
-    aspect-ratio: 4 / 3;
+  /* ── Case study pairs ── */
+  .g-pair {
+    display: grid;
+    gap: var(--grid-gap);
+    align-items: start;
   }
 
-  /* Wide screens: three columns. Each case study takes two columns and
-     two rows (alternating left and right); its two pieces stack beside
-     it. Every row is the same height, so there are no empty gaps. */
-  @media (min-width: 64rem) {
-    .gallery {
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: calc((100cqi - 2 * var(--gallery-gap)) / 3 * 0.75);
+  .g-case__link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .g-case__link:hover {
+    color: inherit;
+  }
+
+  /* Phones, tablets and touch screens: title and summary under the tile. */
+  .g-case__text {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-1) var(--space-4);
+  }
+
+  .g-case__title {
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+  }
+
+  .g-case__summary {
+    max-width: 34rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .g-case__cta {
+    display: none;
+  }
+
+  /* ── Blocks of visual pieces ── */
+  /* Phones (and before the script runs): one column, in list order. */
+  .g-zone {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  .g-zone__col {
+    display: contents;
+  }
+
+  .g-zone__item {
+    order: var(--i);
+  }
+
+  @media (min-width: 40rem) {
+    .g-pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .tile--case {
-      grid-column: 1 / span 2;
-      grid-row: span 2;
-      margin-bottom: 0;
+    /* A single case study keeps the pair size, centered. */
+    .g-pair--single {
+      grid-template-columns: minmax(0, calc((100% - var(--grid-gap)) / 2));
+      justify-content: center;
     }
 
-    .tile--case.tile--right {
-      grid-column: 2 / span 2;
+    .g-zone {
+      flex-direction: row;
+      align-items: stretch;
     }
 
-    .tile--piece {
-      aspect-ratio: auto;
+    .g-zone__col {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: var(--grid-gap);
+      min-width: 0;
+    }
+
+    /* Before a pair: the last tile of each column grows so the columns
+       end level. Its media stays whole and centered. */
+    .g-zone[data-level="true"] .g-zone__col > .g-zone__item:last-child {
+      flex-grow: 1;
+    }
+  }
+
+  /* Laptops with a mouse or trackpad: text fades in over the image. */
+  @media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
+    .g-pair {
+      align-items: stretch;
+    }
+
+    .g-case,
+    .g-case__link {
+      height: 100%;
+    }
+
+    .g-case__link {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .g-case__tile {
+      flex: 1 0 auto;
+    }
+
+    .g-case__text {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: var(--space-8) var(--space-5) var(--space-5);
+      border-radius: 0 0 var(--radius-tile) var(--radius-tile);
+      background: linear-gradient(to top, rgb(17 17 17 / 0.6), rgb(17 17 17 / 0));
+      color: var(--color-bg);
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease);
+    }
+
+    .g-case__summary {
+      color: rgb(255 255 255 / 0.85);
+    }
+
+    .g-case__cta {
+      display: inline;
+      margin-top: var(--space-2);
+      font-size: var(--text-sm);
+    }
+
+    .g-case__link:hover .g-case__text,
+    .g-case__link:focus-visible .g-case__text {
+      opacity: 1;
     }
   }
 </style>

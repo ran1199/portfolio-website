@@ -88,7 +88,16 @@ Tick an item (`[x]`) when it's done.
 - [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
 - [ ] Figma exports for each case study (one folder per project)
 - [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
-- [ ] Choose 8 visual pieces for Home (`home: true` in `content/play.yaml`) — 2 sit beside each case study; add a `title` and `tags` for the hover labels
+- [ ] Home & Work gallery: fill the 8 visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):
+  - [ ] `gallery-01` (placeholder shape 4/5, cover)
+  - [ ] `gallery-02` (1/1, contain)
+  - [ ] `gallery-03` (3/4, cover)
+  - [ ] `gallery-04` (16/9, cover)
+  - [ ] `gallery-05` (9/16, cover)
+  - [ ] `gallery-06` (1/1, contain)
+  - [ ] `gallery-07` (4/5, cover)
+  - [ ] `gallery-08` (3/4, contain)
+- [ ] Gallery case study tiles: give each case study a 4:3 tile image (`tileImage` + `tileAlt`, like Galactic Guardians), so the two tiles in each pair are the same shape (Buddy's, CTE and WonderWeave still use their grey placeholder covers)
 - [ ] Visual work for Play and Home (images, MP4s, GIFs) — add each to `content/images/play/` and one entry in `content/play.yaml` (the Play page shows 9 grey placeholders until then)
 - [ ] GIFs: will be converted to MP4 so pages stay fast. This needs a video tool (ffmpeg) installed on the cloud computer — Claude will ask before installing
 - [ ] Each video needs a poster image (a still shown until it loads)

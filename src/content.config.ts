@@ -13,7 +13,7 @@ const site = defineCollection({
   }),
   schema: z.object({
     name: z.string(),
-    introLine: z.string(),
+    introLine: z.string().default(""),
     description: z.string(),
     email: z.string().email(),
     menu: z.object({
@@ -211,4 +211,36 @@ const play = defineCollection({
   }),
 });
 
-export const collections = { site, caseStudies, about, play };
+// content/home-gallery.yaml — the gallery on the Home and Work pages,
+// in display order. Each item is a case study (clickable) or a visual
+// piece (just for looking). Items without a real file yet show a grey
+// placeholder tile shaped by "ratio".
+const ratioText = z.string().regex(/^\s*\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?\s*$/, {
+  message: 'Write the ratio as width/height, e.g. "4/5" or "16/9".',
+});
+
+const homeGallery = defineCollection({
+  loader: file("content/home-gallery.yaml", {
+    parser: (text) =>
+      ((yaml.load(text) as object[] | null) ?? []).map((item, i) => ({
+        id: String(i + 1).padStart(3, "0"),
+        ...item,
+      })),
+  }),
+  schema: z
+    .object({
+      type: z.enum(["case-study", "visual"]),
+      study: z.string().optional(),
+      file: z.string().default(""),
+      poster: z.string().default(""),
+      alt: z.string().default(""),
+      fit: z.enum(["cover", "contain"]).default("cover"),
+      ratio: ratioText.default("4/3"),
+    })
+    .refine((d) => d.type !== "case-study" || Boolean(d.study), {
+      message: 'Case studies need "study:" (the case study file name, e.g. galactic-guardians).',
+      path: ["study"],
+    }),
+});
+
+export const collections = { site, caseStudies, about, play, homeGallery };

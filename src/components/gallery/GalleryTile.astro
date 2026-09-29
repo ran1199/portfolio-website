@@ -1,0 +1,60 @@
+---
+// One gallery tile: a soft grey rounded box holding an image, a looping
+// video or a placeholder. The tile takes the media's own shape.
+//   fit "cover"   → the media fills the tile (photos, videos)
+//   fit "contain" → the media sits centered with space around it
+// If the grid makes a tile taller than its media (to close a gap), the
+// media stays whole and centered; it is never cut off.
+import { Image, getImage } from "astro:assets";
+import type { GalleryMedia } from "../../lib/gallery";
+
+interface Props {
+  media: GalleryMedia;
+  alt: string;
+  fit?: "cover" | "contain";
+  sizes: string;
+  priority?: boolean; // true for tiles at the top of the page
+  class?: string;
+  [attr: string]: unknown; // extra attributes for the gallery layout
+}
+
+const { media, alt, fit = "cover", sizes, priority = false, class: className, ...attrs } = Astro.props;
+const posterUrl =
+  media.kind === "video" && media.poster
+    ? (await getImage({ src: media.poster, width: 1200 })).src
+    : undefined;
+const widths = [480, 800, 1200, 1600, 2000];
+---
+
+<div
+  class:list={["g-tile", `g-tile--${fit}`, { "g-tile--placeholder": media.kind === "placeholder" }, className]}
+  style={`--ratio: ${media.ratio}`}
+  {...attrs}
+>
+  <div class="g-tile__media">
+    {
+      media.kind === "image" ? (
+        <Image src={media.image} alt={alt} widths={widths} sizes={sizes} priority={priority} />
+      ) : media.kind === "video" ? (
+        <video
+          data-src={media.src}
+          poster={posterUrl}
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-label={alt}
+          data-motion-video
+          data-lazy-video
+        />
+      ) : (
+        <div class="g-tile__placeholder" role="img" aria-label="Placeholder: visual piece">
+          <span>Placeholder: visual piece</span>
+          <span class="g-tile__slot">
+            {media.name} · {media.ratioText}
+          </span>
+        </div>
+      )
+    }
+  </div>
+</div>

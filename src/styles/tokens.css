@@ -68,6 +68,10 @@
   --radius-media: 1rem;     /* rounded corners on images and videos */
   --radius-label: 0.5rem;   /* rounded corners on hover labels */
   --gallery-gap: var(--space-3); /* gap between gallery tiles */
+  /* Home & Work gallery grid */
+  --grid-gap: 0.625rem;     /* 10px between tiles */
+  --grid-edge: 0.625rem;    /* 10px margin at the screen edges */
+  --radius-tile: 0.5rem;    /* 8px rounded corners on gallery tiles */
   --radius-pill: 999px;
   --focus-ring: 2px solid var(--color-text);
 }

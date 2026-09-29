@@ -1,0 +1,96 @@
+# ─────────────────────────────────────────────────────────────
+# HOME & WORK GALLERY
+# The grid on the Home page and the Work page, in this order (top = first).
+# Both pages always show the same grid.
+#
+# HOW THE GRID IS BUILT (on laptops)
+#   • Case studies appear in pairs, side by side, about 1.5× as wide as a
+#     visual piece. Two case studies in a row of this list form one pair.
+#   • The visual pieces listed after a pair flow below it in 3 columns.
+#   • Each tile takes the shape of its image or video automatically.
+#   On tablets everything is 2 columns wide, on phones 1 column.
+#
+# FIELDS
+#   type:   "case-study" (clickable, opens the case study)
+#           or "visual" (just for looking, never clickable)
+#   study:  case studies only — the case study's file name, without ".md"
+#           (e.g. galactic-guardians). Its title and one-line summary
+#           come from that file.
+#   file:   the image or video in the folder  content/images/gallery/
+#           For case studies, leave this out to use the case study's own
+#           tile image or cover.
+#           Anything written as [PLACEHOLDER…] shows a grey placeholder tile.
+#   poster: videos only — a still image (same folder, same size as the
+#           video) shown until the video loads. The tile's shape comes from it.
+#   alt:    a short description of the image, read aloud to people who
+#           can't see it
+#   fit:    cover   = the image fills the whole tile (photos, videos)
+#           contain = the image sits centered on the grey tile with space
+#                     around it (logos, phone mockups, transparent PNGs)
+#   ratio:  only used while the file is missing: the placeholder's shape,
+#           as width/height (e.g. "4/5", "16/9"). Once the real file is in,
+#           its own shape is used automatically.
+#
+# TO ADD A VISUAL PIECE: upload the file into content/images/gallery/,
+# then replace the [PLACEHOLDER…] lines of a slot below (or copy a slot).
+# ─────────────────────────────────────────────────────────────
+
+- type: case-study
+  study: galactic-guardians
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-01]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: cover
+  ratio: "4/5"
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-02]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: contain
+  ratio: "1/1"
+
+- type: case-study
+  study: buddys-adventure-island
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-03]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: cover
+  ratio: "3/4"
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-04]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: cover
+  ratio: "16/9"
+
+- type: case-study
+  study: cte-every-hit-matters
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-05]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: cover
+  ratio: "9/16"
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-06]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: contain
+  ratio: "1/1"
+
+- type: case-study
+  study: wonderweave
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-07]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: cover
+  ratio: "4/5"
+
+- type: visual
+  file: "[PLACEHOLDER: gallery-08]"
+  alt: "[PLACEHOLDER: alt text]"
+  fit: contain
+  ratio: "3/4"

@@ -17,9 +17,7 @@
 #   title: (optional) short label that appears on hover, e.g. the project
 #   tags:  (optional) small labels shown next to the title on hover,
 #          in square brackets, separated by commas
-#   home:  true = also show it in the Home page gallery; false = Play only
-#          The Home gallery fits 8 pieces exactly (2 beside each case
-#          study). Any more are added below in rows of 3.
+#   (The Home and Work gallery has its own list: content/home-gallery.yaml)
 #
 # Example:
 # - file: "poster-series-01.jpg"
@@ -27,12 +25,10 @@
 #   alt: "Three posters in pastel colors showing a cartoon rabbit"
 #   title: "Poster series"
 #   tags: ["Illustration", "Print"]
-#   home: true
 #
 # - file: "motion-study.mp4"
 #   type: "video"
 #   poster: "motion-study-poster.jpg"
 #   alt: "Short looping animation of ..."
-#   home: false
 # ─────────────────────────────────────────────────────────────
 
