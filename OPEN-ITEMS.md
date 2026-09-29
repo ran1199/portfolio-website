@@ -25,8 +25,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `characters.png` — Nova, Orion, Stella, Cosmo — added
   - [x] `event-cards.png` — the four event card types — added
   - [x] `play-step-1.jpg` … `play-step-5.jpg` — Product Trial photos — added (hands only, no faces)
-  - [x] `app-leaderboard.png`, `app-game-history.png`, `app-new-game.png`, `app-profile.png`, `app-insights.png` — app screens — added
-  - [ ] `app-skill-focus.png`, `app-performance.png`, `app-dashboard.png` — app screens (Skill focus, Children's performance, Parent dashboard); 454 × 982 px phone mockups like the others
+  - [x] All 8 app screens (`app-leaderboard`, `app-game-history`, `app-skill-focus`, `app-performance`, `app-dashboard`, `app-new-game`, `app-profile`, `app-insights`) — added
   - [ ] `app-ia.png` — information architecture
 
 ### Buddy's Adventure Island (`content/case-studies/buddys-adventure-island.md`, visual-first)
