@@ -53,7 +53,7 @@
   ratio: "1/1"
 
 - type: case-study
-  study: buddys-adventure-island
+  study: cte-every-hit-matters
 
 - type: visual
   file: "[PLACEHOLDER: gallery-03]"
@@ -68,7 +68,7 @@
   ratio: "16/9"
 
 - type: case-study
-  study: cte-every-hit-matters
+  study: buddys-adventure-island
 
 - type: visual
   file: "[PLACEHOLDER: gallery-05]"
