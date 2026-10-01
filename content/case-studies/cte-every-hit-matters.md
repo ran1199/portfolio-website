@@ -17,7 +17,7 @@ role: "Individual project"
 dates: "Oct–Dec 2024"
 tags: ["Advertisement Design", "Educational Design"]
 cover: "cover.jpg"
-coverAlt: "Bus stop billboard from the CTE: Every Hit Matters campaign"
+coverAlt: "Mockup of the campaign poster at a city bus stop: two young football players colliding under the lines What looks like play can leave a mark and CTE's impact starts in the spark, with a passer-by looking at it"
 notice: "Self-initiated concept. Not affiliated with or endorsed by the Concussion Legacy Foundation, the NHL or any team."
 
 # ── SECTIONS (numbered 01, 02… in this order) ────────────────
