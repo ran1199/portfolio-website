@@ -24,7 +24,9 @@
 #           video) shown until the video loads. The tile's shape comes from it.
 #   alt:    a short description of the image, read aloud to people who
 #           can't see it
-#   fit:    cover   = the image fills the whole tile (photos, videos)
+#   fit:    cover   = the image fills the whole tile (photos, videos);
+#                     the edges may be trimmed a little, so keep important
+#                     details away from the very edges
 #           contain = the image sits centered on the grey tile with space
 #                     around it (logos, phone mockups, transparent PNGs)
 #   ratio:  only used while the file is missing: the placeholder's shape,

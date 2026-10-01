@@ -1,10 +1,11 @@
 ---
 // One gallery tile: a soft grey rounded box holding an image, a looping
 // video or a placeholder. The tile takes the media's own shape.
-//   fit "cover"   → the media fills the tile (photos, videos)
-//   fit "contain" → the media sits centered with space around it
-// If the grid makes a tile taller than its media (to close a gap), the
-// media stays whole and centered; it is never cut off.
+//   fit "cover"   → the media fills the tile (photos, videos). If the grid
+//                   makes the tile taller to close a gap, the photo still
+//                   fills it and its edges are trimmed a little.
+//   fit "contain" → the media sits centered with space around it and is
+//                   never cut off (logos, mockups, transparent PNGs)
 import { Image, getImage } from "astro:assets";
 import type { GalleryMedia } from "../../lib/gallery";
 

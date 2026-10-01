@@ -289,6 +289,16 @@ let caseCount = 0;
     width: 76%;
   }
 
+  /* Photos and videos ("cover") always fill the whole tile, even when the
+     grid stretches the tile to line columns up; the edges are trimmed a
+     little if the tile is a different shape. */
+  .g-tile--cover:not(.g-tile--placeholder) .g-tile__media {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    aspect-ratio: auto;
+  }
+
   .g-tile__media img,
   .g-tile__media video {
     display: block;
@@ -402,7 +412,8 @@ let caseCount = 0;
     }
 
     /* Before a pair: the last tile of each column grows so the columns
-       end level. Its media stays whole and centered. */
+       end level. Photos ("cover") fill the taller tile; logos and
+       mockups ("contain") stay whole and centered. */
     .g-zone[data-level="true"] .g-zone__col > .g-zone__item:last-child {
       flex-grow: 1;
     }
