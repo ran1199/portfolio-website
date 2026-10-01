@@ -90,7 +90,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
 - [ ] Home & Work gallery: fill the 8 visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):
   - [ ] `gallery-01` (placeholder shape 4/5, cover)
-  - [ ] `gallery-02` (1/1, contain)
+  - [x] `gallery-02` — added (REI Co-op poster mockup at a bus stop, 1080 × 1319 px). Confirm: is this a self-initiated / class concept for REI (not commissioned)? It shows REI's logo
   - [ ] `gallery-03` (3/4, cover)
   - [ ] `gallery-04` (16/9, cover)
   - [x] `gallery-05` — added (Sake High! nigiri cocktail video, 720 × 1280, 4.4 s, loops). Still to add: a poster still (`gallery-05-poster.jpg`, 720 × 1280) and confirm the description

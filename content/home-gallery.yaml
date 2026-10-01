@@ -47,9 +47,9 @@
   ratio: "4/5"
 
 - type: visual
-  file: "[PLACEHOLDER: gallery-02]"
-  alt: "[PLACEHOLDER: alt text]"
-  fit: contain
+  file: "gallery-02.jpg"
+  alt: "Mockup of a poster at a bus stop: a collage of a person doing a handstand in a wildflower meadow with a white rabbit, the headline Leave it all behind, and the REI Co-op logo"
+  fit: cover
   ratio: "1/1"
 
 - type: case-study
