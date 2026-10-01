@@ -17,7 +17,7 @@ role: "Individual project"
 dates: "Apr–Aug 2024"
 tags: ["Game Design", "UX Design", "Educational Design"]
 cover: "cover.jpg"
-coverAlt: "Island scene with the characters of Buddy's Adventure Island"
+coverAlt: "Buddy's Adventure Island game scene: a bear, a squirrel, a rabbit and a dog in party hats on a sandy island path, with balloons and gifts"
 
 # ── SECTIONS (numbered 01, 02… in this order) ────────────────
 sections:

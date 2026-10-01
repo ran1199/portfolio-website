@@ -34,7 +34,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] No photos of real, named children anywhere on the page
 - [ ] Check each image's alt text matches the real export once it's in
 - [ ] Replace the 16 labeled grey placeholder images in `content/images/buddys-adventure-island/` with Figma exports (same file names):
-  - [ ] `cover.jpg` — island scene with the characters
+  - [x] `cover.jpg` — game scene (party on the island) — added, 4:3, 1605 × 1204 px
   - [ ] `research-signs.png` — signs & symptoms (Age 3–5 / Age 6+)
   - [ ] `research-interventions.png` — existing interventions (3 approaches)
   - [ ] `scene-map.png` — game scene map
