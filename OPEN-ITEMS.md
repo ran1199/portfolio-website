@@ -4,7 +4,7 @@ Everything still missing, to write, or to confirm before launch.
 Tick an item (`[x]`) when it's done.
 
 ## Content to write
-- [ ] About intro paragraph — `content/about.md`
+- [ ] About intro paragraph — `content/about.md` (placeholder removed at Ran's request; the page shows no intro until text is added after the last `---`)
 - [x] About timeline one-liners — finalized by Ran (7 entries, incl. Hearst China | SuperELLE Magazine)
 - [ ] Final wording of the Home intro line — `content/site.yaml`
 - [ ] Full text for each case study section (Phase 4)

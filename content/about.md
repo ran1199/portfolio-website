@@ -56,5 +56,3 @@ timeline:
     role: "BS, Advertising"
     note: "Dean's List, four semesters"
 ---
-
-[PLACEHOLDER: About intro paragraph]
