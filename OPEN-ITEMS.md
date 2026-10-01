@@ -74,7 +74,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] `research-journey`: crop out the parent's photo and name before exporting
 - [ ] Check each image's alt text matches the real export once it's in
 - [ ] Replace the 17 labeled grey placeholder images in `content/images/wonderweave/` with Figma exports (same file names):
-  - [ ] `cover.jpg` — exhibition gallery scene (label stock people as illustrative)
+  - [x] `cover.jpg` — exhibition gallery scene — added (4:3, 2000 × 1500 px), labelled "Illustrative render." under the cover
   - [ ] `research-journey.png` — timeline and emotional experiences chart (crop out the parent's photo and name)
   - [ ] `scenes.png` — "How it works" row of 5 scenes
   - [ ] `visit-step-1.png` … `visit-step-4.png` — experience process icons and illustrations
@@ -97,7 +97,7 @@ Tick an item (`[x]`) when it's done.
   - [ ] `gallery-06` (1/1, contain)
   - [ ] `gallery-07` (4/5, cover)
   - [ ] `gallery-08` (3/4, contain)
-- [ ] Gallery case study tiles: give each case study a 4:3 tile image (`tileImage` + `tileAlt`, like Galactic Guardians), so the two tiles in each pair are the same shape (Buddy's, CTE and WonderWeave still use their grey placeholder covers)
+- [ ] Gallery case study tiles: give each case study a 4:3 tile image (`tileImage` + `tileAlt`, like Galactic Guardians), so the two tiles in each pair are the same shape (CTE still uses its grey placeholder cover; Buddy's and WonderWeave covers are 4:3)
 - [ ] Visual work for Play and Home (images, MP4s, GIFs) — add each to `content/images/play/` and one entry in `content/play.yaml` (the Play page shows 9 grey placeholders until then)
 - [ ] GIFs: will be converted to MP4 so pages stay fast. This needs a video tool (ffmpeg) installed on the cloud computer — Claude will ask before installing
 - [ ] Each video needs a poster image (a still shown until it loads)

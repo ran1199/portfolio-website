@@ -20,7 +20,8 @@ role: "Individual project"
 dates: "May–Jul 2024"
 tags: ["UI/UX Design", "Educational Design"]
 cover: "cover.jpg"
-coverAlt: "The WonderWeave exhibition gallery"
+coverAlt: "Illustrative render of the WonderWeave exhibition: a gallery wall with line drawings of children at milestones such as First Step Towards Independence and First Night Away, touch and phone icons, and two visitors"
+notice: "Illustrative render."
 
 # ── SECTIONS (numbered 01, 02… in this order) ────────────────
 sections:
