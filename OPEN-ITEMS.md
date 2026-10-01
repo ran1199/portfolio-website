@@ -89,13 +89,13 @@ Tick an item (`[x]`) when it's done.
 - [ ] Figma exports for each case study (one folder per project)
 - [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
 - [ ] Home & Work gallery: fill the 8 visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):
-  - [x] `gallery-01` — added (toy-store game on two laptops, 986 × 1381 px)
+  - [ ] `gallery-01` (placeholder shape 4/5, cover)
   - [ ] `gallery-02` (1/1, contain)
   - [ ] `gallery-03` (3/4, cover)
   - [ ] `gallery-04` (16/9, cover)
   - [ ] `gallery-05` (9/16, cover)
   - [ ] `gallery-06` (1/1, contain)
-  - [ ] `gallery-07` (4/5, cover)
+  - [x] `gallery-07` — added (toy-store game on two laptops, 986 × 1381 px)
   - [ ] `gallery-08` (3/4, contain)
 - [ ] Gallery case study tiles: give each case study a 4:3 tile image (`tileImage` + `tileAlt`, like Galactic Guardians), so the two tiles in each pair are the same shape (CTE still uses its grey placeholder cover; Buddy's and WonderWeave covers are 4:3)
 - [ ] Visual work for Play and Home (images, MP4s, GIFs) — add each to `content/images/play/` and one entry in `content/play.yaml` (the Play page shows 9 grey placeholders until then)
