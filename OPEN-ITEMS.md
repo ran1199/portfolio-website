@@ -91,7 +91,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] Home & Work gallery: fill the 8 visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):
   - [ ] `gallery-01` (placeholder shape 4/5, cover)
   - [ ] `gallery-02` (1/1, contain)
-  - [ ] `gallery-03` (3/4, cover)
+  - [x] `gallery-03` — added (Sake High! nigiri cocktail video, 720 × 1280, 3.5 s, loops). Still to add: a poster still (`gallery-03-poster.jpg`, 720 × 1280) and confirm the description
   - [ ] `gallery-04` (16/9, cover)
   - [ ] `gallery-05` (9/16, cover)
   - [ ] `gallery-06` (1/1, contain)

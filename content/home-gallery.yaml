@@ -56,10 +56,10 @@
   study: cte-every-hit-matters
 
 - type: visual
-  file: "[PLACEHOLDER: gallery-03]"
-  alt: "[PLACEHOLDER: alt text]"
+  file: "gallery-03.mp4"
+  alt: "Short looping video of a Sake High! nigiri cocktail"
   fit: cover
-  ratio: "3/4"
+  ratio: "9/16"   # the video is 720 × 1280; used for its shape until a poster image is added
 
 - type: visual
   file: "[PLACEHOLDER: gallery-04]"
