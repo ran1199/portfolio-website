@@ -11,7 +11,7 @@
 
 # ── HERO ─────────────────────────────────────────────────────
 title: "CTE: Every Hit Matters"
-order: 3
+order: 2
 summary: "An interactive awareness campaign about CTE risks in youth contact sports."
 role: "Individual project"
 dates: "Oct–Dec 2024"

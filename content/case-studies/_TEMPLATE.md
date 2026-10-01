@@ -28,7 +28,8 @@
 
 # ── HERO (top of the page) ────────────────────────────────────
 title: "Project name"
-order: 5                  # position on Home and for "Next project"
+order: 5                  # order for the "Next project" link (the Home/Work
+                          # gallery order is set in content/home-gallery.yaml)
 summary: "One line describing the project."
 role: "Individual project"
 dates: "Jan–Mar 2026"
