@@ -89,7 +89,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] Figma exports for each case study (one folder per project)
 - [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
 - [ ] Home & Work gallery: fill the 8 visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):
-  - [ ] `gallery-01` (placeholder shape 4/5, cover)
+  - [x] `gallery-01` — added (toy-store game on two laptops, 1024 × 1280 px)
   - [ ] `gallery-02` (1/1, contain)
   - [ ] `gallery-03` (3/4, cover)
   - [ ] `gallery-04` (16/9, cover)

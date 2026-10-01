@@ -39,8 +39,8 @@
   study: galactic-guardians
 
 - type: visual
-  file: "[PLACEHOLDER: gallery-01]"
-  alt: "[PLACEHOLDER: alt text]"
+  file: "gallery-01.jpg"
+  alt: "Two laptop screens showing a colorful toy-store game: a wheel of animal toys, and a screen that says Drag to match the zone! with animal figures on a shelf"
   fit: cover
   ratio: "4/5"
 
