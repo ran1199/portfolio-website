@@ -19,7 +19,7 @@ const site = (await getEntry("site", "site"))!.data;
     )
   }
 
-  <section class="home-gallery" aria-labelledby="work-heading">
+  <section class:list={["home-gallery", { "home-gallery--top": !site.introLine }]} aria-labelledby="work-heading">
     <h2 id="work-heading" class="visually-hidden">{site.menu.work}</h2>
     <WorkGallery />
   </section>
@@ -39,5 +39,10 @@ const site = (await getEntry("site", "site"))!.data;
 
   .home-gallery {
     padding-bottom: var(--grid-edge);
+  }
+
+  /* No intro line: same small gap under the menu as the Work page. */
+  .home-gallery--top {
+    padding-top: var(--space-5);
   }
 </style>

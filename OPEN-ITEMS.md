@@ -4,9 +4,9 @@ Everything still missing, to write, or to confirm before launch.
 Tick an item (`[x]`) when it's done.
 
 ## Content to write
-- [ ] About intro paragraph — `content/about.md` (placeholder removed at Ran's request; the page shows no intro until text is added after the last `---`)
+- [ ] About intro paragraph — `content/about.md`: currently the positioning line "Ran Guo — a product thinker…" (moved from Home at Ran's request); extend it into a short paragraph if you like
 - [x] About timeline one-liners — finalized by Ran (7 entries, incl. Hearst China | SuperELLE Magazine)
-- [ ] Final wording of the Home intro line — `content/site.yaml`
+- [x] Home intro line — removed from Home at Ran's request (now on About); `introLine` in `content/site.yaml` is empty
 - [ ] Full text for each case study section (Phase 4)
 
 ### Galactic Guardians (`content/case-studies/galactic-guardians.md`, visual-first)

@@ -56,3 +56,5 @@ timeline:
     role: "BS, Advertising"
     note: "Dean's List, four semesters"
 ---
+
+Ran Guo — a product thinker with a design background and strong brand sense.

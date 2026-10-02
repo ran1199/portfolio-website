@@ -7,8 +7,9 @@
 # Your name. It appears at the top left of every page and links to Home.
 name: "Ran Guo"
 
-# The line under your name on the Home page.
-introLine: "Ran Guo — a product thinker with a design background and strong brand sense."
+# An optional line above the gallery on the Home page.
+# Leave it empty ("") to show no line (the gallery starts right under the menu).
+introLine: ""
 
 # Short description used by Google and when a link is shared (e.g. LinkedIn).
 # Aim for one sentence, under about 160 characters.
