@@ -41,10 +41,11 @@
   study: galactic-guardians
 
 - type: visual
-  file: "[PLACEHOLDER: gallery-01]"
-  alt: "[PLACEHOLDER: alt text]"
+  file: "gallery-01.mp4"
+  poster: "gallery-01-poster.jpg"
+  alt: "Screen recording of the Experience Music Group Instagram: the profile page, then a black-and-white Reel with the words There was a time when music was just sound and We saw an Experience"
   fit: cover
-  ratio: "4/5"
+  ratio: "9/16"
 
 - type: visual
   file: "gallery-02.jpg"
