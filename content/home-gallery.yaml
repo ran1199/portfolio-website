@@ -88,7 +88,7 @@
   ratio: "4/5"
 
 - type: visual
-  file: "[PLACEHOLDER: gallery-08]"
-  alt: "[PLACEHOLDER: alt text]"
-  fit: contain
+  file: "gallery-08.jpg"
+  alt: "Close-up of a phone showing a promoted Boston Interiors post in a feed: a woman taking a selfie with her dog on a bed, headed Make Room for Your New Best Friend, with a Book now button"
+  fit: cover
   ratio: "3/4"

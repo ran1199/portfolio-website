@@ -95,7 +95,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `gallery-05` — added (Sake High! Instagram screen recording, 4 s, loops). Converted with ffmpeg to H.264, 720 × 1280, no sound, 0.49 MB (was 3.5 MB HEVC); poster still `gallery-05-poster.jpg` added
   - [x] `gallery-06` — added (Boston Interiors "Make Room for Bedtime Stories" billboard mockup, 1099 × 795 px). Confirm: is the photo of the mother and child a stock photo (if so, label it "Stock photo" or similar), and was this made for Boston Interiors (client or internship work) or self-initiated? It uses their logo
   - [x] `gallery-07` — added (toy-store game on two laptops, 986 × 1381 px)
-  - [ ] `gallery-08` (3/4, contain)
+  - [x] `gallery-08` — added (Boston Interiors promoted post on a phone, 730 × 1024 px; see-through frame and white strip trimmed). Same questions as gallery-06: is the photo of the woman and dog a stock photo (label it if so), and was this made for Boston Interiors or self-initiated?
 - [ ] Gallery case study tiles: give each case study a 4:3 tile image (`tileImage` + `tileAlt`, like Galactic Guardians), so the two tiles in each pair are the same shape (CTE still uses its grey placeholder cover; Buddy's and WonderWeave covers are 4:3)
 - [ ] Visual work for Play and Home (images, MP4s, GIFs) — add each to `content/images/play/` and one entry in `content/play.yaml` (the Play page shows 9 grey placeholders until then)
 - [ ] GIFs: will be converted to MP4 so pages stay fast. This needs a video tool (ffmpeg) installed on the cloud computer — Claude will ask before installing
