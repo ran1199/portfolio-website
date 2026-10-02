@@ -92,7 +92,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `gallery-01` — added (Experience Music Group Instagram screen recording, 6.3 s, loops; converted to H.264, 720 × 1280, no sound, 0.58 MB; poster still added). Confirm: OK to show the people in the Reel and the client logos in the profile grid (Rogers, Pioneer, Armor All)?
   - [x] `gallery-02` — added (REI Co-op poster mockup at a bus stop, 941 × 1672 px, fills its tile). Confirm: is this a self-initiated / class concept for REI (not commissioned)? It shows REI's logo
   - [x] `gallery-03` — added (REI Co-op Instagram post + story: phone mockups and flat artwork, 1071 × 1908 px, fills its tile edge to edge; white background around the pieces made transparent, empty margins trimmed). Same REI logo question as gallery-02
-  - [x] `gallery-05` — added (Sake High! Instagram screen recording, 3.5 s, loops). Converted with ffmpeg to H.264, 720 × 1280, no sound, 0.47 MB (was 3 MB HEVC); poster still `gallery-05-poster.jpg` added
+  - [x] `gallery-05` — added (Sake High! Instagram screen recording, 4 s, loops). Converted with ffmpeg to H.264, 720 × 1280, no sound, 0.49 MB (was 3.5 MB HEVC); poster still `gallery-05-poster.jpg` added
   - [ ] `gallery-06` (1/1, contain)
   - [x] `gallery-07` — added (toy-store game on two laptops, 986 × 1381 px)
   - [ ] `gallery-08` (3/4, contain)
