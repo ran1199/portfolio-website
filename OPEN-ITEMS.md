@@ -91,7 +91,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] Home & Work gallery: fill the 8 visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):
   - [ ] `gallery-01` (placeholder shape 4/5, cover)
   - [x] `gallery-02` — added (REI Co-op poster mockup at a bus stop, 1080 × 1319 px). Confirm: is this a self-initiated / class concept for REI (not commissioned)? It shows REI's logo
-  - [ ] `gallery-03` (3/4, cover)
+  - [x] `gallery-03` — added (REI Co-op Instagram post + story: phone mockups and flat artwork, 1073 × 2000 px, fills its tile; white background around the pieces made transparent). Same REI logo question as gallery-02
   - [ ] `gallery-04` (16/9, cover)
   - [x] `gallery-05` — added (Sake High! nigiri cocktail video, 720 × 1280, 4.4 s, loops). Still to add: a poster still (`gallery-05-poster.jpg`, 720 × 1280) and confirm the description
   - [ ] `gallery-06` (1/1, contain)
