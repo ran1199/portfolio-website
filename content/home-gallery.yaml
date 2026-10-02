@@ -73,10 +73,10 @@
   ratio: "9/16"
 
 - type: visual
-  file: "[PLACEHOLDER: gallery-06]"
-  alt: "[PLACEHOLDER: alt text]"
-  fit: contain
-  ratio: "1/1"
+  file: "gallery-06.jpg"
+  alt: "Billboard mockup for Boston Interiors: a mother and daughter reading a book in bed by lamplight, with the headline Make Room for Bedtime Stories and an invitation to book a free Design Studio appointment"
+  fit: cover
+  ratio: "4/3"
 
 - type: case-study
   study: wonderweave
