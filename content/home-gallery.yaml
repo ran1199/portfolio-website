@@ -8,7 +8,8 @@
 #     visual piece. Two case studies in a row of this list form one pair.
 #   • The visual pieces listed after a pair flow below it in 3 columns.
 #   • Each tile takes the shape of its image or video automatically.
-#   On tablets everything is 2 columns wide, on phones 1 column.
+#   On tablets everything is 2 columns wide, on phones 1 column (pieces
+#   stacked in the same column on laptops stay together on phones).
 #
 # FIELDS
 #   type:   "case-study" (clickable, opens the case study)

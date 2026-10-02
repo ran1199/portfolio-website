@@ -8,7 +8,8 @@
 // Before the next pair, the last tile of each shorter column grows a
 // little, so the columns end level and no gap is left.
 // Tablets: pairs stay side by side; pieces flow in 2 columns.
-// Phones: one column, in list order.
+// Phones: one column. Pieces stacked in the same laptop column stay
+// together; otherwise list order is kept.
 import { getCollection } from "astro:content";
 import GalleryCase from "./gallery/GalleryCase.astro";
 import GalleryTile from "./gallery/GalleryTile.astro";
@@ -123,10 +124,20 @@ function assign(heights: number[], count: number, level: boolean): number[] {
   return best;
 }
 function columns(list: PieceItem[], count: number, level: boolean) {
-  const cols: { piece: PieceItem; index: number }[][] = Array.from({ length: count }, () => []);
-  assign(list.map((p) => 1 / p.media.ratio), count, level).forEach((c, index) =>
-    cols[c].push({ piece: list[index], index }),
+  const cols: { piece: PieceItem; index: number; phone: number }[][] = Array.from(
+    { length: count },
+    () => [],
   );
+  assign(list.map((p) => 1 / p.media.ratio), count, level).forEach((c, index) =>
+    cols[c].push({ piece: list[index], index, phone: 0 }),
+  );
+  // Phone order: column by column (columns in the order of their first
+  // piece), so pieces stacked together on a laptop stay together.
+  let phone = 0;
+  [...cols]
+    .filter((col) => col.length)
+    .sort((a, b) => a[0].index - b[0].index)
+    .forEach((col) => col.forEach((entry) => (entry.phone = phone++)));
   return cols;
 }
 const pieceSizes = "(min-width: 64rem) 34vw, (min-width: 40rem) 50vw, 100vw";
@@ -152,7 +163,7 @@ let caseCount = 0;
         <div class="g-zone" data-zone data-cols="3" data-level={String(segment.level)}>
           {columns(segment.pieces, 3, segment.level).map((col) => (
             <div class="g-zone__col">
-              {col.map(({ piece, index }) => (
+              {col.map(({ piece, index, phone }) => (
                 <GalleryTile
                   media={piece.media}
                   alt={piece.alt}
@@ -160,8 +171,9 @@ let caseCount = 0;
                   sizes={pieceSizes}
                   class="g-zone__item reveal"
                   data-i={index}
+                  data-phone={phone}
                   data-h={1 / piece.media.ratio}
-                  style={`--ratio: ${piece.media.ratio}; --i: ${index}`}
+                  style={`--ratio: ${piece.media.ratio}; --i: ${phone}`}
                 />
               ))}
             </div>
@@ -217,8 +229,11 @@ let caseCount = 0;
     const count = wide.matches ? 3 : medium.matches ? 2 : 1;
     document.querySelectorAll<HTMLElement>("[data-zone]").forEach((zone) => {
       if (zone.dataset.cols === String(count)) return;
+      // Phones keep the laptop's stacks together (data-phone); tablets
+      // share the pieces out again in list order (data-i).
+      const key = count === 1 ? "phone" : "i";
       const tiles = [...zone.querySelectorAll<HTMLElement>("[data-i]")].sort(
-        (a, b) => Number(a.dataset.i) - Number(b.dataset.i),
+        (a, b) => Number(a.dataset[key]) - Number(b.dataset[key]),
       );
       const cols = Array.from({ length: count }, () => {
         const col = document.createElement("div");
@@ -372,7 +387,8 @@ let caseCount = 0;
   }
 
   /* ── Blocks of visual pieces ── */
-  /* Phones (and before the script runs): one column, in list order. */
+  /* Phones (and before the script runs): one column, laptop stacks kept
+     together (see "Phone order" above). */
   .g-zone {
     display: flex;
     flex-direction: column;
