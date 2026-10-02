@@ -62,12 +62,6 @@
   fit: cover
   ratio: "3/4"
 
-- type: visual
-  file: "[PLACEHOLDER: gallery-04]"
-  alt: "[PLACEHOLDER: alt text]"
-  fit: cover
-  ratio: "16/9"
-
 - type: case-study
   study: buddys-adventure-island
 
