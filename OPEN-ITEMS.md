@@ -56,7 +56,7 @@ Tick an item (`[x]`) when it's done.
 - [ ] `screen-before`: export it if you have it; otherwise keep the placeholder
 - [ ] Check each image's alt text matches the real export once it's in
 - [ ] Replace the 16 labeled grey placeholder images in `content/images/cte-every-hit-matters/` with Figma exports (same file names):
-  - [x] `cover.jpg` — bus stop billboard mockup — added (4:3, 1600 × 1200 px); Ran approved publishing. Still to confirm: source/permission for the football photo on the poster (recognizable children, name "MICHAEL" on a helmet), whether the helmet wings emblem is a real team logo, and whether to label the mockup "Illustrative mockup."
+  - [x] `cover.jpg` — bus stop billboard mockup — added (4:3, 1448 × 1086 px, replaced with Ran's updated version); Ran approved publishing. Still to confirm: source/permission for the football photo on the poster (recognizable children, a name label on a helmet), whether the helmet wings emblem is a real team logo, and whether to label the mockup "Illustrative mockup."
   - [ ] `research-sports.png` — sports strip with statistics (needs sources)
   - [ ] `user-journey.png` — user journey diagram
   - [ ] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 (check logos)
