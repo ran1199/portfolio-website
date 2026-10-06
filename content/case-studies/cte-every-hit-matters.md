@@ -115,9 +115,9 @@ sections:
       - sideBySide: true
         gallery:
           - image: "test-pvc.jpg"
-            alt: "Billboard visual test: a transparent PVC board over an iPad"
+            alt: "Billboard visual test on iPads: three posters (football, soccer and hockey) with Come closer before the transition, and two after it, showing CTE's impact starts in the spark and then Scan to learn more with a QR code"
             caption: "Tested the reveal with a transparent PVC board over an iPad."
           - image: "test-arduino.jpg"
-            alt: "Arduino test with an ultrasonic proximity sensor"
+            alt: "Arduino test: an ultrasonic sensor above an iPad shows Come closer when no one is approaching, and switches to CTE's impact starts in the spark with a red glow when a hand comes near"
             caption: "An ultrasonic sensor (HC-SR04) triggers the change as people approach."
 ---

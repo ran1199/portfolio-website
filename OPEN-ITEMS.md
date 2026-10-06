@@ -60,8 +60,8 @@ Tick an item (`[x]`) when it's done.
   - [x] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 added (1200 × 1500 px each). Confirm: steps 2–4 show the Concussion Legacy Foundation logo on the poster (OK to show for a self-initiated concept? the page already says "not affiliated with or endorsed by"); same football photo as the cover (recognizable children, "MICHAEL" on a helmet)
   - [x] `screen-1.png` … `screen-4.png` — arena screen steps added (1200 × 1500 px, same as the billboards). Ran chose to publish them with the real team mascots and logos (St. Louis Blues, LA Galaxy, Minnesota Vikings, NFL, Herbalife, Nike, Concussion Legacy Foundation) and to remove the "placeholders" note under the screens. Step 4 typo fixed ("Scan to learn more")
   - [x] `scenarios.png` — scenarios image added (2000 × 1167 px). Confirm: the photos of people (a child and an adult at the arena screen, a child at the bus stop, a hand holding a phone) — stock photos? If so, label them; permission needed if they show real children you know. Also shows the Concussion Legacy Foundation donation page and real team mascots/logos
-  - [ ] `test-pvc.jpg` — billboard visual test (PVC)
-  - [ ] `test-arduino.jpg` — Arduino ultrasonic sensor test, one image
+  - [x] `test-pvc.jpg` — billboard visual test on iPads added (1300 × 975 px). Shows the football photo plus soccer and hockey photos of children (same permission question as the cover)
+  - [x] `test-arduino.jpg` — Arduino ultrasonic sensor test added (1300 × 975 px)
 
 ### WonderWeave (`content/case-studies/wonderweave.md`, visual-first)
 - [ ] Parents' consent to use their interview quotes (currently: "A father in Beijing (parent interview; names changed for privacy)")
