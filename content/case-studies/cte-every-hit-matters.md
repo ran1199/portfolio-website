@@ -14,7 +14,7 @@ title: "CTE: Every Hit Matters"
 order: 2
 summary: "An interactive awareness campaign about CTE risks in youth contact sports."
 role: "Individual project"
-dates: "Oct–Dec 2024"
+dates: "Dec 2024 – Feb 2025"
 tags: ["Advertisement Design", "Educational Design"]
 cover: "cover.jpg"
 coverAlt: "Mockup of the campaign poster at a city bus stop: two young football players colliding under the lines What looks like play can leave a mark and CTE's impact starts in the spark, with a passer-by looking at it"
