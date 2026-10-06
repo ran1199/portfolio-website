@@ -84,7 +84,7 @@ Tick an item (`[x]`) when it's done.
   - [ ] `app-ia.png` — information architecture
 
 ## Files to provide
-- [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf`
+- [ ] Résumé PDF without phone number → replaces the placeholder `public/resume.pdf` (the résumé is hidden for now: `showResume: false` in `content/site.yaml`)
 - [ ] Figma exports for each case study (one folder per project)
 - [ ] A cover image for each case study (+ `cover` and `coverAlt` in its file) — shown large on Home
 - [ ] Home & Work gallery: fill the visual piece slots in `content/home-gallery.yaml` — upload each file to `content/images/gallery/`, then replace the slot's `file` and `alt` (and set `fit`: cover or contain; add `poster` for videos):

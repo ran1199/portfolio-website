@@ -12,7 +12,8 @@ const links = [
   { label: site.menu.work, href: withBase("work/") },
   { label: site.menu.play, href: withBase("play/") },
   { label: site.menu.about, href: withBase("about/") },
-  { label: site.menu.resume, href: withBase("resume.pdf") },
+  // The résumé link shows only when showResume is true in site.yaml.
+  ...(site.showResume ? [{ label: site.menu.resume, href: withBase("resume.pdf") }] : []),
 ];
 ---
 

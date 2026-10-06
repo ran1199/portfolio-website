@@ -16,6 +16,7 @@ const site = defineCollection({
     introLine: z.string().default(""),
     description: z.string(),
     email: z.string().email(),
+    showResume: z.boolean().default(true),
     menu: z.object({
       work: z.string(),
       play: z.string(),

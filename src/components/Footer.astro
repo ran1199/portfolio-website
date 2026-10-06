@@ -1,5 +1,6 @@
 ---
-// Footer shown on every page: email, copy button and résumé link.
+// Footer shown on every page: email, copy button and résumé link
+// (the résumé link only when showResume is true in site.yaml).
 import { getEntry } from "astro:content";
 import { withBase } from "../lib/url";
 import CopyEmail from "./CopyEmail.astro";
@@ -14,7 +15,7 @@ const year = new Date().getFullYear();
       <a href={`mailto:${site.email}`}>{site.email}</a>
       <CopyEmail email={site.email} label="Copy" />
     </div>
-    <a href={withBase("resume.pdf")}>{site.menu.resume}</a>
+    {site.showResume && <a href={withBase("resume.pdf")}>{site.menu.resume}</a>}
     <p class="site-footer__copyright">© {year} {site.name}</p>
   </div>
 </footer>

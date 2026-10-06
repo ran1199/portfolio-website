@@ -1,5 +1,6 @@
 ---
-// About page: intro, résumé download and email, then the timeline.
+// About page: intro, résumé download (when showResume is true in
+// site.yaml) and email, then the timeline.
 // All words come from content/about.md (and the email from site.yaml).
 import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -21,9 +22,13 @@ const intro = (about.body ?? "").trim();
       <h1>{title}</h1>
       {intro && <Text text={intro} class="about__text" />}
       <div class="about__actions">
-        <a class="button" href={withBase("resume.pdf")} download>
-          {resumeButton} <span aria-hidden="true">↓</span>
-        </a>
+        {
+          site.showResume && (
+            <a class="button" href={withBase("resume.pdf")} download>
+              {resumeButton} <span aria-hidden="true">↓</span>
+            </a>
+          )
+        }
         <span class="about__email">
           <a href={`mailto:${site.email}`}>{site.email}</a>
           <CopyEmail email={site.email} label="Copy" />

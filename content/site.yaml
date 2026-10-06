@@ -18,6 +18,11 @@ description: "Portfolio of Ran Guo — a product thinker with a design backgroun
 # Your email address. Used by the "copy email" button on every page.
 email: "grleah1902@gmail.com"
 
+# Show the résumé? true = a "Résumé" link in the menu and footer and a
+# "Download résumé" button on About (the file is public/resume.pdf).
+# false = hidden everywhere.
+showResume: false
+
 # The words shown in the top menu.
 menu:
   work: "Work"
