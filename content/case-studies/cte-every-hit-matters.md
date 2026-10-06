@@ -56,7 +56,7 @@ sections:
           - title: "Mission alignment"
             text: "A shared goal of protecting young athletes"
       - image: "user-journey.png"
-        alt: "User journey diagram for the campaign"
+        alt: "User journey in five stages. Awareness: the user. Engagement: bus stop billboards or sports arena screens. Education: messaging. Call to action: scan a QR code, visit the website, then donate or sign. Post-engagement: social share."
         caption: "Awareness → engagement → education → call to action → post-engagement."
       # Two channels, side by side.
       - tiles:
