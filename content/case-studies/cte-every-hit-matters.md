@@ -105,9 +105,8 @@ sections:
             text: "A QR code call to action, then the screen resets."
             image: "screen-4.png"
             alt: "Arena screen, step 4: a person scans a QR code on the screen next to the words Scan to learn more"
-        note: "Mascots shown are placeholders for original designs."
 
-      # c. Scenario: keep the placeholder until the mascots are replaced.
+      # c. Scenario
       - image: "scenarios.png"
         alt: "Both executions in context: the bus stop billboard and the arena screen"
 
