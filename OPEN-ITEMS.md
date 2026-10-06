@@ -49,13 +49,11 @@ Tick an item (`[x]`) when it's done.
 
 ### CTE: Every Hit Matters (`content/case-studies/cte-every-hit-matters.md`, visual-first)
 - [ ] Sources for the sports strip statistics (replaces "Sources: [SOURCE NEEDED]")
-- [ ] Original mascot designs — needed before replacing `screen-1` … `screen-4`, `scenarios` and `screen-kids-height`
+- [ ] Original mascot designs — needed before replacing `screen-1` … `screen-4` and `scenarios`
 - [ ] Logo check: no NHL, team or other organization logos in `cover` or `billboard-1` … `4` (flag any to Claude before use)
 - [ ] Athletes' permission for names and photos (credited by sport only until confirmed)
-- [ ] `screen-kids-height`: if it shows a real child, confirm permission (or use an illustration)
-- [ ] `screen-before`: export it if you have it; otherwise keep the placeholder
 - [ ] Check each image's alt text matches the real export once it's in
-- [ ] Replace the 16 labeled grey placeholder images in `content/images/cte-every-hit-matters/` with Figma exports (same file names):
+- [ ] Replace the 14 labeled grey placeholder images in `content/images/cte-every-hit-matters/` with Figma exports (same file names):
   - [x] `cover.jpg` — bus stop billboard mockup — added (4:3, 1448 × 1086 px, replaced with Ran's updated version); Ran approved publishing. Still to confirm: source/permission for the football photo on the poster (recognizable children, a name label on a helmet), whether the helmet wings emblem is a real team logo, and whether to label the mockup "Illustrative mockup."
   - [ ] `research-sports.png` — sports strip with statistics (needs sources)
   - [ ] `user-journey.png` — user journey diagram
@@ -64,8 +62,6 @@ Tick an item (`[x]`) when it's done.
   - [ ] `scenarios.png` — scenarios image (mascots first)
   - [ ] `test-pvc.jpg` — billboard visual test (PVC)
   - [ ] `test-arduino.jpg` — Arduino ultrasonic sensor test, one image
-  - [ ] `screen-before.png` — interactive screen before the change
-  - [ ] `screen-kids-height.png` — screen with a child reaching the button (mascots first)
 
 ### WonderWeave (`content/case-studies/wonderweave.md`, visual-first)
 - [ ] Parents' consent to use their interview quotes (currently: "A father in Beijing (parent interview; names changed for privacy)")

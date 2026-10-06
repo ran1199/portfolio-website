@@ -15,7 +15,7 @@ order: 2
 summary: "An interactive awareness campaign about CTE risks in youth contact sports."
 role: "Individual project"
 dates: "Dec 2024 – Feb 2025"
-tags: ["Advertisement Design", "Educational Design"]
+tags: ["Advertisement Campaign", "Educational Design"]
 cover: "cover.jpg"
 coverAlt: "Mockup of the campaign poster at a city bus stop: two young football players colliding under the lines What looks like play can leave a mark and CTE's impact starts in the spark, with a passer-by looking at it"
 notice: "Self-initiated concept. Not affiliated with or endorsed by the Concussion Legacy Foundation, the NHL or any team."
@@ -114,12 +114,4 @@ sections:
           - image: "test-arduino.jpg"
             alt: "Arduino test with an ultrasonic proximity sensor"
             caption: "An ultrasonic sensor (HC-SR04) triggers the change as people approach."
-      - before:
-          text: "My professor asked me to consider content across channels and which audiences would react."
-          image: "screen-before.png"
-          alt: "The interactive arena screen before the change"
-        after:
-          text: "On the arena screen, I placed the interactive buttons at children's height."
-          image: "screen-kids-height.png"
-          alt: "The arena screen with interactive buttons at children's height"
 ---
