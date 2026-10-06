@@ -91,6 +91,8 @@ sections:
             credit: "Who said it, e.g. by role only"
       # TEXT CARDS: small cards with a title and one line each.
       # "label" (optional, works on any block) adds a small heading above.
+      # "title" (optional, works on any block) adds a larger title above,
+      # e.g. title: "User Journey Map".
       - label: "Design focus"
         tiles:
           - title: "Card title"

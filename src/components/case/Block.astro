@@ -48,6 +48,15 @@ const isLandscape = (image?: string) => {
     )
   }
 
+  {/* Optional title above the block, larger than a label, e.g. "User Journey Map" */}
+  {
+    b.title && (
+      <h3 class="block__title">
+        <Inline text={b.title} />
+      </h3>
+    )
+  }
+
   {/* Big typographic moment, e.g. a campaign's key message */}
   {
     b.statement && (
@@ -303,6 +312,13 @@ const isLandscape = (image?: string) => {
     margin-bottom: calc(-1 * var(--space-3));
   }
 
+  .block__title {
+    margin-bottom: calc(-1 * var(--space-2));
+    font-size: var(--text-lg);
+    font-weight: var(--weight-medium);
+  }
+
+  .block--side .block__title,
   .block--side .block__label {
     grid-column: 1 / -1;
   }

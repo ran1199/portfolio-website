@@ -55,7 +55,7 @@ sections:
             text: "An established network of experts, athletes and policymakers"
           - title: "Mission alignment"
             text: "A shared goal of protecting young athletes"
-      - label: "User Journey Map"
+      - title: "User Journey Map"
         image: "user-journey.png"
         alt: "User journey in five stages. Awareness: the user. Engagement: bus stop billboards or sports arena screens. Education: messaging. Call to action: scan a QR code, visit the website, then donate or sign. Post-engagement: social share."
         caption: "Awareness → engagement → education → call to action → post-engagement."
