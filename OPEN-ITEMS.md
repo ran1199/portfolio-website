@@ -58,7 +58,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `research-sports.png` — sports strip added (2000 × 400 px). Sources added. Confirm: where the athlete photos come from (stock or press photos? label them if stock) and whether the IBA logo on the boxing headgear and any team marks on helmets are OK to show
   - [x] `user-journey.png` — user journey diagram added (1600 × 729 px, white background around the cards made transparent, empty space above and below trimmed)
   - [x] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 added (1200 × 1500 px each). Confirm: steps 2–4 show the Concussion Legacy Foundation logo on the poster (OK to show for a self-initiated concept? the page already says "not affiliated with or endorsed by"); same football photo as the cover (recognizable children, "MICHAEL" on a helmet)
-  - [ ] `screen-1.png` … `screen-4.png` — interactive screen steps (combine Figma steps 4 and 5; mascots first)
+  - [x] `screen-1.png` … `screen-4.png` — arena screen steps added (1200 × 1500 px, same as the billboards). Not published until Ran decides: they show real team mascots (St. Louis Blues, LA Galaxy, Minnesota Vikings) and logos (Blues, Galaxy, Vikings, NFL, Herbalife, Nike, Concussion Legacy Foundation), while the brief says to use placeholders until original mascots are designed; the note under the screens ("Mascots shown are placeholders for original designs") is no longer accurate; step 4 reads "SCAN TO LEAN MORE" (typo for LEARN?)
   - [ ] `scenarios.png` — scenarios image (mascots first)
   - [ ] `test-pvc.jpg` — billboard visual test (PVC)
   - [ ] `test-arduino.jpg` — Arduino ultrasonic sensor test, one image
