@@ -133,6 +133,9 @@ const caseStudies = defineCollection({
     .object({
       title: z.string(),
       order: z.number(),
+      // false = kept in GitHub but not on the live site: no page is
+      // published and its Home/Work tile isn't clickable ("Coming soon").
+      published: z.boolean().default(true),
       summary: z.string(),
       role: z.string(),
       dates: z.string(),

@@ -63,6 +63,9 @@ Tick an item (`[x]`) when it's done.
   - [x] `test-pvc.jpg` — billboard visual test on iPads added (1300 × 975 px). Shows the football photo plus soccer and hockey photos of children (same permission question as the cover)
   - [x] `test-arduino.jpg` — Arduino ultrasonic sensor test added (1300 × 975 px)
 
+### Unpublished case studies
+- [ ] Buddy's Adventure Island and WonderWeave are hidden from the live site (`published: false` in their files; tiles say "Coming soon"). Set `published: true` when their content is ready
+
 ### WonderWeave (`content/case-studies/wonderweave.md`, visual-first)
 - [ ] Parents' consent to use their interview quotes (currently: "A father in Beijing (parent interview; names changed for privacy)")
 - [ ] Confirm how the psychotherapist is credited (currently by role only: "Psychotherapist specializing in family counseling")

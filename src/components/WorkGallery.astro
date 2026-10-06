@@ -386,6 +386,13 @@ let caseCount = 0;
     display: none;
   }
 
+  /* Not published yet: "Coming soon" shows under the title on phones too. */
+  .g-case__cta--soon {
+    display: inline;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
   /* ── Blocks of visual pieces ── */
   /* Phones (and before the script runs): one column, laptop stacks kept
      together (see "Phone order" above). */
@@ -475,6 +482,10 @@ let caseCount = 0;
       display: inline;
       margin-top: var(--space-2);
       font-size: var(--text-sm);
+    }
+
+    .g-case__cta--soon {
+      color: rgb(255 255 255 / 0.85);
     }
 
     .g-case__link:hover .g-case__text,

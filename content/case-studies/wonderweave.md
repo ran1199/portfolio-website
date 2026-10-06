@@ -15,6 +15,7 @@
 # ── HERO ─────────────────────────────────────────────────────
 title: "WonderWeave"
 order: 4
+published: false            # true = live on the website; false = kept here but not published yet
 summary: "An interactive exhibition and companion app helping parents navigate a life transition."
 role: "Individual project"
 dates: "May–Jul 2024"

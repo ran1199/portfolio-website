@@ -16,7 +16,10 @@ import Inline from "../../components/case/Inline.astro";
 import { withBase } from "../../lib/url";
 
 export async function getStaticPaths() {
-  const studies = (await getCollection("caseStudies")).sort((a, b) => a.data.order - b.data.order);
+  // Only published case studies get a page (and a "Next project" link).
+  const studies = (await getCollection("caseStudies", (s) => s.data.published)).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
   return studies.map((study, i) => ({
     params: { slug: study.id },
     props: { study, next: studies[(i + 1) % studies.length] },

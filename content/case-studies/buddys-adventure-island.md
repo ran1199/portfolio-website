@@ -12,6 +12,7 @@
 # ── HERO ─────────────────────────────────────────────────────
 title: "Buddy's Adventure Island"
 order: 3
+published: false            # true = live on the website; false = kept here but not published yet
 summary: "A motion-based game that helps children with DCD build motor and social skills through real-world movements."
 role: "Individual project"
 dates: "Apr–Aug 2024"

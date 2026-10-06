@@ -3,6 +3,8 @@
 // "View" cursor on laptops. With a mouse or trackpad, the title, summary
 // and "View case study →" fade in over the bottom of the image; on
 // phones and tablets the title and summary are always shown under it.
+// A case study with "published: false" shows the same tile, but it isn't
+// a link and says "Coming soon" instead.
 import type { CollectionEntry } from "astro:content";
 import GalleryTile from "./GalleryTile.astro";
 import type { GalleryMedia } from "../../lib/gallery";
@@ -17,11 +19,16 @@ interface Props {
 }
 
 const { study, media, alt, fit, priority = false } = Astro.props;
-const { title, summary } = study.data;
+const { title, summary, published } = study.data;
+const Tag = published ? "a" : "div";
 ---
 
-<article class="g-case reveal">
-  <a class="g-case__link" href={withBase(`work/${study.id}/`)} data-cursor="view">
+<article class:list={["g-case reveal", { "g-case--soon": !published }]}>
+  <Tag
+    class="g-case__link"
+    href={published ? withBase(`work/${study.id}/`) : undefined}
+    data-cursor={published ? "view" : undefined}
+  >
     <GalleryTile
       media={media}
       alt={alt}
@@ -33,7 +40,13 @@ const { title, summary } = study.data;
     <div class="g-case__text">
       <h3 class="g-case__title">{title}</h3>
       <p class="g-case__summary">{summary}</p>
-      <span class="g-case__cta">View case study <span aria-hidden="true">→</span></span>
+      {
+        published ? (
+          <span class="g-case__cta">View case study <span aria-hidden="true">→</span></span>
+        ) : (
+          <span class="g-case__cta g-case__cta--soon">Coming soon</span>
+        )
+      }
     </div>
-  </a>
+  </Tag>
 </article>
