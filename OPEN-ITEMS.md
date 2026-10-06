@@ -48,14 +48,14 @@ Tick an item (`[x]`) when it's done.
   - [ ] `arduino-test.jpg` — Arduino testing, one combined image
 
 ### CTE: Every Hit Matters (`content/case-studies/cte-every-hit-matters.md`, visual-first)
-- [ ] Sources for the sports strip statistics (replaces "Sources: [SOURCE NEEDED]")
+- [x] Sources for the sports strip statistics — added (6 citations under the image)
 - [ ] Original mascot designs — needed before replacing `screen-1` … `screen-4` and `scenarios`
 - [ ] Logo check: no NHL, team or other organization logos in `cover` or `billboard-1` … `4` (flag any to Claude before use)
 - [ ] Athletes' permission for names and photos (credited by sport only until confirmed)
 - [ ] Check each image's alt text matches the real export once it's in
 - [ ] Replace the 14 labeled grey placeholder images in `content/images/cte-every-hit-matters/` with Figma exports (same file names):
   - [x] `cover.jpg` — bus stop billboard mockup — added (4:3, 1448 × 1086 px, replaced with Ran's updated version); Ran approved publishing. Still to confirm: source/permission for the football photo on the poster (recognizable children, a name label on a helmet), whether the helmet wings emblem is a real team logo, and whether to label the mockup "Illustrative mockup."
-  - [x] `research-sports.png` — sports strip added (2000 × 400 px). Still needed: a source for each of the 5 statistics. Confirm: where the athlete photos come from (stock or press photos? label them if stock) and whether the IBA logo on the boxing headgear and any team marks on helmets are OK to show
+  - [x] `research-sports.png` — sports strip added (2000 × 400 px). Sources added. Confirm: where the athlete photos come from (stock or press photos? label them if stock) and whether the IBA logo on the boxing headgear and any team marks on helmets are OK to show
   - [ ] `user-journey.png` — user journey diagram
   - [ ] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 (check logos)
   - [ ] `screen-1.png` … `screen-4.png` — interactive screen steps (combine Figma steps 4 and 5; mascots first)

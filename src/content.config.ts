@@ -115,6 +115,7 @@ const block = z
     after: beforeAfter.optional(),
     video: video.optional(),
     note: z.string().optional(),
+    sources: z.array(z.string()).optional(),
   })
   .refine(needsAlt, altMessage);
 

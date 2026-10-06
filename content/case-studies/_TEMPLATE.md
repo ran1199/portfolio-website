@@ -73,6 +73,13 @@ sections:
           - "Second short insight line."
         goal: "The design goal in one line."
         note: "A small note, e.g. where the research comes from."
+      # SOURCES: a numbered list of citations under a block (any block can
+      # have one). Web addresses become links. One citation per "- " line:
+      - image: "statistics.png"
+        alt: "Description of the image"
+        sources:
+          - "Author, A. (2024). Title of the study. Journal. https://doi.org/..."
+          - "[SOURCE NEEDED]"
 
   - heading: "Strategy"
     blocks:

@@ -25,6 +25,10 @@ const hasSideText = Boolean(b.insight || b.goal || b.text);
 const sideBySide = hasImage && hasSideText && b.size !== "small";
 // Insight can be one line or a list of short lines.
 const insightLines = b.insight === undefined ? [] : [b.insight].flat();
+// Sources: web addresses inside a citation become links (a full stop
+// right after an address isn't part of it).
+const sourceParts = (text: string) =>
+  text.split(/(https?:\/\/\S+?)(?=\.?(?:\s|$))/g).filter(Boolean);
 // Landscape photos in before/after use the panel's full width;
 // tall phone screens stay narrower.
 const isLandscape = (image?: string) => {
@@ -261,6 +265,23 @@ const isLandscape = (image?: string) => {
       </p>
     )
   }
+
+  {
+    b.sources && (
+      <div class="block__sources">
+        <p class="small-label">{labels.sources ?? "Sources"}</p>
+        <ol>
+          {b.sources.map((source) => (
+            <li>
+              {sourceParts(source).map((part) =>
+                /^https?:\/\//.test(part) ? <a href={part}>{part}</a> : <Inline text={part} />,
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
+    )
+  }
 </div>
 
 <style>
@@ -312,6 +333,22 @@ const isLandscape = (image?: string) => {
   .block__note {
     color: var(--color-text-muted);
     font-size: var(--text-sm);
+  }
+
+  .block__sources {
+    max-width: 48rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .block__sources ol {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.4em;
+  }
+
+  .block__sources a {
+    overflow-wrap: anywhere;
   }
 
   .block__image--small {

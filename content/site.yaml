@@ -48,3 +48,4 @@ caseStudy:
   before: "Before"
   after: "After"
   source: "Source"
+  sources: "Sources"

@@ -27,7 +27,13 @@ sections:
       - text: "CTE is a brain condition linked to repeated head impacts, yet public awareness remains limited, even in youth contact sports."
       - image: "research-sports.png"
         alt: "CTE and concussion figures for five contact sports. American football: 92% of ex-NFL players studied have been diagnosed with CTE. Hockey: 14% to 30% of players will be concussed in any given season, and a 23% increase in the risk of developing CTE occurs with each additional year of playing with body checking. Lacrosse: male and female players were listed at the highest risk among collegiate athletes for sustaining a concussion. Boxing: around 20% of boxers have CTE. Soccer: in 10 of 14 soccer players, CTE was the primary diagnosis."
-        note: "Sources: [SOURCE NEEDED]"
+        sources:
+          - "Boston University CTE Center. (2023, February 6). Researchers find CTE in 345 of 376 former NFL players studied."
+          - "Andrews, E., et al. (2022). Concussions in the National Hockey League: Analysis of incidence, return to play, and performance. Orthopaedic Journal of Sports Medicine, 10(1). https://doi.org/10.1177/23259671211052069"
+          - "Abdolmohammadi, B., et al. (2024). Duration of ice hockey play and chronic traumatic encephalopathy. JAMA Network Open, 7(12), e2449106. https://doi.org/10.1001/jamanetworkopen.2024.49106."
+          - "Covassin, T., Moran, R., & Elbin, R. J. (2016). Sex differences in reported concussion injury rates and time loss from participation: An update of the National Collegiate Athletic Association Injury Surveillance Program from 2004–2005 through 2008–2009. Journal of Athletic Training, 51(3), 189–194. https://doi.org/10.4085/1062-6050-51.3.05"
+          - "American Academy of Pediatrics & Canadian Paediatric Society. (2011). Boxing participation by children and adolescents. Pediatrics, 128(3), 617–623. https://doi.org/10.1542/peds.2011-1165"
+          - "Hageman, G., Hageman, I., & Nihom, J. Chronic traumatic encephalopathy in soccer players: Review of 14 cases."
       # Athlete interviews: credited by sport only, no names or photos.
       - quotes:
           - text: "The body contact is definitely there. We get knocked around a lot, especially during corner kicks and tackles."
