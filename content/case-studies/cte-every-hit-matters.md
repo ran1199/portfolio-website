@@ -108,7 +108,7 @@ sections:
 
       # c. Scenario
       - image: "scenarios.png"
-        alt: "Both executions in context: the bus stop billboard and the arena screen"
+        alt: "Both executions in context. At a sports field, a child touches the arena screen and watches the chosen mascot's animation, ending in Scan to learn more. At a bus stop, a person interacts with the billboard, scans its QR code with a phone and reaches the Concussion Legacy Foundation's page to donate or sign."
 
   - heading: "Prototyping and testing"
     blocks:

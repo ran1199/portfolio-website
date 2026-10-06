@@ -49,7 +49,7 @@ Tick an item (`[x]`) when it's done.
 
 ### CTE: Every Hit Matters (`content/case-studies/cte-every-hit-matters.md`, visual-first)
 - [x] Sources for the sports strip statistics — added (6 citations under the image)
-- [ ] Original mascot designs — needed before replacing `screen-1` … `screen-4` and `scenarios`
+- [x] Original mascot designs — Ran chose to use the real team mascots in `screen-1` … `screen-4` and `scenarios` instead
 - [ ] Logo check: no NHL, team or other organization logos in `cover` or `billboard-1` … `4` (flag any to Claude before use)
 - [ ] Athletes' permission for names and photos (credited by sport only until confirmed)
 - [ ] Check each image's alt text matches the real export once it's in
@@ -59,7 +59,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `user-journey.png` — user journey diagram added (1600 × 729 px, white background around the cards made transparent, empty space above and below trimmed)
   - [x] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 added (1200 × 1500 px each). Confirm: steps 2–4 show the Concussion Legacy Foundation logo on the poster (OK to show for a self-initiated concept? the page already says "not affiliated with or endorsed by"); same football photo as the cover (recognizable children, "MICHAEL" on a helmet)
   - [x] `screen-1.png` … `screen-4.png` — arena screen steps added (1200 × 1500 px, same as the billboards). Ran chose to publish them with the real team mascots and logos (St. Louis Blues, LA Galaxy, Minnesota Vikings, NFL, Herbalife, Nike, Concussion Legacy Foundation) and to remove the "placeholders" note under the screens. Step 4 typo fixed ("Scan to learn more")
-  - [ ] `scenarios.png` — scenarios image (mascots first)
+  - [x] `scenarios.png` — scenarios image added (2000 × 1167 px). Confirm: the photos of people (a child and an adult at the arena screen, a child at the bus stop, a hand holding a phone) — stock photos? If so, label them; permission needed if they show real children you know. Also shows the Concussion Legacy Foundation donation page and real team mascots/logos
   - [ ] `test-pvc.jpg` — billboard visual test (PVC)
   - [ ] `test-arduino.jpg` — Arduino ultrasonic sensor test, one image
 
