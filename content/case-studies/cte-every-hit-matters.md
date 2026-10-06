@@ -26,7 +26,7 @@ sections:
     blocks:
       - text: "CTE is a brain condition linked to repeated head impacts, yet public awareness remains limited, even in youth contact sports."
       - image: "research-sports.png"
-        alt: "CTE and concussion figures for five contact sports. American football: 92% of ex-NFL players studied have been diagnosed with CTE. Hockey: 14% to 30% of players will be concussed in any given season, and a 23% increase in the risk of developing CTE occurs with each additional year of playing with body checking. Lacrosse: male and female players were listed at the highest risk among collegiate athletes for sustaining a concussion. Boxing: around 20% of boxers have CTE. Soccer: in 10 of 14 soccer players, CTE was the primary diagnosis."
+        alt: "CTE and concussion figures for five contact sports. American football: 92% of ex-NFL players studied have been diagnosed with CTE. Hockey: 14% to 30% of players will be concussed in any given season, and a 34% increase in the risk of developing CTE occurs with each additional year of playing with body checking. Lacrosse: male and female players were listed at the highest risk among collegiate athletes for sustaining a concussion. Boxing: around 20% of boxers have CTE. Soccer: in 10 of 14 soccer players, CTE was the primary diagnosis."
         sources:
           - "Boston University CTE Center. (2023, February 6). Researchers find CTE in 345 of 376 former NFL players studied."
           - "Andrews, E., et al. (2022). Concussions in the National Hockey League: Analysis of incidence, return to play, and performance. Orthopaedic Journal of Sports Medicine, 10(1). https://doi.org/10.1177/23259671211052069"

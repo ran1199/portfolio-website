@@ -26,6 +26,7 @@
 
   /* ── Text sizes ─────────────────────────────────────────── */
   /* The larger sizes grow smoothly from phone to laptop screens. */
+  --text-2xs: 0.75rem;                                /* 12px: source lists */
   --text-xs: 0.8125rem;                               /* 13px: tags, small labels */
   --text-sm: 0.9375rem;                               /* 15px: menu, captions */
   --text-base: 1.0625rem;                             /* 17px: body text */
