@@ -57,7 +57,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `cover.jpg` — bus stop billboard mockup — added (4:3, 1448 × 1086 px, replaced with Ran's updated version); Ran approved publishing. Still to confirm: source/permission for the football photo on the poster (recognizable children, a name label on a helmet), whether the helmet wings emblem is a real team logo, and whether to label the mockup "Illustrative mockup."
   - [x] `research-sports.png` — sports strip added (2000 × 400 px). Sources added. Confirm: where the athlete photos come from (stock or press photos? label them if stock) and whether the IBA logo on the boxing headgear and any team marks on helmets are OK to show
   - [x] `user-journey.png` — user journey diagram added (1600 × 729 px, white background around the cards made transparent, empty space above and below trimmed)
-  - [ ] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 (check logos)
+  - [x] `billboard-1.png` … `billboard-4.png` — bus stop billboard steps 1–4 added (1200 × 1500 px each). Confirm: steps 2–4 show the Concussion Legacy Foundation logo on the poster (OK to show for a self-initiated concept? the page already says "not affiliated with or endorsed by"); same football photo as the cover (recognizable children, "MICHAEL" on a helmet)
   - [ ] `screen-1.png` … `screen-4.png` — interactive screen steps (combine Figma steps 4 and 5; mascots first)
   - [ ] `scenarios.png` — scenarios image (mascots first)
   - [ ] `test-pvc.jpg` — billboard visual test (PVC)

@@ -73,19 +73,19 @@ sections:
           - title: "Attract."
             text: "\"What looks like play can leave a mark.\" invites people closer."
             image: "billboard-1.png"
-            alt: "Bus stop billboard, step 1: the poster invites people closer"
+            alt: "Bus stop billboard, step 1: people walk past a poster of two young football players colliding, with the line What looks like play can leave a mark and faint text saying Come closer"
           - title: "Reveal."
             text: "Sensors detect approach; a red halo reveals the hidden impact."
             image: "billboard-2.png"
-            alt: "Bus stop billboard, step 2: a red halo reveals the hidden impact"
+            alt: "Bus stop billboard, step 2: a person stands close to the poster, and a red halo appears behind the players with the line CTE's impact starts in the spark"
           - title: "Act."
             text: "\"Scan to learn more\" leads to a petition or donation."
             image: "billboard-3.png"
-            alt: "Bus stop billboard, step 3: a QR code to scan and learn more"
+            alt: "Bus stop billboard, step 3: a person scans a QR code on the poster, which now reads Scan to learn more"
           - title: "Reset."
             text: "The poster returns to its original image for the next viewer."
             image: "billboard-4.png"
-            alt: "Bus stop billboard, step 4: the poster returns to its original image"
+            alt: "Bus stop billboard, step 4: with no one nearby, the poster returns to its original image and Come closer"
 
       # b. Sports arena interactive screen
       - steps:
