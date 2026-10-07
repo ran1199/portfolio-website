@@ -81,7 +81,7 @@ if (isPlay) {
   const placeholderShapes = ["4/5", "1/1", "3/4"];
   const pieces: PieceItem[] = (await getCollection("play")).map(({ data }) => ({
     kind: "piece",
-    media: resolveMedia("play", data.file, data.poster ?? "", "1/1"),
+    media: resolveMedia("play", data.file, data.poster ?? "", data.ratio ?? "1/1"),
     alt: data.alt,
     fit: "cover",
     link: data.link,

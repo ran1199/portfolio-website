@@ -213,6 +213,8 @@ const play = defineCollection({
     // Optional web address: the piece becomes a link that opens it in a
     // new tab (e.g. a live prototype). Without it, the piece isn't clickable.
     link: z.string().url().optional(),
+    // Placeholder shape (e.g. "4/5") while file is still [PLACEHOLDER…]
+    ratio: z.string().optional(),
     home: z.boolean().default(false),
   }).refine((d) => d.type === "image" || d.poster, {
     message: "Videos need a poster image.",
