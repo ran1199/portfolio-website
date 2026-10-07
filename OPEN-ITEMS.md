@@ -63,6 +63,10 @@ Tick an item (`[x]`) when it's done.
   - [x] `test-pvc.jpg` — billboard visual test on iPads added (1300 × 975 px). Shows the football photo plus soccer and hockey photos of children (same permission question as the cover)
   - [x] `test-arduino.jpg` — Arduino ultrasonic sensor test added (1300 × 975 px)
 
+### Play page
+- [ ] `poster-birthday.jpg` (Play spot 2): the poster's title reads "A Brithday" — typo for "A Birthday"? Re-export from the design file if so
+- [ ] `poster-light.jpg` (Play spot 4): the lamp photo shows the "tomons" brand on its base — is the photo yours or the brand's/stock? (label it if stock)
+
 ### Unpublished case studies
 - [ ] Buddy's Adventure Island and WonderWeave are hidden from the live site (`published: false` in their files; tiles say "Coming soon"). Set `published: true` when their content is ready
 
