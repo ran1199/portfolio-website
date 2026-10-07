@@ -83,6 +83,12 @@
   study: wonderweave
 
 - type: visual
+  file: "gallery-07.jpg"
+  alt: "Email campaign for Cyrtan Energy shown in an inbox: a wood-waste processing facility, the headline Reduce the Cost & Hassle of Contaminated Wood Disposal, a short list of benefits and a Schedule a call button"
+  fit: cover
+  ratio: "4/5"
+
+- type: visual
   file: "gallery-08.jpg"
   alt: "Close-up of a phone showing a promoted Boston Interiors post in a feed: a woman taking a selfie with her dog on a bed, headed Make Room for Your New Best Friend, with a Book now button"
   fit: cover
