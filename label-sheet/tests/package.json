@@ -1,0 +1,15 @@
+{
+  "name": "label-sheet-tests",
+  "private": true,
+  "type": "module",
+  "description": "Tests for the label sheet site. Not needed to run or publish the site.",
+  "scripts": {
+    "test": "node run-tests.mjs",
+    "check": "node check-pdf.mjs"
+  },
+  "devDependencies": {
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "6.4.299",
+    "playwright": "1.56.1"
+  }
+}

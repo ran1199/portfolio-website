@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Label Sheet: 6 labels on A4</title>
+    <meta
+      name="description"
+      content="Upload one 4 × 3 inch label and get 6 copies on an A4 page, ready to print or save as a PDF. Your file never leaves your computer."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <main class="tool">
+      <!-- Left panel: upload, label preview, buttons -->
+      <section class="panel controls" aria-labelledby="title">
+        <h1 id="title">Label Sheet</h1>
+        <p class="intro">Upload one 4 × 3 in label. You get 6 copies on an A4 page.</p>
+
+        <label class="drop" id="drop">
+          <input
+            type="file"
+            id="file"
+            class="visually-hidden"
+            accept=".png,.jpg,.jpeg,.pdf,image/png,image/jpeg,application/pdf"
+          />
+          <span class="drop-title">Drop your label here</span>
+          <span class="drop-hint">or click to choose a file · PNG, JPG or PDF</span>
+        </label>
+
+        <p class="message" id="message" role="alert" hidden></p>
+
+        <figure class="label-preview" id="labelPreview" hidden>
+          <div class="label-frame" id="labelFrame"></div>
+          <figcaption id="fileName"></figcaption>
+        </figure>
+
+        <div class="actions">
+          <button type="button" id="printButton" disabled>Print</button>
+          <button type="button" id="downloadButton" class="secondary" disabled>Download PDF</button>
+        </div>
+        <p class="help">Print at 100% / Actual size — not "Fit to page".</p>
+        <p class="status" id="status" aria-live="polite"></p>
+        <p class="privacy">Your file stays on your computer. Nothing is uploaded.</p>
+      </section>
+
+      <!-- Right panel: the A4 page, drawn to scale -->
+      <section class="panel sheet-panel" aria-label="Preview of the A4 page">
+        <div class="sheet" id="sheet">
+          <div class="slots" id="slots" aria-hidden="true"></div>
+          <canvas id="sheetCanvas" hidden></canvas>
+        </div>
+        <p class="sheet-caption">A4 · 210 × 297 mm · 6 labels, each 4 × 3 in</p>
+      </section>
+    </main>
+  </body>
+</html>
