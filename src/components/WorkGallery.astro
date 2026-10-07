@@ -15,7 +15,19 @@ import GalleryCase from "./gallery/GalleryCase.astro";
 import GalleryTile from "./gallery/GalleryTile.astro";
 import { resolveMedia, isPlaceholder, type GalleryMedia } from "../lib/gallery";
 
-const items = (await getCollection("homeGallery")).sort((a, b) => a.id.localeCompare(b.id));
+// source "home" (default): content/home-gallery.yaml, used on Home and Work.
+// source "play": content/play.yaml — only visual pieces, in one block of
+// columns that keeps each piece's own shape (no stretching, no grey space),
+// with grey placeholders until there are 9 pieces.
+interface Props {
+  source?: "home" | "play";
+}
+const { source = "home" } = Astro.props;
+const isPlay = source === "play";
+
+const items = isPlay
+  ? []
+  : (await getCollection("homeGallery")).sort((a, b) => a.id.localeCompare(b.id));
 const studies = await getCollection("caseStudies");
 
 type CaseItem = {
@@ -25,7 +37,14 @@ type CaseItem = {
   alt: string;
   fit: "cover" | "contain";
 };
-type PieceItem = { kind: "piece"; media: GalleryMedia; alt: string; fit: "cover" | "contain" };
+type PieceItem = {
+  kind: "piece";
+  media: GalleryMedia;
+  alt: string;
+  fit: "cover" | "contain";
+  link?: string; // Play pieces only: opens this page in a new tab
+  labels?: string[]; // Play pieces only: title and tags shown on hover
+};
 
 const resolved: (CaseItem | PieceItem)[] = items.map(({ data }) => {
   if (data.type === "case-study") {
@@ -56,6 +75,28 @@ const resolved: (CaseItem | PieceItem)[] = items.map(({ data }) => {
     fit: data.fit,
   };
 });
+
+if (isPlay) {
+  const PLAY_MIN = 9; // grey placeholders fill the grid up to this many
+  const placeholderShapes = ["4/5", "1/1", "3/4"];
+  const pieces: PieceItem[] = (await getCollection("play")).map(({ data }) => ({
+    kind: "piece",
+    media: resolveMedia("play", data.file, data.poster ?? "", "1/1"),
+    alt: data.alt,
+    fit: "cover",
+    link: data.link,
+    labels: [data.title, data.tags?.join(", ")].filter((l): l is string => Boolean(l)),
+  }));
+  for (let n = pieces.length; n < PLAY_MIN; n++) {
+    pieces.push({
+      kind: "piece",
+      media: resolveMedia("play", `[PLACEHOLDER: play-${n + 1}]`, "", placeholderShapes[n % 3]),
+      alt: "",
+      fit: "cover",
+    });
+  }
+  resolved.push(...pieces);
+}
 
 // Group the list into rows of case study pairs and blocks of pieces.
 type Pair = { kind: "pair"; cases: CaseItem[] };
@@ -133,6 +174,11 @@ function columns(list: PieceItem[], count: number, level: boolean) {
   );
   // Phone order: column by column (columns in the order of their first
   // piece), so pieces stacked together on a laptop stay together.
+  // On Play, phones simply follow the list order.
+  if (isPlay) {
+    cols.forEach((col) => col.forEach((entry) => (entry.phone = entry.index)));
+    return cols;
+  }
   let phone = 0;
   [...cols]
     .filter((col) => col.length)
@@ -168,6 +214,8 @@ let caseCount = 0;
                   media={piece.media}
                   alt={piece.alt}
                   fit={piece.fit}
+                  link={piece.link}
+                  labels={piece.labels}
                   sizes={pieceSizes}
                   class="g-zone__item reveal"
                   data-i={index}
@@ -346,6 +394,41 @@ let caseCount = 0;
 
   .g-tile__slot {
     opacity: 0.75;
+  }
+
+  /* Play: a piece with a "link" is a link; labels (title, tags) fade in
+     on hover with a mouse or trackpad and are hidden on touch screens. */
+  a.g-tile {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .g-tile__labels {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .g-tile__labels {
+      position: absolute;
+      inset: auto var(--space-3) var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease);
+    }
+
+    .g-tile:hover .g-tile__labels {
+      opacity: 1;
+    }
+  }
+
+  .g-tile__label {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-label);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+    line-height: 1.3;
   }
 
   /* ── Case study pairs ── */

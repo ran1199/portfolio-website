@@ -1,60 +1,27 @@
 ---
-// Play page: every visual piece from content/play.yaml, in file order.
-// Just for looking — a piece is a link only if it has a "link".
-// Until there are at least 9 pieces, grey placeholders fill the grid.
-import { getCollection, getEntry } from "astro:content";
+// Play page: every visual piece from content/play.yaml, in file order, in
+// the same column layout as the Home/Work gallery. Each tile takes the
+// shape of its image or video (nothing is cropped). A piece is a link only
+// if it has a "link". Grey placeholders fill the grid up to 9 tiles.
+import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import VisualPiece from "../components/VisualPiece.astro";
+import WorkGallery from "../components/WorkGallery.astro";
 
 const site = (await getEntry("site", "site"))!.data;
-const pieces = await getCollection("play");
-const PLACEHOLDER_COUNT = 9;
-const items = [
-  ...pieces,
-  ...Array.from({ length: Math.max(0, PLACEHOLDER_COUNT - pieces.length) }, () => undefined),
-];
 ---
 
 <BaseLayout title={site.menu.play}>
-  <div class="container play">
+  <div class="play">
     <!-- Hidden title: not shown on screen, but screen readers still
          announce the page name. -->
     <h1 class="visually-hidden">{site.menu.play}</h1>
-    <ul class="play__grid">
-      {
-        items.map((piece) => (
-          <li class="play__item reveal">
-            <VisualPiece piece={piece} fit="contain" sizes="(min-width: 64rem) 30vw, 48vw" />
-          </li>
-        ))
-      }
-    </ul>
+    <WorkGallery source="play" />
   </div>
 </BaseLayout>
 
 <style>
-  /* Small gap under the menu so the grid starts near the top. */
+  /* Same small gap under the menu as the Work page. */
   .play {
-    padding-top: var(--space-5);
-  }
-
-  /* Square tiles: two across on phones and tablets, three on wide screens. */
-  .play__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gallery-gap);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .play__item {
-    aspect-ratio: 1 / 1;
-  }
-
-  @media (min-width: 64rem) {
-    .play__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    padding-block: var(--space-5) var(--grid-edge);
   }
 </style>

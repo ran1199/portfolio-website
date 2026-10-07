@@ -9,6 +9,9 @@
 #   2. Copy the example below, remove the "# " at the start of each line,
 #      and fill it in. Add new pieces at the bottom of this file.
 #
+#   Each piece shows at its own shape (as uploaded), in 3 columns on
+#   laptops, 2 on tablets and 1 on phones — nothing is cropped.
+#
 #   file:  the file name inside content/images/play/
 #   type:  "image" for a picture, "video" for a short looping clip (MP4)
 #   poster: videos only — a still image (in the same folder) shown

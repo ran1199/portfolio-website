@@ -6,6 +6,8 @@
 //                   fills it and its edges are trimmed a little.
 //   fit "contain" → the media sits centered with space around it and is
 //                   never cut off (logos, mockups, transparent PNGs)
+// Optional "link" makes the tile open that page in a new tab (with the
+// "View" cursor); optional "labels" fade in on hover (Play titles/tags).
 import { Image, getImage } from "astro:assets";
 import type { GalleryMedia } from "../../lib/gallery";
 
@@ -15,11 +17,24 @@ interface Props {
   fit?: "cover" | "contain";
   sizes: string;
   priority?: boolean; // true for tiles at the top of the page
+  link?: string;
+  labels?: string[];
   class?: string;
   [attr: string]: unknown; // extra attributes for the gallery layout
 }
 
-const { media, alt, fit = "cover", sizes, priority = false, class: className, ...attrs } = Astro.props;
+const {
+  media,
+  alt,
+  fit = "cover",
+  sizes,
+  priority = false,
+  link,
+  labels = [],
+  class: className,
+  ...attrs
+} = Astro.props;
+const Tag = link ? "a" : "div";
 const posterUrl =
   media.kind === "video" && media.poster
     ? (await getImage({ src: media.poster, width: 1200 })).src
@@ -27,9 +42,13 @@ const posterUrl =
 const widths = [480, 800, 1200, 1600, 2000];
 ---
 
-<div
+<Tag
   class:list={["g-tile", `g-tile--${fit}`, { "g-tile--placeholder": media.kind === "placeholder" }, className]}
   style={`--ratio: ${media.ratio}`}
+  href={link}
+  target={link ? "_blank" : undefined}
+  rel={link ? "noopener" : undefined}
+  data-cursor={link ? "view" : undefined}
   {...attrs}
 >
   <div class="g-tile__media">
@@ -58,4 +77,14 @@ const widths = [480, 800, 1200, 1600, 2000];
       )
     }
   </div>
-</div>
+  {link && <span class="visually-hidden">(opens in a new tab)</span>}
+  {
+    labels.length > 0 && (
+      <span class="g-tile__labels">
+        {labels.map((label) => (
+          <span class="g-tile__label">{label}</span>
+        ))}
+      </span>
+    )
+  }
+</Tag>
