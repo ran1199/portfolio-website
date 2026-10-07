@@ -64,7 +64,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `test-arduino.jpg` — Arduino ultrasonic sensor test added (1300 × 975 px)
 
 ### Play page
-- [ ] `poster-birthday.jpg` (Play spot 2): the poster's title reads "A Brithday" — typo for "A Birthday"? Re-export from the design file if so
+- [x] `poster-birthday.jpg` (Play spot 2): title typo "A Brithday" fixed to "A Birthday" in the website image (fix your design file too, so future exports match)
 - [ ] `poster-light.jpg` (Play spot 4): the lamp photo shows the "tomons" brand on its base — is the photo yours or the brand's/stock? (label it if stock)
 
 ### Unpublished case studies
