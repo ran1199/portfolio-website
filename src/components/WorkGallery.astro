@@ -14,6 +14,7 @@ import { getCollection } from "astro:content";
 import GalleryCase from "./gallery/GalleryCase.astro";
 import GalleryTile from "./gallery/GalleryTile.astro";
 import { resolveMedia, isPlaceholder, type GalleryMedia } from "../lib/gallery";
+import { withBase } from "../lib/url";
 
 // source "home" (default): content/home-gallery.yaml, used on Home and Work.
 // source "play": content/play.yaml — only visual pieces, in one block of
@@ -84,7 +85,8 @@ if (isPlay) {
     media: resolveMedia("play", data.file, data.poster ?? "", data.ratio ?? "1/1"),
     alt: data.alt,
     fit: "cover",
-    link: data.link,
+    // Pages on this site ("/…") go through withBase like every other link.
+    link: data.link?.startsWith("/") ? withBase(data.link.slice(1)) : data.link,
     labels: [data.title, data.tags?.join(", ")].filter((l): l is string => Boolean(l)),
   }));
   for (let n = pieces.length; n < PLAY_MIN; n++) {

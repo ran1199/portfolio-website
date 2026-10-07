@@ -210,9 +210,15 @@ const play = defineCollection({
     alt: z.string(),
     title: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    // Optional web address: the piece becomes a link that opens it in a
-    // new tab (e.g. a live prototype). Without it, the piece isn't clickable.
-    link: z.string().url().optional(),
+    // Optional web address (https://…) or a page on this site starting
+    // with "/" (e.g. "/play/a-birthday.html", a file in public/play/).
+    // The piece becomes a link that opens it in a new tab.
+    link: z
+      .string()
+      .refine((v) => v.startsWith("/") || /^https?:\/\//.test(v), {
+        message: 'Use a full web address (https://…) or a path starting with "/".',
+      })
+      .optional(),
     // Placeholder shape (e.g. "4/5") while file is still [PLACEHOLDER…]
     ratio: z.string().optional(),
     home: z.boolean().default(false),

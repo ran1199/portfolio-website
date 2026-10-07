@@ -64,7 +64,7 @@ Tick an item (`[x]`) when it's done.
   - [x] `test-arduino.jpg` — Arduino ultrasonic sensor test added (1300 × 975 px)
 
 ### Play page
-- [x] `poster-birthday.jpg` (Play spot 2): title typo "A Brithday" fixed to "A Birthday" in the website image (fix your design file too, so future exports match)
+- [x] Play spot 2: the rolling "A Birthday" video (`a-birthday-rolling.mp4`), linking to the interactive poster page `public/play/a-birthday.html` (replaces the still poster). That page loads two free Google Fonts (Anton, Libre Caslon Text) as fallbacks
 - [ ] `poster-light.jpg` (Play spot 4): the lamp photo shows the "tomons" brand on its base — is the photo yours or the brand's/stock? (label it if stock)
 
 ### Unpublished case studies

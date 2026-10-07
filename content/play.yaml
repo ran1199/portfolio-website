@@ -21,8 +21,10 @@
 #   title: (optional) short label that appears on hover, e.g. the project
 #   tags:  (optional) small labels shown next to the title on hover,
 #          in square brackets, separated by commas
-#   link:  (optional) a web address, e.g. a live prototype. The piece then
-#          opens it in a new tab when clicked. Leave it out otherwise.
+#   link:  (optional) a web address, e.g. a live prototype, or a page of
+#          this site starting with "/" (e.g. "/play/a-birthday.html" for a
+#          file in public/play/). The piece then opens it in a new tab when
+#          clicked. Leave it out otherwise.
 #
 #   To keep an empty grey spot in the order, use
 #   file: "[PLACEHOLDER: play-2]" with ratio: "1/1" (its shape) and
@@ -48,9 +50,11 @@
   alt: "Phone prototype of a food-logging app: the camera opens, a photo of a plate is recognized as garlic chicken stir-fry, one serving of 302 kcal is logged, and the home screen shows the calories left for the day"
   link: "https://ladle-prototype-mf0ousxdy-ladle.vercel.app/"
 
-- file: "poster-birthday.jpg"
-  type: "image"
-  alt: "Typographic poster of Christina Rossetti's poem A Birthday: the lines of the poem in red letters trace the outline of a three-layer birthday cake with three candles"
+- file: "a-birthday-rolling.mp4"
+  type: "video"
+  poster: "a-birthday-rolling-poster.jpg"
+  alt: "Animated typographic poster of Christina Rossetti's poem A Birthday: the lines of the poem, in red letters, roll along a single line that draws a three-layer birthday cake with three candles"
+  link: "/play/a-birthday.html"
 
 - file: "toy-store-game.jpg"
   type: "image"
