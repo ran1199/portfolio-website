@@ -48,7 +48,7 @@
   type: "video"
   poster: "ladle-demo-poster.jpg"
   alt: "Phone prototype of a food-logging app: the camera opens, a photo of a plate is recognized as garlic chicken stir-fry, one serving of 302 kcal is logged, and the home screen shows the calories left for the day"
-  link: "https://ladle-prototype-mf0ousxdy-ladle.vercel.app/"
+  link: "https://ladle-prototype.vercel.app/"
 
 - file: "a-birthday-rolling.mp4"
   type: "video"
