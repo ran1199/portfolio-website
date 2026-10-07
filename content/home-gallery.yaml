@@ -83,6 +83,12 @@
   study: wonderweave
 
 - type: visual
+  file: "gallery-09.jpg"
+  alt: "Website homepage design for Cyrtan Energy: the headline Less hauling. Less scheduling. Less effort., a stack of painted and stained wood boards, a Talk to us about your waste button and four benefits: reduce costs, simple process, local service, energy benefit"
+  fit: cover
+  ratio: "16/10"
+
+- type: visual
   file: "gallery-07.jpg"
   alt: "Email campaign for Cyrtan Energy shown in an inbox: a wood-waste processing facility, the headline Reduce the Cost & Hassle of Contaminated Wood Disposal, a short list of benefits and a Schedule a call button"
   fit: cover
