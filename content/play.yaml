@@ -1,7 +1,8 @@
 # ─────────────────────────────────────────────────────────────
 # PLAY PIECES
 # Your visual work, shown on the Play page in this order (top = first).
-# Visual pieces are just for looking — they are never clickable.
+# Visual pieces are just for looking — they aren't clickable, unless you
+# give one a "link" (see below).
 #
 # To add a piece:
 #   1. Upload the file into the folder  content/images/play/
@@ -17,6 +18,8 @@
 #   title: (optional) short label that appears on hover, e.g. the project
 #   tags:  (optional) small labels shown next to the title on hover,
 #          in square brackets, separated by commas
+#   link:  (optional) a web address, e.g. a live prototype. The piece then
+#          opens it in a new tab when clicked. Leave it out otherwise.
 #   (The Home and Work gallery has its own list: content/home-gallery.yaml)
 #
 # Example:
@@ -32,3 +35,8 @@
 #   alt: "Short looping animation of ..."
 # ─────────────────────────────────────────────────────────────
 
+- file: "ladle-demo.mp4"
+  type: "video"
+  poster: "ladle-demo-poster.jpg"
+  alt: "Phone prototype of a food-logging app: the camera opens, a photo of a plate is recognized as garlic chicken stir-fry, one serving of 302 kcal is logged, and the home screen shows the calories left for the day"
+  link: "https://ladle-prototype-mf0ousxdy-ladle.vercel.app/"

@@ -1,6 +1,7 @@
 ---
-// A visual piece (image or short looping video). Just for looking:
-// never a link, and no special cursor. On hover (mouse or trackpad),
+// A visual piece (image or short looping video). Just for looking, unless
+// it has a "link": then the whole piece opens that page in a new tab and
+// shows the "View" cursor. On hover (mouse or trackpad),
 // its title and tags fade in as small labels.
 // The piece fills the box the gallery gives it.
 import { Image, getImage } from "astro:assets";
@@ -23,12 +24,21 @@ const poster =
     ? (await getImage({ src: findImage("play", data.poster), width: 1200 })).src
     : undefined;
 
+const link = data?.link;
+const Wrap = link ? "a" : "div";
 const labels = data
   ? [data.title, data.tags?.join(", ")].filter(Boolean)
   : ["[PLACEHOLDER: title]", "[PLACEHOLDER: tags]"];
 ---
 
 <figure class:list={["piece", { "piece--contain": fit === "contain" }]}>
+  <Wrap
+    class="piece__inner"
+    href={link}
+    target={link ? "_blank" : undefined}
+    rel={link ? "noopener" : undefined}
+    data-cursor={link ? "view" : undefined}
+  >
   {
     image && data ? (
       <Image src={image} alt={data.alt} widths={[480, 800, 1200, 1600]} sizes={sizes} />
@@ -48,6 +58,8 @@ const labels = data
       <div class="piece__placeholder">[PLACEHOLDER: visual piece]</div>
     )
   }
+  {link && <span class="visually-hidden">(opens in a new tab)</span>}
+  </Wrap>
   {
     labels.length > 0 && (
       <figcaption class="piece__labels">
@@ -67,6 +79,13 @@ const labels = data
     overflow: hidden;
     border-radius: var(--radius-media);
     background: var(--color-surface);
+  }
+
+  /* Fills the tile; a link when the piece has one. */
+  .piece__inner {
+    position: absolute;
+    inset: 0;
+    display: block;
   }
 
   .piece img,
