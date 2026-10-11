@@ -69,6 +69,8 @@ Tick an item (`[x]`) when it's done.
 
 - [ ] `protein-world-billboard.jpg` (Play spot 5): uses the Protein World logo — was this for Protein World or self-initiated? Are the four photos stock? (label them if so)
 
+- [ ] `ikea-tatte-magazine.jpg` (Play spot 7): uses the IKEA and Tatte logos — client/class work or self-initiated? Are the photos (woman at the café, the café scene on the left page) stock? (label them if so)
+
 ### Unpublished case studies
 - [ ] Buddy's Adventure Island and WonderWeave are hidden from the live site (`published: false` in their files; tiles say "Coming soon"). Set `published: true` when their content is ready
 
