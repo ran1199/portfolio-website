@@ -64,13 +64,13 @@
   type: "image"
   alt: "Poster for an adjustable wooden desk lamp with a black shade, with the headline Light, your way. running down the left side and the line Light above you, light below you, light on your right, light on your left, light any way you want it."
 
-- file: "protein-world-billboard.jpg"
-  type: "image"
-  alt: "Billboard mockup on a brick building for Protein World: four photos of women exercising, labelled Try, Courage, Patience and Sweat, next to a yellow panel with the Protein World logo"
-
 - file: "brattle-book-shop-collage.jpg"
   type: "image"
   alt: "Black-and-white photo collage of the Brattle Book Shop in Boston, pieced together from many overlapping photos: the shop front with its pencil-shaped sign, brick buildings with a fire escape, and people browsing the outdoor bookshelves"
+
+- file: "protein-world-billboard.jpg"
+  type: "image"
+  alt: "Billboard mockup on a brick building for Protein World: four photos of women exercising, labelled Try, Courage, Patience and Sweat, next to a yellow panel with the Protein World logo"
 
 - file: "ikea-tatte-magazine.jpg"
   type: "image"

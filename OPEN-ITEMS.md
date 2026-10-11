@@ -67,11 +67,11 @@ Tick an item (`[x]`) when it's done.
 - [x] Play spot 2: the rolling "A Birthday" video (`a-birthday-rolling.mp4`), linking to the interactive poster page `public/play/a-birthday.html` (replaces the still poster). That page loads two free Google Fonts (Anton, Libre Caslon Text) as fallbacks
 - [ ] `poster-light.jpg` (Play spot 4): the lamp photo shows the "tomons" brand on its base — is the photo yours or the brand's/stock? (label it if stock)
 
-- [ ] `protein-world-billboard.jpg` (Play spot 5): uses the Protein World logo — was this for Protein World or self-initiated? Are the four photos stock? (label them if so)
+- [ ] `protein-world-billboard.jpg` (Play spot 6): uses the Protein World logo — was this for Protein World or self-initiated? Are the four photos stock? (label them if so)
 
 - [ ] `ikea-tatte-magazine.jpg` (Play spot 7): uses the IKEA and Tatte logos — client/class work or self-initiated? Are the photos (woman at the café, the café scene on the left page) stock? (label them if so)
 
-- [ ] `brattle-book-shop-collage.jpg` (Play spot 6): street photo collage with passers-by browsing books — fine as public street photography? (no close-up faces)
+- [ ] `brattle-book-shop-collage.jpg` (Play spot 5): street photo collage with passers-by browsing books — fine as public street photography? (no close-up faces)
 
 ### Unpublished case studies
 - [ ] Buddy's Adventure Island and WonderWeave are hidden from the live site (`published: false` in their files; tiles say "Coming soon"). Set `published: true` when their content is ready
