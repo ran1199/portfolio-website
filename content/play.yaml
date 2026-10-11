@@ -68,10 +68,9 @@
   type: "image"
   alt: "Billboard mockup on a brick building for Protein World: four photos of women exercising, labelled Try, Courage, Patience and Sweat, next to a yellow panel with the Protein World logo"
 
-- file: "[PLACEHOLDER: play-6]"
+- file: "brattle-book-shop-collage.jpg"
   type: "image"
-  alt: "[PLACEHOLDER: alt text]"
-  ratio: "3/4"
+  alt: "Black-and-white photo collage of the Brattle Book Shop in Boston, pieced together from many overlapping photos: the shop front with its pencil-shaped sign, brick buildings with a fire escape, and people browsing the outdoor bookshelves"
 
 - file: "ikea-tatte-magazine.jpg"
   type: "image"

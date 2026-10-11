@@ -71,6 +71,8 @@ Tick an item (`[x]`) when it's done.
 
 - [ ] `ikea-tatte-magazine.jpg` (Play spot 7): uses the IKEA and Tatte logos — client/class work or self-initiated? Are the photos (woman at the café, the café scene on the left page) stock? (label them if so)
 
+- [ ] `brattle-book-shop-collage.jpg` (Play spot 6): street photo collage with passers-by browsing books — fine as public street photography? (no close-up faces)
+
 ### Unpublished case studies
 - [ ] Buddy's Adventure Island and WonderWeave are hidden from the live site (`published: false` in their files; tiles say "Coming soon"). Set `published: true` when their content is ready
 
