@@ -1,0 +1,4 @@
+# Video and voice recordings stay off GitHub (this repository is public).
+*.mp4
+*.m4a
+*.wav
