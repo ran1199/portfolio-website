@@ -1,5 +1,5 @@
 ## Title
-Hi team. This is ToyMatch, an iPhone shopping app that helps people choose a toy as a gift.
+This is ToyMatch, an iPhone shopping app that helps people choose a toy as a gift.
 ## Introduction
 The shopper is a relative or family friend buying a birthday gift for a child aged three to twelve.
 They have a budget and a date, but they don't know much about what the child likes or already owns.
@@ -36,4 +36,3 @@ The shopper can check the reasoning instead of taking it on faith.
 ## Closing
 To recap: people buying for a child they don't know well lose time and confidence.
 ToyMatch gives them a short list that fits, explains why, and sends them to the store they choose.
-Happy to take your questions.

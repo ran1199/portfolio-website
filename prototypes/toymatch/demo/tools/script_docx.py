@@ -13,7 +13,7 @@ CUES = {
  "Details": "Open the Glow Garden Terrarium Kit: Why it may fit, Before you buy (batteries), What buyers say.",
  "Where to buy": "Tap Choose this toy. Point to Amazon (Fastest delivery) and Target (Lowest price). Tap Target, then Buy at Target. Simulated handoff screen.",
  "Customer concern": "Go back to the details: the From your answers / Uncertain / Check this labels, then Limitations.",
- "Closing": "Back to the gift ideas list, then the closing card.",
+ "Closing": "Back to the gift ideas list, then the closing ToyMatch card.",
 }
 lines, sec = [], None
 body = open(src).read().splitlines()

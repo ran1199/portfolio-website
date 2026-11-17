@@ -14,6 +14,6 @@ h1{font-family:"Inter Display",Inter,sans-serif;font-size:132px;line-height:1;ma
 const p=new URLSearchParams(location.search);
 const shot='<div class="shot"><img src="'+p.get('img')+'"></div>';
 document.getElementById('wrap').innerHTML = p.get('kind')==='close'
- ? '<div class="close"><div class="eyebrow">ToyMatch · Recap</div><h1>Questions?</h1><p class="tag">A faster, more confident toy choice, with reviews and clear reasons why it fits the child.</p><div class="meta"><b>Ran Guo</b> · Product demonstration for the Go To Market team</div></div>'+shot
+ ? '<div class="close"><div class="eyebrow">Recap</div><h1>ToyMatch</h1><p class="tag">A faster, more confident toy choice, with reviews and clear reasons why it fits the child.</p><div class="meta"><b>Ran Guo</b> · Product demonstration for the Go To Market team</div></div>'+shot
  : '<div><div class="eyebrow">Product demonstration · Go To Market team</div><h1>ToyMatch</h1><p class="tag">A faster, more confident toy choice, with reviews and clear reasons why it fits the child.</p><div class="meta"><b>Ran Guo</b> · 17-629 Product Management Essentials II · Product Assignment 4<br>iPhone app prototype · sample data</div></div>'+shot;
 </script></body></html>

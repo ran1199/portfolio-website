@@ -109,7 +109,6 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     [26, 0.75, async () => { await reveal(q('#h-lim'), 'start'); await point(q('#h-lim')); }],
     [28, 0.2, () => tap(q('.nav .back'))],
     [28, 0.6, () => tap(q('.nav .back'))],
-    [29, 0.1, () => point(q('.toy-card .why'))],
   ];
   for (const [i, f, fn] of steps) {
     const t = at(i, f);
