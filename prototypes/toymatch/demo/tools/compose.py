@@ -7,7 +7,7 @@ audio = sys.argv[5] if len(sys.argv) > 5 else None
 tl = json.load(open(tlp)); L = tl["lines"]
 total = tl["duration"]
 d1 = L[1]["start"]                       # title card until line 2
-d2 = L[30]["start"] + 0.2 - L[1]["start"]  # prototype until line 31
+d2 = L[-1]["start"] + 0.2 - L[1]["start"]  # prototype until the last line
 d3 = total - (d1 + d2)
 
 def ts(t):

@@ -36,5 +36,4 @@ The shopper can check the reasoning instead of taking it on faith.
 ## Closing
 To recap: people buying for a child they don't know well lose time and confidence.
 ToyMatch gives them a short list that fits, explains why, and sends them to the store they choose.
-In this prototype, prices and reviews are sample data.
 Happy to take your questions.

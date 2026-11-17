@@ -110,7 +110,6 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     [28, 0.2, () => tap(q('.nav .back'))],
     [28, 0.6, () => tap(q('.nav .back'))],
     [29, 0.1, () => point(q('.toy-card .why'))],
-    [30, 0.1, async () => { await reveal(q('.demo-note'), 'center'); await point(q('.demo-note')); }],
   ];
   for (const [i, f, fn] of steps) {
     const t = at(i, f);
@@ -119,7 +118,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     await waitUntil(t);
     try { await fn(); } catch (e) { late.push(`line ${i}@${f} FAILED: ${e.message.split('\n')[0]}`); }
   }
-  await waitUntil(L(31).start + 0.2);
+  await waitUntil(L(tl.lines.length).start + 0.2);
   await cdp.send('Page.stopScreencast');
   const endWall = Date.now() / 1000;
   // concat list: frame durations from timestamps, first frame starts at startWall
@@ -132,7 +131,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   }
   lines.push(`file 'frames/${kept[kept.length - 1].file}'`);
   fs.writeFileSync(OUT + '/frames.txt', lines.join('\n') + '\n');
-  fs.writeFileSync(OUT + '/record-log.json', JSON.stringify({ T0, recorded: endWall - startWall, expected: L(31).start + 0.2 - T0, frames: kept.length, late }, null, 1));
-  console.log(JSON.stringify({ recorded: (endWall - startWall).toFixed(1), expected: (L(31).start + 0.2 - T0).toFixed(1), frames: kept.length, late }, null, 1));
+  fs.writeFileSync(OUT + '/record-log.json', JSON.stringify({ T0, recorded: endWall - startWall, expected: L(tl.lines.length).start + 0.2 - T0, frames: kept.length, late }, null, 1));
+  console.log(JSON.stringify({ recorded: (endWall - startWall).toFixed(1), expected: (L(tl.lines.length).start + 0.2 - T0).toFixed(1), frames: kept.length, late }, null, 1));
   await browser.close();
 })().catch(e => { console.error(e); process.exit(1); });

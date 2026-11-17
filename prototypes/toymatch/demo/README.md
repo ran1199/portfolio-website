@@ -1,6 +1,6 @@
 # ToyMatch demo video (Product Assignment 4)
 
-- `script.txt` / `Ran_Guo_Product_Assignment_4_Script_to_read.md`: the narration script (439 words, about 3 minutes).
+- `script.txt` / `Ran_Guo_Product_Assignment_4_Script.docx`: the narration script (430 words, about 3 minutes).
 - `tools/`: how the video is made.
   1. `cards.js` renders the title and closing cards.
   2. `align.py` finds when each script line is spoken in Ran's recording (from the pauses).
